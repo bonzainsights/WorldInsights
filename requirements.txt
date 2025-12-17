@@ -2,3 +2,4 @@ flask
 wbdata
 python-dotenv
 requests
+pytest
