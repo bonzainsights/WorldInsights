@@ -1,0 +1,18 @@
+Flask==3.1.2
+Flask-Mail==0.10.0
+Flask-Login==0.6.3
+Flask-SQLAlchemy==3.1.1
+duckdb==1.4.3
+duckdb-engine==0.17.0
+pandas==2.3.3
+plotly==6.5.0
+requests==2.32.5
+python-dotenv==1.2.1
+gunicorn==23.0.0
+# ML
+scikit-learn==1.8.0
+statsmodels==0.14.6
+joblib==1.5.3
+# Testing
+pytest==9.0.2
+pytest-cov==7.0.0
