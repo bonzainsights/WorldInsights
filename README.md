@@ -110,7 +110,7 @@ WorldInsights/
 │   │   ├── api/
 │   │   ├── auth/
 │   │   ├── data_sources/
-│   │   ├── frontend/
+│   │   ├── templates/
 │   │   ├── ml/
 │   │   └── visualization/
 │   ├── core/                # Framework-agnostic core logic

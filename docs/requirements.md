@@ -85,7 +85,6 @@ app
 │ ├── api
 │ ├── auth
 │ ├── data_sources
-│ ├── frontend
 │ ├── ml
 │ └── visualization
 ├── core

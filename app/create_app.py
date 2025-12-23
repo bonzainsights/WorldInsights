@@ -10,7 +10,7 @@ Following Clean Architecture:
 - Does NOT contain business logic
 - Registers blueprints and middleware
 """
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from typing import Optional, Union, Dict, Any
 
 from app.core.config import Config
@@ -126,20 +126,12 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     @app.route('/', methods=['GET'])
     def index():
         """
-        Root endpoint.
+        Homepage route.
         
         Returns:
-            JSON response with API information
+            Rendered homepage template
         """
-        return jsonify({
-            'name': 'WorldInsights API',
-            'version': '1.0.0',
-            'description': 'Global data intelligence platform',
-            'endpoints': {
-                'health': '/health',
-                'api': '/api/*'
-            }
-        }), 200
+        return render_template('index.html')
     
     # ============================================
     # CORS Configuration (for API routes)
