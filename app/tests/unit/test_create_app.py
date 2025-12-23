@@ -16,10 +16,11 @@ class TestCreateApp:
         from app.create_app import create_app
         from flask import Flask
         
-        app = create_app()
-        
-        assert app is not None
-        assert isinstance(app, Flask)
+        with patch.dict('os.environ', {'SECRET_KEY': 'test-key'}):
+            app = create_app()
+            
+            assert app is not None
+            assert isinstance(app, Flask)
     
     def test_create_app_with_testing_config(self):
         """Test that create_app accepts configuration."""
