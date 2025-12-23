@@ -711,14 +711,14 @@ section {
     display: none;
     position: absolute;
     right: 0;
-    top: calc(100% + 0.5rem);
+    top: calc(100% + 0.75rem);
     background: var(--surface);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: var(--radius-md);
-    min-width: 150px;
-    box-shadow: var(--shadow-lg);
-    z-index: 1000;
-    overflow: hidden;
+    min-width: 180px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    overflow: visible;
 }
 
 .user-dropdown-menu.show {
@@ -727,15 +727,18 @@ section {
 
 .dropdown-item {
     display: block;
-    padding: 0.75rem 1.25rem;
+    padding: 1rem 1.5rem;
     color: var(--text-primary);
     text-decoration: none;
     transition: background 0.2s ease;
-    font-size: 0.9375rem;
+    font-size: 1rem;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
 .dropdown-item:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary-light);
 }
 
 
