@@ -1,0 +1,177 @@
+"""
+Flask application factory for WorldInsights.
+
+This module implements the application factory pattern, providing
+a clean way to create and configure Flask applications with dependency injection.
+
+Following Clean Architecture:
+- This is the delivery layer (Flask-specific)
+- Depends on core modules (config, logging)
+- Does NOT contain business logic
+- Registers blueprints and middleware
+"""
+from flask import Flask, jsonify
+from typing import Optional, Union, Dict, Any
+
+from app.core.config import Config
+from app.core.logging import setup_logging, get_logger
+
+
+def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
+    """
+    Create and configure the Flask application.
+    
+    This factory function follows the application factory pattern,
+    allowing for dependency injection and easier testing.
+    
+    Args:
+        config: Optional configuration object or dict.
+                If None, creates a new Config from environment variables.
+    
+    Returns:
+        Configured Flask application instance
+    
+    Example:
+        >>> app = create_app()
+        >>> app.run()
+    
+    Example with custom config:
+        >>> from app.core.config import Config
+        >>> config = Config()
+        >>> app = create_app(config=config)
+    """
+    # ============================================
+    # Create Flask application
+    # ============================================
+    app = Flask(__name__)
+    
+    # ============================================
+    # Load configuration
+    # ============================================
+    if config is None:
+        config = Config()
+    
+    # Convert Config object to dict for Flask config
+    if hasattr(config, 'to_dict'):
+        # It's our Config class
+        config_dict = config.to_dict(redact_secrets=False)
+        app.config.update(config_dict)
+    elif isinstance(config, dict):
+        # It's already a dict
+        app.config.update(config)
+    else:
+        # It's an object with attributes
+        for key in dir(config):
+            if key.isupper():
+                app.config[key] = getattr(config, key)
+    
+    # Set testing flag if in testing environment
+    if app.config.get('FLASK_ENV') == 'testing':
+        app.config['TESTING'] = True
+    
+    # ============================================
+    # Initialize logging
+    # ============================================
+    logger = setup_logging(config)
+    logger.info(f"WorldInsights application starting in {app.config.get('FLASK_ENV', 'production')} mode")
+    
+    # ============================================
+    # Register error handlers
+    # ============================================
+    @app.errorhandler(404)
+    def not_found(error):
+        """Handle 404 errors."""
+        return jsonify({
+            'error': 'Not Found',
+            'message': 'The requested resource was not found',
+            'status': 404
+        }), 404
+    
+    @app.errorhandler(500)
+    def internal_error(error):
+        """Handle 500 errors."""
+        logger.error(f"Internal server error: {error}")
+        return jsonify({
+            'error': 'Internal Server Error',
+            'message': 'An unexpected error occurred',
+            'status': 500
+        }), 500
+    
+    @app.errorhandler(400)
+    def bad_request(error):
+        """Handle 400 errors."""
+        return jsonify({
+            'error': 'Bad Request',
+            'message': 'The request was malformed or invalid',
+            'status': 400
+        }), 400
+    
+    # ============================================
+    # Register basic routes
+    # ============================================
+    @app.route('/health', methods=['GET'])
+    def health_check():
+        """
+        Health check endpoint.
+        
+        Returns:
+            JSON response with health status
+        """
+        return jsonify({
+            'status': 'healthy',
+            'service': 'worldinsights',
+            'environment': app.config.get('FLASK_ENV', 'production')
+        }), 200
+    
+    @app.route('/', methods=['GET'])
+    def index():
+        """
+        Root endpoint.
+        
+        Returns:
+            JSON response with API information
+        """
+        return jsonify({
+            'name': 'WorldInsights API',
+            'version': '1.0.0',
+            'description': 'Global data intelligence platform',
+            'endpoints': {
+                'health': '/health',
+                'api': '/api/*'
+            }
+        }), 200
+    
+    # ============================================
+    # CORS Configuration (for API routes)
+    # ============================================
+    @app.after_request
+    def after_request(response):
+        """Add CORS headers to all responses."""
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+        return response
+    
+    # ============================================
+    # Register blueprints (when they exist)
+    # ============================================
+    # TODO: Register blueprints as they are implemented
+    # Example:
+    # from app.blueprints.api import api_bp
+    # app.register_blueprint(api_bp, url_prefix='/api')
+    
+    logger.info("WorldInsights application initialized successfully")
+    
+    return app
+
+
+# ============================================
+# Application entry point for development
+# ============================================
+if __name__ == '__main__':
+    app = create_app()
+    app.run(
+        host='0.0.0.0',
+        port=5000,
+        debug=app.config.get('DEBUG', False)
+    )
