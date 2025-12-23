@@ -1,39 +1,8 @@
-# 🌍 WorldInsights
-
-**WorldInsights** is a Flask-based global data intelligence platform that brings together **free, open, and authoritative data about the world** into a single interactive research environment.
-
-The platform aggregates live and historical data from sources such as the **World Bank, FAO, WHO, NASA/NOAA**, and other open datasets to cover domains including **population, economy, GDP, agriculture, food production, literacy, geography, climate, wealth, health as well as many other open datasets that provides free api**.
-
-WorldInsights enables users to:
-
-- Explore and combine multiple global indicators across countries and time
-- Perform independent research by correlating social, economic, agricultural, and health data
-- Interactively visualize data using **dynamic 2D charts** and a **3D globe**
-- Drill down from global trends to country-level and time-series insights
-- Experiment with data relationships (e.g., population growth vs. food production, wealth vs. health outcomes)
-
-The platform is designed for **researchers, students, analysts, and the general public**, with a strong focus on **scientific credibility, reproducibility, and transparency**.
-
-WorldInsights follows a **modular, API-first architecture**, supports advanced analytics and future machine learning workflows, and is built to evolve into an **AI-assisted research environment**.
-
-Its goal is to serve as a **single trusted place for understanding global patterns, trends, and insights across economic, agricultural, social, and health perspectives**.
-
-## WorldInsights – Project Requirements & Execution Rules
-
-### Purpose of This Document
-
-This section defines **mandatory, non-negotiable requirements** for all work on the **WorldInsights** project.
-
-It applies to:
-
-- The project owner
-- All contributors
-- Automated scripts
-- AI agents
-
-Any implementation that violates these rules is considered **invalid**.
-
 ---
+description: WorldInsights is a global data intelligence platform aggregating open world data on population, economy, agriculture, health, climate, wealth, etc enabling researchers and users to explore, correlate, and visualize insights across countries and time
+---
+
+Its goal is to serve as a single trusted place for understanding global patterns, trends, and insights across economic, agricultural, social, health and geographical perspectives.
 
 ## 1. Core Project Vision
 
@@ -54,75 +23,12 @@ The platform must provide:
 
 This project is **not** a demo, toy app, or static dashboard.
 
----
-
-## 2. Architecture Rules (Strict)
-
-### 2.1 Clean Architecture
-
-The project **must follow Clean Architecture principles**.
-
-- Core business logic must not depend on Flask
-- Core logic must not import infrastructure or frameworks
-
-**Dependency direction must always be:**
-
-Blueprints → Services → Core → (NO outward dependency)
-
-Any violation of this rule is not allowed.
-
----
-
-### 2.2 Project Structure
-
-The canonical structure must remain but can be extended:
-
-```
-app
-├── blueprints
-│ ├── analytics
-│ ├── api
-│ ├── auth
-│ ├── data_sources
-│ ├── ml
-│ └── visualization
-├── core
-├── infrastructure
-│ ├── api_clients
-│ ├── cache
-│ └── db
-│ └── migrations
-├── services
-├── templates
-└── tests
-├── fixtures
-├── integration
-└── unit
-```
-
 ## ⚠️Rules:
 
 - Every directory must contain `__init__.py`
 - Every blueprint must live in its own subdirectory
 - No business logic inside `routes.py`
 - No circular dependencies
-
----
-
-## 3. Flask Usage Rules
-
-- Flask must be used with Blueprints only
-- No global application state
-- No database logic in routes
-- No business logic in routes
-
-Routes are only allowed to:
-
-- Validate input
-- Call service-layer functions
-- Return formatted responses
-
----
 
 ## 4. Data Source Rules (API-First Only)
 
@@ -157,8 +63,6 @@ Every API client must:
 - Include unit tests
 - Support caching
 
----
-
 ## 5. Data Storage Rules
 
 - Use DuckDB
@@ -167,8 +71,6 @@ Every API client must:
 - ⚠️Once again we will not be storing data locally and directly channeling data from api to frontend⚠️
 - Database schemas must be versioned
 - Raw data is immutable
-
----
 
 ## 6. Analytics & Insights Rules
 
@@ -228,16 +130,12 @@ Allowed model families:
 - Must update automatically when data changes
 - No static images
 
----
-
 ### 8.2 3D Visualizations
 
 - A globe-based visualization is mandatory
 - Users must be able to select countries
 - Time-series drill-down must be supported
 - Backend provides data only (no rendering)
-
----
 
 ## 9. Frontend Rules
 
@@ -252,10 +150,7 @@ The frontend must:
   - Insights
   - About
   - Login
-
-Flask templates alone are not sufficient for the final UI.
-
----
+  - others as necessary
 
 ## 10. Authentication Rules (Mandatory from Day One)
 
@@ -273,8 +168,6 @@ The system must be designed to support:
 
 - Premium researcher accounts
 - Saved insights and plots (future feature)
-
----
 
 ## 11. Testing Rules (No Exceptions)
 
@@ -324,16 +217,6 @@ feat(data): add World Bank API client
 test(analytics): add inequality insight tests
 chore: update project scaffolding
 ```
-
----
-
-### 12.3 Documentation Rules
-
-- Update `README.md` after major changes
-- Each blueprint must maintain its own README
-- Architecture changes must be documented
-
----
 
 ## 13. AI-Agent Rules (Critical)
 

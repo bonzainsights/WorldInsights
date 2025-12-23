@@ -78,6 +78,12 @@ class Config:
             'DATABASE_URL', 
             f'duckdb:///{self._DUCKDB_PATH}'
         )
+        # SQLAlchemy configuration - using SQLite for auth due to DuckDB/SQLAlchemy limitations
+        # DuckDB will be used directly for data analytics
+        import os
+        abs_db_path = os.path.abspath('./data/worldinsights.db')
+        self._SQLALCHEMY_DATABASE_URI = _get_env('SQLALCHEMY_DATABASE_URI', f'sqlite:///{abs_db_path}')
+        self._SQLALCHEMY_TRACK_MODIFICATIONS = False
         
         # ============================================
         # Mail Configuration
@@ -137,6 +143,14 @@ class Config:
     @property
     def DATABASE_URL(self) -> str:
         return self._DATABASE_URL
+    
+    @property
+    def SQLALCHEMY_DATABASE_URI(self) -> str:
+        return self._SQLALCHEMY_DATABASE_URI
+    
+    @property
+    def SQLALCHEMY_TRACK_MODIFICATIONS(self) -> bool:
+        return self._SQLALCHEMY_TRACK_MODIFICATIONS
     
     @property
     def MAIL_SERVER(self) -> str:
@@ -225,6 +239,8 @@ class Config:
             'DEBUG': self._DEBUG,
             'DUCKDB_PATH': self._DUCKDB_PATH,
             'DATABASE_URL': self._DATABASE_URL,
+            'SQLALCHEMY_DATABASE_URI': self._SQLALCHEMY_DATABASE_URI,
+            'SQLALCHEMY_TRACK_MODIFICATIONS': self._SQLALCHEMY_TRACK_MODIFICATIONS,
             'MAIL_SERVER': self._MAIL_SERVER,
             'MAIL_PORT': self._MAIL_PORT,
             'MAIL_USE_TLS': self._MAIL_USE_TLS,

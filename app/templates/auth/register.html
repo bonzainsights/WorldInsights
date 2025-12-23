@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block title %}Register - WorldInsights{% endblock %} {% block content %}
+<section class="auth-page">
+    <div class="container">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>Create Account</h1>
+                <p>Join WorldInsights to access global data insights</p>
+            </div>
+
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required placeholder="Choose a username" minlength="3" />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="your@email.com" />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="At least 8 characters" minlength="8" />
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required placeholder="Re-enter password" />
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large btn-block">
+          <span>Create Account</span>
+        </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>
+                    Already have an account?
+                    <a href="{{ url_for('auth.login') }}" class="link-primary">Log in</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} {% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}" /> {% endblock %}

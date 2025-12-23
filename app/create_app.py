@@ -11,10 +11,14 @@ Following Clean Architecture:
 - Registers blueprints and middleware
 """
 from flask import Flask, jsonify, render_template
+from flask_login import LoginManager
+from flask_mail import Mail
 from typing import Optional, Union, Dict, Any
 
 from app.core.config import Config
 from app.core.logging import setup_logging, get_logger
+from app.infrastructure.db import init_db, User
+from app.services.auth_service import mail as service_mail
 
 
 def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
@@ -74,6 +78,32 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     # ============================================
     logger = setup_logging(config)
     logger.info(f"WorldInsights application starting in {app.config.get('FLASK_ENV', 'production')} mode")
+    
+    # ============================================
+    # Initialize Database
+    # ============================================
+    init_db(app)
+    
+    # ============================================
+    # Initialize Flask-Login
+    # ============================================
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
+    login_manager.login_message = 'Please log in to access this page.'
+    login_manager.login_message_category = 'info'
+    
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+    
+    # ============================================
+    # Initialize Flask-Mail
+    # ============================================
+    mail = Mail()
+    mail.init_app(app)
+    # Update service mail instance
+    service_mail.init_app(app)
     
     # ============================================
     # Register error handlers
@@ -145,12 +175,10 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
         return response
     
     # ============================================
-    # Register blueprints (when they exist)
+    # Register blueprints
     # ============================================
-    # TODO: Register blueprints as they are implemented
-    # Example:
-    # from app.blueprints.api import api_bp
-    # app.register_blueprint(api_bp, url_prefix='/api')
+    from app.blueprints.auth import auth_bp
+    app.register_blueprint(auth_bp)
     
     logger.info("WorldInsights application initialized successfully")
     

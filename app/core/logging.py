@@ -154,4 +154,4 @@ def get_logger(name: str = 'worldinsights') -> logging.Logger:
     Returns:
         Logger instance
     """
-    return logging.getLogger(name)
+    return logging.getLogger(f'worldinsights.{name}' if name != 'worldinsights' else name)
