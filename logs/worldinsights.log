@@ -117,3 +117,416 @@
 2025-12-23 17:18:49 - worldinsights.database - INFO - database.py:62 - Admin user already exists
 2025-12-23 17:18:49 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
 2025-12-23 17:19:34 - worldinsights.auth_service - INFO - auth_service.py:174 - User authenticated: admin
+2025-12-23 21:17:48 - worldinsights.auth_service - INFO - auth_service.py:56 - New user registered: achbj
+2025-12-23 21:17:50 - worldinsights.auth_service - ERROR - auth_service.py:110 - Error sending verification email: STARTTLS extension not supported by server.
+2025-12-23 21:19:32 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 21:19:32 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 21:19:32 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 21:19:32 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 21:19:32 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 21:19:32 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 21:19:32 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 21:19:32 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 21:20:46 - worldinsights.auth_service - INFO - auth_service.py:56 - New user registered: example
+2025-12-23 21:20:55 - worldinsights.auth_service - INFO - auth_service.py:106 - Verification email sent to ach.bj7@gmail.com
+2025-12-23 21:21:34 - worldinsights.auth_service - INFO - auth_service.py:142 - User verified: example
+2025-12-23 21:21:48 - worldinsights.auth_service - INFO - auth_service.py:174 - User authenticated: example
+2025-12-23 21:28:57 - worldinsights.auth_service - INFO - auth_service.py:174 - User authenticated: admin
+2025-12-23 21:30:30 - worldinsights.auth_service - INFO - auth_service.py:217 - Admin admin changed achbj role from user to researcher
+2025-12-23 21:30:36 - worldinsights.auth_service - INFO - auth_service.py:217 - Admin admin changed achbj role from researcher to user
+2025-12-23 21:33:14 - worldinsights.auth_service - INFO - auth_service.py:174 - User authenticated: admin
+2025-12-23 21:48:18 - worldinsights.auth_service - INFO - auth_service.py:174 - User authenticated: admin
+2025-12-23 21:55:15 - worldinsights.auth_service - INFO - auth_service.py:174 - User authenticated: admin
+2025-12-23 22:03:08 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:03:08 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:03:08 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 22:03:08 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:03:16 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:03:16 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:03:16 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 22:03:16 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:03:16 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:03:16 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:03:16 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 22:03:16 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:15:37 - worldinsights.auth_service - INFO - auth_service.py:174 - User authenticated: example
+2025-12-23 22:17:21 - worldinsights.auth_service - INFO - auth_service.py:174 - User authenticated: admin
+2025-12-23 22:18:24 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:18:24 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:18:24 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:18:24 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:18:25 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:18:25 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:18:25 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:18:25 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:18:43 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:18:43 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:18:43 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:18:43 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:19:05 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:19:05 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:19:05 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:19:05 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:19:30 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:19:30 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:19:30 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:19:30 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:19:31 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:19:31 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:19:31 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:19:31 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:20:44 - worldinsights.auth_service - ERROR - auth_service.py:181 - Error authenticating user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:21:00 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:21:00 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:21:00 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:21:00 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:21:00 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:21:00 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:21:00 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:21:00 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:21:18 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:21:18 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:21:18 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:21:18 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:21:18 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:21:18 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:21:18 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:21:18 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:21:43 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:21:43 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:21:43 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:21:43 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:21:43 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:21:43 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:21:43 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:21:43 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:21:47 - worldinsights.auth_service - ERROR - auth_service.py:181 - Error authenticating user: (sqlite3.OperationalError) no such column: user.is_locked
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.is_locked AS user_is_locked, user.role AS user_role, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:28:37 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:28:37 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:28:37 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 22:28:37 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:28:38 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:28:38 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:28:38 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 22:28:38 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:28:39 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:28:39 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:28:39 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 22:28:39 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:28:51 - worldinsights.auth_service - INFO - auth_service.py:174 - User authenticated: admin
+2025-12-23 22:29:34 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:29:34 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:29:34 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 22:29:34 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:29:59 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:29:59 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:29:59 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 22:29:59 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:29:59 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:29:59 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:29:59 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 22:29:59 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:29:59 - worldinsights.auth_service - INFO - auth_service.py:297 - Admin admin set achbj as verified
+2025-12-23 22:42:03 - worldinsights.auth_service - INFO - auth_service.py:337 - Admin admin deleted user example
+2025-12-23 22:42:34 - worldinsights.auth_service - INFO - auth_service.py:174 - User authenticated: achbj
+2025-12-23 22:43:06 - worldinsights.auth_service - INFO - auth_service.py:174 - User authenticated: admin
+2025-12-23 22:44:44 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:44:44 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:44:44 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.deleted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:44:44 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:44:45 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:44:45 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:44:45 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.deleted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:44:45 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:45:09 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:45:09 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:45:09 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.deleted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:45:09 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:45:10 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:45:10 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:45:10 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.deleted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:45:10 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:45:30 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:45:30 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:45:30 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.deleted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:45:30 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:45:51 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:45:51 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:45:51 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.deleted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:45:51 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:45:54 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:45:54 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:45:54 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.deleted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:45:54 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:46:35 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:46:35 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:46:35 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.deleted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:46:35 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:46:35 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:46:35 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:46:35 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.deleted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:46:35 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:46:48 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:46:48 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:46:48 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.deleted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:46:48 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:46:48 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:46:48 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:46:48 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.deleted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:46:48 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:46:59 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:46:59 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:47:00 - worldinsights.database - INFO - database.py:59 - Default admin user created successfully
+2025-12-23 22:47:00 - worldinsights.database - INFO - database.py:60 - Admin credentials - Email: admin@worldinsights.com, Password: Tahaxaina@1
+2025-12-23 22:47:00 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:47:00 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:47:00 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:47:00 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 22:47:00 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:47:48 - worldinsights.auth_service - INFO - auth_service.py:56 - New user registered: achbj
+2025-12-23 22:47:57 - worldinsights.auth_service - INFO - auth_service.py:106 - Verification email sent to ach.bj27@gmail.com
+2025-12-23 22:48:32 - worldinsights.auth_service - INFO - auth_service.py:142 - User verified: achbj
+2025-12-23 22:48:46 - worldinsights.auth_service - INFO - auth_service.py:177 - User authenticated: achbj
+2025-12-23 22:50:11 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:50:11 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:50:11 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.first_name
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:50:11 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:50:13 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:50:13 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:50:13 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.first_name
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:50:13 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:50:29 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:50:29 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:50:29 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.first_name
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:50:29 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:50:47 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:50:47 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:50:47 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.first_name
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:50:47 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:50:49 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:50:49 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:50:50 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.first_name
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-23 22:50:50 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:51:56 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:51:56 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:51:56 - worldinsights.database - INFO - database.py:59 - Default admin user created successfully
+2025-12-23 22:51:56 - worldinsights.database - INFO - database.py:60 - Admin credentials - Email: admin@worldinsights.com, Password: Tahaxaina@1
+2025-12-23 22:51:56 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:51:56 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-23 22:51:56 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-23 22:51:56 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-23 22:51:56 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-23 22:52:19 - worldinsights.auth_service - INFO - auth_service.py:177 - User authenticated: admin
+2025-12-23 22:52:33 - worldinsights.auth_service - INFO - auth_service.py:406 - User profile updated: admin
+2025-12-23 22:53:04 - worldinsights.auth_service - INFO - auth_service.py:56 - New user registered: achbj
+2025-12-23 22:53:11 - worldinsights.auth_service - INFO - auth_service.py:106 - Verification email sent to ach.bj27@gmail.com
+2025-12-23 22:53:35 - worldinsights.auth_service - INFO - auth_service.py:142 - User verified: achbj
+2025-12-23 22:53:45 - worldinsights.auth_service - INFO - auth_service.py:177 - User authenticated: achbj
+2025-12-23 22:53:53 - worldinsights.auth_service - INFO - auth_service.py:406 - User profile updated: achbj
+2025-12-23 22:54:06 - worldinsights.auth_service - INFO - auth_service.py:177 - User authenticated: admin
+2025-12-24 18:38:04 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 18:38:04 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 18:38:04 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-24 18:38:04 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 18:41:10 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 18:41:10 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 18:41:10 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-24 18:41:10 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 18:43:21 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 18:43:21 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 18:43:21 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-24 18:43:21 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 18:43:21 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 18:43:21 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 18:43:21 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-24 18:43:21 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 18:48:51 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 18:48:51 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 18:48:51 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-24 18:48:51 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 18:51:08 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 18:51:08 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 18:51:08 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-24 18:51:08 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 18:53:16 - worldinsights.auth_service - INFO - auth_service.py:177 - User authenticated: admin
+2025-12-24 18:56:10 - worldinsights.auth_service - INFO - auth_service.py:177 - User authenticated: admin

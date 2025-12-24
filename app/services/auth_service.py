@@ -171,6 +171,9 @@ def authenticate_user(email: str, password: str) -> Tuple[Optional[User], Option
         if not user.is_verified:
             return None, "Please verify your email address before logging in"
         
+        if user.is_deleted():
+            return None, "This account has been deleted. Contact support to recover your account."
+        
         logger.info(f"User authenticated: {user.username}")
         return user, None
         
@@ -225,7 +228,8 @@ def change_user_role(admin: User, target_user_id: int, new_role: str) -> Tuple[b
 
 def delete_user_account(user: User, password: str) -> Tuple[bool, Optional[str]]:
     """
-    Delete user account after password confirmation.
+    Mark user account for deletion after password confirmation.
+    Account will be recoverable for 30 days.
     
     Args:
         user: User to delete
@@ -243,11 +247,12 @@ def delete_user_account(user: User, password: str) -> Tuple[bool, Optional[str]]
         if user.is_admin() and user.email == 'admin@worldinsights.com':
             return False, "Cannot delete the default admin account"
         
+        # Soft delete - mark for deletion
         username = user.username
-        db.session.delete(user)
+        user.deleted_at = datetime.utcnow()
         db.session.commit()
         
-        logger.info(f"User account deleted: {username}")
+        logger.info(f"User account marked for deletion: {username}")
         return True, None
         
     except Exception as e:
@@ -268,3 +273,141 @@ def get_all_users() -> list:
     except Exception as e:
         logger.error(f"Error fetching users: {e}")
         return []
+
+
+def toggle_user_verification(admin: User, target_user_id: int) -> Tuple[bool, Optional[str]]:
+    """
+    Toggle user verification status (admin only).
+    
+    Args:
+        admin: Admin user performing the action
+        target_user_id: ID of user to toggle verification
+    
+    Returns:
+        Tuple of (success, error_message)
+    """
+    try:
+        if not admin.is_admin():
+            return False, "Only administrators can change verification status"
+        
+        target_user = User.query.get(target_user_id)
+        if not target_user:
+            return False, "User not found"
+        
+        # Toggle verification
+        target_user.is_verified = not target_user.is_verified
+        db.session.commit()
+        
+        status = "verified" if target_user.is_verified else "unverified"
+        logger.info(f"Admin {admin.username} set {target_user.username} as {status}")
+        return True, None
+        
+    except Exception as e:
+        logger.error(f"Error toggling user verification: {e}")
+        db.session.rollback()
+        return False, "An error occurred while changing verification status"
+
+
+def admin_delete_user(admin: User, target_user_id: int) -> Tuple[bool, Optional[str]]:
+    """
+    Mark a user account for deletion (admin only).
+    Account will be recoverable for 30 days.
+    
+    Args:
+        admin: Admin user performing the action
+        target_user_id: ID of user to delete
+    
+    Returns:
+        Tuple of (success, error_message)
+    """
+    try:
+        if not admin.is_admin():
+            return False, "Only administrators can delete user accounts"
+        
+        target_user = User.query.get(target_user_id)
+        if not target_user:
+            return False, "User not found"
+        
+        # Don't allow deleting own account
+        if target_user.id == admin.id:
+            return False, "You cannot delete your own account"
+        
+        # Don't allow deleting the default admin
+        if target_user.is_admin() and target_user.email == 'admin@worldinsights.com':
+            return False, "Cannot delete the default admin account"
+        
+        # Soft delete - mark for deletion
+        username = target_user.username
+        target_user.deleted_at = datetime.utcnow()
+        db.session.commit()
+        
+        logger.info(f"Admin {admin.username} marked user {username} for deletion")
+        return True, None
+        
+    except Exception as e:
+        logger.error(f"Error deleting user: {e}")
+        db.session.rollback()
+        return False, "An error occurred while deleting the user account"
+
+
+def recover_user(admin: User, target_user_id: int) -> Tuple[bool, Optional[str]]:
+    """
+    Recover a deleted user account (admin only).
+    
+    Args:
+        admin: Admin user performing the action
+        target_user_id: ID of user to recover
+    
+    Returns:
+        Tuple of (success, error_message)
+    """
+    try:
+        if not admin.is_admin():
+            return False, "Only administrators can recover user accounts"
+        
+        target_user = User.query.get(target_user_id)
+        if not target_user:
+            return False, "User not found"
+        
+        if not target_user.is_deleted():
+            return False, "User account is not deleted"
+        
+        # Recover account
+        username = target_user.username
+        target_user.deleted_at = None
+        db.session.commit()
+        
+        logger.info(f"Admin {admin.username} recovered user {username}")
+        return True, None
+        
+    except Exception as e:
+        logger.error(f"Error recovering user: {e}")
+        db.session.rollback()
+        return False, "An error occurred while recovering the user account"
+
+
+def update_profile(user: User, first_name: str, last_name: str) -> Tuple[bool, Optional[str]]:
+    """
+    Update user profile information.
+    
+    Args:
+        user: User to update
+        first_name: First name
+        last_name: Last name
+    
+    Returns:
+        Tuple of (success, error_message)
+    """
+    try:
+        user.first_name = first_name.strip() if first_name else None
+        user.last_name = last_name.strip() if last_name else None
+        db.session.commit()
+        
+        logger.info(f"User profile updated: {user.username}")
+        return True, None
+        
+    except Exception as e:
+        logger.error(f"Error updating profile: {e}")
+        db.session.rollback()
+        return False, "An error occurred while updating your profile"
+

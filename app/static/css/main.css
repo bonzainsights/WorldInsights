@@ -81,7 +81,6 @@ body {
     z-index: 9999;
     transition: all 0.3s ease;
     width: 100%;
-    overflow-x: hidden;
 }
 
 .nav-wrapper {
@@ -89,6 +88,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
+    position: relative;
 }
 
 .logo {
@@ -715,7 +715,7 @@ section {
     border-radius: var(--radius-md);
     min-width: 180px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    z-index: 10000;
+    z-index: 99999;
     overflow: visible;
 }
 

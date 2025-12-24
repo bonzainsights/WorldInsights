@@ -1,41 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="{% block meta_description %}WorldInsights - Global Data Intelligence Platform for Researchers and Analysts{% endblock %}" />
+    <meta
+      name="description"
+      content="{% block meta_description %}WorldInsights - Global Data Intelligence Platform for Researchers and Analysts{% endblock %}"
+    />
     <title>
-        {% block title %}WorldInsights - Global Data Intelligence{% endblock %}
+      {% block title %}WorldInsights - Global Data Intelligence{% endblock %}
     </title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" /> {% block extra_css %}{% endblock %}
-</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    {% block extra_css %}{% endblock %}
+  </head>
 
-<body>
+  <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
-            <div class="nav-wrapper">
-                <a href="/" class="logo">
-                    <span class="logo-icon">🌍</span>
-                    <span class="logo-text">WorldInsights</span>
-                </a>
+      <div class="container">
+        <div class="nav-wrapper">
+          <a href="/" class="logo">
+            <span class="logo-icon">🌍</span>
+            <span class="logo-text">WorldInsights</span>
+          </a>
 
-                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <button class="mobile-menu-toggle" aria-label="Toggle menu">
             <span></span>
             <span></span>
             <span></span>
           </button>
 
-                <div class="nav-links">
-                    <a href="/" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">Home</a
+          <div class="nav-links">
+            <a
+              href="/"
+              class="nav-link {% if request.endpoint == 'index' %}active{% endif %}"
+              >Home</a
             >
             <a
               href="/explore"
@@ -69,6 +81,13 @@
                 <a href="{{ url_for('auth.profile') }}" class="dropdown-item"
                   >Profile</a
                 >
+                {% if current_user.is_admin() %}
+                <a
+                  href="{{ url_for('auth.admin_dashboard') }}"
+                  class="dropdown-item"
+                  >Admin Dashboard</a
+                >
+                {% endif %}
                 <a href="{{ url_for('auth.logout') }}" class="dropdown-item"
                   >Logout</a
                 >
@@ -110,57 +129,56 @@
             </p>
             <div class="footer-social">
               <a href="#" aria-label="Twitter">𝕏</a>
-                    <a href="#" aria-label="GitHub">GitHub</a>
-                    <a href="#" aria-label="LinkedIn">LinkedIn</a>
-                </div>
+              <a href="#" aria-label="GitHub">GitHub</a>
+              <a href="#" aria-label="LinkedIn">LinkedIn</a>
             </div>
+          </div>
 
-            <div class="footer-col">
-                <h4>Platform</h4>
-                <ul>
-                    <li><a href="/explore">Explore Data</a></li>
-                    <li><a href="/visualizations">Visualizations</a></li>
-                    <li><a href="/insights">Insights</a></li>
-                    <li><a href="/api">API Documentation</a></li>
-                </ul>
-            </div>
+          <div class="footer-col">
+            <h4>Platform</h4>
+            <ul>
+              <li><a href="/explore">Explore Data</a></li>
+              <li><a href="/visualizations">Visualizations</a></li>
+              <li><a href="/insights">Insights</a></li>
+              <li><a href="/api">API Documentation</a></li>
+            </ul>
+          </div>
 
-            <div class="footer-col">
-                <h4>Data Sources</h4>
-                <ul>
-                    <li><a href="#">World Bank</a></li>
-                    <li><a href="#">FAO</a></li>
-                    <li><a href="#">WHO</a></li>
-                    <li><a href="#">NASA/NOAA</a></li>
-                </ul>
-            </div>
+          <div class="footer-col">
+            <h4>Data Sources</h4>
+            <ul>
+              <li><a href="#">World Bank</a></li>
+              <li><a href="#">FAO</a></li>
+              <li><a href="#">WHO</a></li>
+              <li><a href="#">NASA/NOAA</a></li>
+            </ul>
+          </div>
 
-            <div class="footer-col">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/docs">Documentation</a></li>
-                    <li><a href="#">Research Papers</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
+          <div class="footer-col">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="/about">About Us</a></li>
+              <li><a href="/docs">Documentation</a></li>
+              <li><a href="#">Research Papers</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
         </div>
 
         <div class="footer-bottom">
-            <p>
-                &copy; 2025 WorldInsights. Built for researchers, by researchers.
-            </p>
-            <p class="footer-meta">
-                <a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a> •
-                <a href="#">Data Usage Policy</a>
-            </p>
+          <p>
+            &copy; 2025 WorldInsights. Built for researchers, by researchers.
+          </p>
+          <p class="footer-meta">
+            <a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a> •
+            <a href="#">Data Usage Policy</a>
+          </p>
         </div>
-        </div>
-        </footer>
+      </div>
+    </footer>
 
-        <!-- JavaScript -->
-        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-        {% block extra_js %}{% endblock %}
-</body>
-
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+  </body>
 </html>

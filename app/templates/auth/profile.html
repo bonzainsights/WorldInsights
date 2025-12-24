@@ -1,319 +1,373 @@
-{% extends "base.html" %} {% block title %}Profile - WorldInsights{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}Profile - WorldInsights{% endblock %}
+{% block content %}
 <section class="profile-page">
-    <div class="container">
-        <!-- User Profile Card -->
-        <div class="profile-card">
-            <div class="profile-header">
-                <div class="profile-avatar">{{ user.username[0].upper() }}</div>
-                <div class="profile-info">
-                    <h1>{{ user.username }}</h1>
-                    <p>{{ user.email }}</p>
-                    <div class="profile-badges">
-                        <span class="badge badge-{{ user.role }}">{{ user.role|title }}</span> {% if user.is_verified %}
-                        <span class="badge badge-verified">✓ Verified</span> {% else %}
-                        <span class="badge badge-unverified">⚠ Unverified</span> {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="profile-actions">
-                <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary">Logout</a>
-                <button onclick="showDeleteModal()" class="btn btn-outline" style="border-color: #EF4444; color: #EF4444;">Delete Account</button>
-            </div>
+  <div class="container">
+    <!-- User Profile Card -->
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar">{{ user.username[0].upper() }}</div>
+        <div class="profile-info">
+          <h1>
+            {% if user.first_name or user.last_name %} {{ user.first_name or ''
+            }} {{ user.last_name or '' }} {% else %} {{ user.username }} {%
+            endif %}
+          </h1>
+          <p>{{ user.email }}</p>
+          {% if user.first_name or user.last_name %}
+          <p style="font-size: 0.875rem; color: var(--text-secondary)">
+            @{{ user.username }}
+          </p>
+          {% endif %}
+          <div class="profile-badges">
+            <span class="badge badge-{{ user.role }}"
+              >{{ user.role|title }}</span
+            >
+            {% if user.is_verified %}
+            <span class="badge badge-verified">✓ Verified</span> {% else %}
+            <span class="badge badge-unverified">⚠ Unverified</span> {% endif %}
+          </div>
         </div>
+      </div>
 
-        <!-- Admin Dashboard -->
-        {% if user.is_admin() and all_users %}
-        <div class="admin-dashboard">
-            <div class="dashboard-header">
-                <h2>🛡️ Admin Dashboard</h2>
-                <p>Manage user roles and permissions</p>
-            </div>
-
-            <div class="users-table-container">
-                <table class="users-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Verified</th>
-                            <th>Created</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for u in all_users %}
-                        <tr>
-                            <td>{{ u.id }}</td>
-                            <td>{{ u.username }}</td>
-                            <td>{{ u.email }}</td>
-                            <td>
-                                <span class="badge badge-{{ u.role }}">{{ u.role|title }}</span>
-                            </td>
-                            <td>
-                                {% if u.is_verified %}
-                                <span class="status-verified">✓</span> {% else %}
-                                <span class="status-unverified">✗</span> {% endif %}
-                            </td>
-                            <td>{{ u.created_at.strftime('%Y-%m-%d') if u.created_at else 'N/A' }}</td>
-                            <td>
-                                {% if u.id != user.id %}
-                                <form method="POST" action="{{ url_for('auth.change_role') }}" class="role-form">
-                                    <input type="hidden" name="user_id" value="{{ u.id }}">
-                                    <select name="role" onchange="this.form.submit()">
-                                        <option value="user" {% if u.role == 'user' %}selected{% endif %}>User</option>
-                                        <option value="researcher" {% if u.role == 'researcher' %}selected{% endif %}>Researcher</option>
-                                        <option value="admin" {% if u.role == 'admin' %}selected{% endif %}>Admin</option>
-                                    </select>
-                                </form>
-                                {% else %}
-                                <span class="text-muted">You</span> {% endif %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        {% endif %}
+      <div class="profile-actions">
+        <button
+          onclick="toggleEditProfile()"
+          class="btn btn-primary"
+          id="editProfileBtn"
+        >
+          ✏️ Edit Profile
+        </button>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary"
+          >Logout</a
+        >
+        <button
+          onclick="showDeleteModal()"
+          class="btn btn-outline"
+          style="border-color: #ef4444; color: #ef4444"
+        >
+          Delete Account
+        </button>
+      </div>
     </div>
+
+    <!-- Edit Profile Section -->
+    <div
+      class="profile-card"
+      id="editProfileSection"
+      style="margin-top: 2rem; display: none"
+    >
+      <div class="dashboard-header">
+        <h2>✏️ Edit Profile</h2>
+        <p>Update your personal information</p>
+      </div>
+      <form
+        method="POST"
+        action="{{ url_for('auth.update_profile_route') }}"
+        class="profile-form"
+        id="profileForm"
+      >
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              value="{{ user.first_name or '' }}"
+              placeholder="Enter your first name"
+              maxlength="50"
+            />
+          </div>
+          <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              value="{{ user.last_name or '' }}"
+              placeholder="Enter your last name"
+              maxlength="50"
+            />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button
+            type="button"
+            onclick="toggleEditProfile()"
+            class="btn btn-secondary"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </section>
 
 <!-- Delete Account Modal -->
 <div id="deleteModal" class="modal">
-    <div class="modal-content">
-        <h3>Delete Account</h3>
-        <p>This action cannot be undone. Please enter your password to confirm account deletion.</p>
-        <form method="POST" action="{{ url_for('auth.delete_account') }}">
-            <div class="form-group">
-                <input type="password" name="password" placeholder="Enter your password" required>
-            </div>
-            <div class="modal-actions">
-                <button type="button" onclick="hideDeleteModal()" class="btn btn-secondary">Cancel</button>
-                <button type="submit" class="btn btn-primary" style="background: #EF4444;">Delete Account</button>
-            </div>
-        </form>
-    </div>
+  <div class="modal-content">
+    <h3>Delete Account</h3>
+    <p>
+      This action cannot be undone. Please enter your password to confirm
+      account deletion.
+    </p>
+    <form method="POST" action="{{ url_for('auth.delete_account') }}">
+      <div class="form-group">
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+      <div class="modal-actions">
+        <button
+          type="button"
+          onclick="hideDeleteModal()"
+          class="btn btn-secondary"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="background: #ef4444"
+        >
+          Delete Account
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
+
 {% endblock %} {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/auth.css') }}"
+/>
 <style>
-    .profile-page {
-        padding: 4rem 2rem;
-        min-height: 80vh;
-    }
-    
-    .profile-card {
-        background: var(--surface);
-        border-radius: var(--radius-xl);
-        padding: 2.5rem;
-        margin-bottom: 2rem;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
+  .profile-page {
+    padding: 4rem 2rem;
+    min-height: 80vh;
+  }
+
+  .profile-card {
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .profile-info h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .profile-info p {
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  .profile-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .badge-user {
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+  }
+
+  .badge-researcher {
+    background: rgba(139, 92, 246, 0.1);
+    color: #a78bfa;
+  }
+
+  .badge-admin {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+  }
+
+  .badge-verified {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+  }
+
+  .badge-unverified {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+  }
+
+  .profile-actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  /* Modal */
+
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal.active {
+    display: flex;
+  }
+
+  .modal-content {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+    max-width: 500px;
+    width: 90%;
+  }
+
+  .modal-content h3 {
+    margin-bottom: 1rem;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  /* Profile Form */
+
+  .profile-form {
+    margin-top: 1.5rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .form-group input {
+    padding: 0.75rem;
+    background: var(--background);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
     .profile-header {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-        margin-bottom: 2rem;
+      flex-direction: column;
+      text-align: center;
     }
-    
-    .profile-avatar {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background: var(--gradient-primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        font-weight: 700;
-        color: white;
-    }
-    
-    .profile-info h1 {
-        font-size: 1.75rem;
-        margin-bottom: 0.25rem;
-    }
-    
-    .profile-info p {
-        color: var(--text-secondary);
-        margin-bottom: 0.75rem;
-    }
-    
-    .profile-badges {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-    }
-    
-    .badge {
-        padding: 0.25rem 0.75rem;
-        border-radius: var(--radius-md);
-        font-size: 0.875rem;
-        font-weight: 600;
-    }
-    
-    .badge-user {
-        background: rgba(59, 130, 246, 0.1);
-        color: #60A5FA;
-    }
-    
-    .badge-researcher {
-        background: rgba(139, 92, 246, 0.1);
-        color: #A78BFA;
-    }
-    
-    .badge-admin {
-        background: rgba(16, 185, 129, 0.1);
-        color: #10B981;
-    }
-    
-    .badge-verified {
-        background: rgba(16, 185, 129, 0.1);
-        color: #10B981;
-    }
-    
-    .badge-unverified {
-        background: rgba(245, 158, 11, 0.1);
-        color: #F59E0B;
-    }
-    
     .profile-actions {
-        display: flex;
-        gap: 1rem;
+      flex-direction: column;
     }
-    
-    .admin-dashboard {
-        background: var(--surface);
-        border-radius: var(--radius-xl);
-        padding: 2.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .dashboard-header {
-        margin-bottom: 2rem;
-    }
-    
-    .dashboard-header h2 {
-        font-size: 1.75rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .dashboard-header p {
-        color: var(--text-secondary);
-    }
-    
-    .users-table-container {
-        overflow-x: auto;
-    }
-    
-    .users-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    
-    .users-table th,
-    .users-table td {
-        padding: 1rem;
-        text-align: left;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .users-table th {
-        font-weight: 600;
-        color: var(--text-secondary);
-        font-size: 0.875rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    
-    .users-table tr:hover {
-        background: rgba(255, 255, 255, 0.02);
-    }
-    
-    .role-form select {
-        padding: 0.5rem 1rem;
-        background: var(--background);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: var(--radius-md);
-        color: var(--text-primary);
-        cursor: pointer;
-    }
-    
-    .status-verified {
-        color: #10B981;
-        font-weight: 600;
-    }
-    
-    .status-unverified {
-        color: #EF4444;
-        font-weight: 600;
-    }
-    
-    .text-muted {
-        color: var(--text-muted);
-    }
-    /* Modal */
-    
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 2000;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .modal.active {
-        display: flex;
-    }
-    
-    .modal-content {
-        background: var(--surface);
-        padding: 2rem;
-        border-radius: var(--radius-xl);
-        max-width: 500px;
-        width: 90%;
-    }
-    
-    .modal-content h3 {
-        margin-bottom: 1rem;
-    }
-    
-    .modal-actions {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1.5rem;
-    }
-    
-    @media (max-width: 768px) {
-        .profile-header {
-            flex-direction: column;
-            text-align: center;
-        }
-        .profile-actions {
-            flex-direction: column;
-        }
-        .users-table {
-            font-size: 0.875rem;
-        }
-    }
+  }
 </style>
 {% endblock %} {% block extra_js %}
 <script>
-    function showDeleteModal() {
-        document.getElementById('deleteModal').classList.add('active');
-    }
+  function toggleEditProfile() {
+    const section = document.getElementById("editProfileSection");
+    const btn = document.getElementById("editProfileBtn");
 
-    function hideDeleteModal() {
-        document.getElementById('deleteModal').classList.remove('active');
+    if (section.style.display === "none") {
+      section.style.display = "block";
+      btn.textContent = "❌ Cancel Edit";
+      // Smooth scroll to the section
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    } else {
+      section.style.display = "none";
+      btn.textContent = "✏️ Edit Profile";
     }
+  }
+
+  function showDeleteModal() {
+    document.getElementById("deleteModal").classList.add("active");
+  }
+
+  function hideDeleteModal() {
+    document.getElementById("deleteModal").classList.remove("active");
+  }
+
+  // Hide edit section after successful save
+  // Check if there's a success message for profile update
+  document.addEventListener("DOMContentLoaded", function () {
+    const flashMessages = document.querySelectorAll(".alert-success");
+    flashMessages.forEach((msg) => {
+      if (msg.textContent.includes("Profile updated successfully")) {
+        const section = document.getElementById("editProfileSection");
+        const btn = document.getElementById("editProfileBtn");
+        if (section && btn) {
+          section.style.display = "none";
+          btn.textContent = "✏️ Edit Profile";
+        }
+      }
+    });
+  });
 </script>
 {% endblock %}

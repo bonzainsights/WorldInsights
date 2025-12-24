@@ -8,7 +8,8 @@ from flask_login import login_user, logout_user, login_required, current_user
 from app.blueprints.auth import auth_bp
 from app.services.auth_service import (
     register_user, send_verification_email, verify_user_email,
-    authenticate_user, change_user_role, delete_user_account, get_all_users
+    authenticate_user, change_user_role, delete_user_account, get_all_users,
+    toggle_user_verification, admin_delete_user, recover_user, update_profile
 )
 from app.infrastructure.db import User
 
@@ -125,14 +126,23 @@ def logout():
 def profile():
     """
     User profile page.
-    Shows admin dashboard if user is admin.
     """
-    # Get all users if admin
-    all_users = None
-    if current_user.is_admin():
-        all_users = get_all_users()
+    return render_template('auth/profile.html', user=current_user)
+
+
+@auth_bp.route('/admin/dashboard')
+@login_required
+def admin_dashboard():
+    """
+    Admin dashboard page.
+    Shows user management interface for admins only.
+    """
+    if not current_user.is_admin():
+        flash('Unauthorized access', 'error')
+        return redirect(url_for('auth.profile'))
     
-    return render_template('auth/profile.html', user=current_user, all_users=all_users)
+    all_users = get_all_users()
+    return render_template('auth/admin_dashboard.html', all_users=all_users)
 
 
 @auth_bp.route('/change-role', methods=['POST'])
@@ -183,3 +193,102 @@ def delete_account():
     else:
         flash(error or 'Failed to delete account', 'error')
         return redirect(url_for('auth.profile'))
+
+
+@auth_bp.route('/toggle-verification', methods=['POST'])
+@login_required
+def toggle_verification():
+    """
+    Toggle user verification status (admin only).
+    """
+    if not current_user.is_admin():
+        flash('Unauthorized access', 'error')
+        return redirect(url_for('auth.profile'))
+    
+    user_id = request.form.get('user_id', type=int)
+    
+    if not user_id:
+        flash('Invalid request', 'error')
+        return redirect(url_for('auth.profile'))
+    
+    success, error = toggle_user_verification(current_user, user_id)
+    
+    if success:
+        flash('User verification status updated successfully', 'success')
+    else:
+        flash(error or 'Failed to update verification status', 'error')
+    
+    return redirect(url_for('auth.profile'))
+
+
+@auth_bp.route('/admin-delete-user', methods=['POST'])
+@login_required
+def admin_delete_user_route():
+    """
+    Delete a user account (admin only).
+    """
+    if not current_user.is_admin():
+        flash('Unauthorized access', 'error')
+        return redirect(url_for('auth.profile'))
+    
+    user_id = request.form.get('user_id', type=int)
+    
+    if not user_id:
+        flash('Invalid request', 'error')
+        return redirect(url_for('auth.profile'))
+    
+    success, error = admin_delete_user(current_user, user_id)
+    
+    if success:
+        flash('User account marked for deletion. Can be recovered within 30 days.', 'success')
+    else:
+        flash(error or 'Failed to delete user account', 'error')
+    
+    return redirect(url_for('auth.profile'))
+
+
+@auth_bp.route('/recover-user', methods=['POST'])
+@login_required
+def recover_user_route():
+    """
+    Recover a deleted user account (admin only).
+    """
+    if not current_user.is_admin():
+        flash('Unauthorized access', 'error')
+        return redirect(url_for('auth.profile'))
+    
+    user_id = request.form.get('user_id', type=int)
+    
+    if not user_id:
+        flash('Invalid request', 'error')
+        return redirect(url_for('auth.profile'))
+    
+    success, error = recover_user(current_user, user_id)
+    
+    if success:
+        flash('User account recovered successfully', 'success')
+    else:
+        flash(error or 'Failed to recover user account', 'error')
+    
+    return redirect(url_for('auth.profile'))
+
+
+@auth_bp.route('/update-profile', methods=['POST'])
+@login_required
+def update_profile_route():
+    """
+    Update user profile information.
+    """
+    first_name = request.form.get('first_name', '').strip()
+    last_name = request.form.get('last_name', '').strip()
+    
+    success, error = update_profile(current_user, first_name, last_name)
+    
+    if success:
+        flash('Profile updated successfully', 'success')
+    else:
+        flash(error or 'Failed to update profile', 'error')
+    
+    return redirect(url_for('auth.profile'))
+
+

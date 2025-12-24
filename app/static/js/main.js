@@ -27,9 +27,24 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // Close menu when clicking a link
+    // Close menu when clicking a link (but not the user dropdown toggle)
     navLinks.querySelectorAll(".nav-link").forEach((link) => {
-      link.addEventListener("click", function () {
+      link.addEventListener("click", function (e) {
+        // Don't close menu if clicking the user dropdown toggle
+        if (!this.classList.contains("user-dropdown-toggle")) {
+          navLinks.classList.remove("active");
+          body.classList.remove("menu-open");
+          const spans = mobileToggle.querySelectorAll("span");
+          spans[0].style.transform = "";
+          spans[1].style.opacity = "";
+          spans[2].style.transform = "";
+        }
+      });
+    });
+
+    // Close mobile menu when clicking dropdown items (Profile/Logout)
+    navLinks.querySelectorAll(".dropdown-item").forEach((item) => {
+      item.addEventListener("click", function () {
         navLinks.classList.remove("active");
         body.classList.remove("menu-open");
         const spans = mobileToggle.querySelectorAll("span");
