@@ -398,3 +398,161 @@ def change_password_route():
     
     return redirect(url_for('auth.profile'))
 
+
+# ============================================
+# Pricing and Subscription Routes
+# ============================================
+
+from app.services.subscription_service import (
+    get_pricing_tiers, subscribe_user, cancel_subscription,
+    upgrade_subscription, downgrade_subscription, check_subscription_status,
+    get_subscription_history
+)
+from app.core.config import Config
+from datetime import datetime
+
+
+@auth_bp.route('/pricing')
+def pricing():
+    """
+    Pricing page showing subscription tiers.
+    """
+    return render_template('auth/pricing.html')
+
+
+@auth_bp.route('/subscribe/<tier>')
+@login_required
+def subscribe(tier):
+    """
+    Subscription checkout page.
+    """
+    # Validate tier
+    tiers = get_pricing_tiers()
+    if tier not in tiers:
+        flash('Invalid subscription tier', 'error')
+        return redirect(url_for('auth.pricing'))
+    
+    # Don't allow subscribing to current tier
+    if current_user.subscription_tier == tier:
+        flash('You are already subscribed to this tier', 'warning')
+        return redirect(url_for('auth.dashboard'))
+    
+    # Get tier information
+    tier_info = tiers[tier]
+    
+    # Get developer mode setting
+    config = Config()
+    developer_mode = config.DEVELOPER_MODE
+    
+    return render_template('auth/checkout.html', 
+                         tier=tier, 
+                         tier_info=tier_info,
+                         developer_mode=developer_mode)
+
+
+@auth_bp.route('/subscribe/<tier>', methods=['POST'])
+@login_required
+def process_subscription(tier):
+    """
+    Process subscription (mock payment in dev mode).
+    """
+    # Validate tier
+    tiers = get_pricing_tiers()
+    if tier not in tiers:
+        flash('Invalid subscription tier', 'error')
+        return redirect(url_for('auth.pricing'))
+    
+    # Subscribe user
+    success, error = subscribe_user(current_user, tier, payment_method='mock_card')
+    
+    if success:
+        # Redirect to success page
+        return redirect(url_for('auth.checkout_success', tier=tier))
+    else:
+        flash(error or 'Failed to process subscription', 'error')
+        return redirect(url_for('auth.subscribe', tier=tier))
+
+
+@auth_bp.route('/checkout/success')
+@login_required
+def checkout_success():
+    """
+    Checkout success page.
+    """
+    tier = request.args.get('tier', current_user.subscription_tier)
+    tiers = get_pricing_tiers()
+    tier_info = tiers.get(tier, {})
+    
+    # Get developer mode setting
+    config = Config()
+    developer_mode = config.DEVELOPER_MODE
+    
+    return render_template('auth/checkout_success.html',
+                         tier_name=tier_info.get('name', tier.capitalize()),
+                         amount=tier_info.get('price', 0.00),
+                         started_at=current_user.subscription_started_at.strftime('%B %d, %Y') if current_user.subscription_started_at else 'N/A',
+                         developer_mode=developer_mode)
+
+
+@auth_bp.route('/subscription/cancel', methods=['POST'])
+@login_required
+def cancel_subscription_route():
+    """
+    Cancel user subscription.
+    """
+    success, error = cancel_subscription(current_user)
+    
+    if success:
+        flash('Your subscription has been cancelled. You will retain access until the end of your billing period.', 'success')
+    else:
+        flash(error or 'Failed to cancel subscription', 'error')
+    
+    return redirect(url_for('auth.dashboard'))
+
+
+@auth_bp.route('/subscription/upgrade/<tier>', methods=['POST'])
+@login_required
+def upgrade_subscription_route(tier):
+    """
+    Upgrade subscription to higher tier.
+    """
+    success, error = upgrade_subscription(current_user, tier)
+    
+    if success:
+        flash(f'Successfully upgraded to {tier.capitalize()} tier!', 'success')
+    else:
+        flash(error or 'Failed to upgrade subscription', 'error')
+    
+    return redirect(url_for('auth.dashboard'))
+
+
+@auth_bp.route('/subscription/downgrade/<tier>', methods=['POST'])
+@login_required
+def downgrade_subscription_route(tier):
+    """
+    Downgrade subscription to lower tier.
+    """
+    success, error = downgrade_subscription(current_user, tier)
+    
+    if success:
+        flash(f'Successfully downgraded to {tier.capitalize()} tier', 'success')
+    else:
+        flash(error or 'Failed to downgrade subscription', 'error')
+    
+    return redirect(url_for('auth.dashboard'))
+
+
+@auth_bp.route('/dashboard')
+@login_required
+def dashboard():
+    """
+    User dashboard with subscription information.
+    """
+    # Get subscription status
+    subscription_status = check_subscription_status(current_user)
+    subscription_history = get_subscription_history(current_user)
+    
+    return render_template('auth/dashboard.html',
+                         user=current_user,
+                         subscription_status=subscription_status,
+                         subscription_history=subscription_history)

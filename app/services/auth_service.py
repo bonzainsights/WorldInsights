@@ -47,7 +47,10 @@ def register_user(username: str, email: str, password: str) -> Tuple[Optional[Us
             email=email,
             password_hash=hash_password(password),
             is_verified=False,
-            role='user'
+            role='user',
+            subscription_tier='free',
+            subscription_status='active',
+            subscription_started_at=datetime.utcnow()
         )
         
         db.session.add(user)

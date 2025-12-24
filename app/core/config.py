@@ -122,6 +122,18 @@ class Config:
         # ============================================
         self._SESSION_LIFETIME = _get_env('SESSION_LIFETIME', 60, int)
         self._WTF_CSRF_ENABLED = _get_env('WTF_CSRF_ENABLED', True, bool)
+        
+        # ============================================
+        # Subscription Configuration
+        # ============================================
+        self._DEVELOPER_MODE = _get_env('DEVELOPER_MODE', True, bool)
+        self._STRIPE_PUBLISHABLE_KEY = _get_env('STRIPE_PUBLISHABLE_KEY', 'pk_test_mock')
+        self._STRIPE_SECRET_KEY = _get_env('STRIPE_SECRET_KEY', 'sk_test_mock')
+        self._SUBSCRIPTION_TIERS = {
+            'free': {'price': 0.00, 'name': 'Free'},
+            'researcher': {'price': 29.00, 'name': 'Researcher'},
+            'admin': {'price': None, 'name': 'Admin'}
+        }
     
     # Property accessors to make attributes read-only
     @property
@@ -224,6 +236,22 @@ class Config:
     def WTF_CSRF_ENABLED(self) -> bool:
         return self._WTF_CSRF_ENABLED
     
+    @property
+    def DEVELOPER_MODE(self) -> bool:
+        return self._DEVELOPER_MODE
+    
+    @property
+    def STRIPE_PUBLISHABLE_KEY(self) -> str:
+        return self._STRIPE_PUBLISHABLE_KEY
+    
+    @property
+    def STRIPE_SECRET_KEY(self) -> str:
+        return self._STRIPE_SECRET_KEY
+    
+    @property
+    def SUBSCRIPTION_TIERS(self) -> Dict:
+        return self._SUBSCRIPTION_TIERS
+    
     def to_dict(self, redact_secrets: bool = True) -> Dict[str, Any]:
         """
         Convert configuration to dictionary.
@@ -257,6 +285,8 @@ class Config:
             'LOG_BACKUP_COUNT': self._LOG_BACKUP_COUNT,
             'SESSION_LIFETIME': self._SESSION_LIFETIME,
             'WTF_CSRF_ENABLED': self._WTF_CSRF_ENABLED,
+            'DEVELOPER_MODE': self._DEVELOPER_MODE,
+            'SUBSCRIPTION_TIERS': self._SUBSCRIPTION_TIERS,
         }
         
         # Add sensitive fields with redaction option
@@ -264,10 +294,14 @@ class Config:
             config_dict['SECRET_KEY'] = '***REDACTED***'
             config_dict['MAIL_USERNAME'] = '***REDACTED***' if self._MAIL_USERNAME else None
             config_dict['MAIL_PASSWORD'] = '***REDACTED***' if self._MAIL_PASSWORD else None
+            config_dict['STRIPE_PUBLISHABLE_KEY'] = '***REDACTED***'
+            config_dict['STRIPE_SECRET_KEY'] = '***REDACTED***'
         else:
             config_dict['SECRET_KEY'] = self._SECRET_KEY
             config_dict['MAIL_USERNAME'] = self._MAIL_USERNAME
             config_dict['MAIL_PASSWORD'] = self._MAIL_PASSWORD
+            config_dict['STRIPE_PUBLISHABLE_KEY'] = self._STRIPE_PUBLISHABLE_KEY
+            config_dict['STRIPE_SECRET_KEY'] = self._STRIPE_SECRET_KEY
         
         return config_dict
     

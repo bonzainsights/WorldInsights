@@ -1,0 +1,420 @@
+{% extends "base.html" %} {% block title %}Pricing - WorldInsights{% endblock %}
+{% block content %}
+<section class="pricing-page">
+  <div class="container">
+    <!-- Header -->
+    <div class="pricing-header">
+      <h1>Choose Your Plan</h1>
+      <p>
+        Unlock the power of global data intelligence with flexible pricing
+        options
+      </p>
+    </div>
+
+    <!-- Pricing Cards -->
+    <div class="pricing-grid">
+      <!-- Free Tier -->
+      <div class="pricing-card">
+        <div class="pricing-card-header">
+          <h3>Free</h3>
+          <div class="pricing-amount">
+            <span class="currency">$</span>
+            <span class="price">0</span>
+            <span class="period">/month</span>
+          </div>
+          <p class="pricing-description">
+            Perfect for getting started with global data exploration
+          </p>
+        </div>
+
+        <div class="pricing-features">
+          <h4>Features</h4>
+          <ul>
+            <li><i class="icon">✓</i> Access to basic datasets</li>
+            <li><i class="icon">✓</i> Limited visualizations (5/month)</li>
+            <li><i class="icon">✓</i> Community support</li>
+            <li><i class="icon">✓</i> Export data (CSV only)</li>
+            <li><i class="icon">✓</i> Basic analytics</li>
+          </ul>
+        </div>
+
+        <div class="pricing-footer">
+          {% if current_user.is_authenticated and current_user.subscription_tier
+          == 'free' %}
+          <button class="btn btn-secondary btn-large btn-block" disabled>
+            <span>Current Plan</span>
+          </button>
+          {% elif current_user.is_authenticated %}
+          <a
+            href="{{ url_for('auth.subscribe', tier='free') }}"
+            class="btn btn-secondary btn-large btn-block"
+          >
+            <span>Downgrade to Free</span>
+          </a>
+          {% else %}
+          <a
+            href="{{ url_for('auth.register') }}"
+            class="btn btn-secondary btn-large btn-block"
+          >
+            <span>Get Started</span>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Researcher Tier (Featured) -->
+      <div class="pricing-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="pricing-card-header">
+          <h3>Researcher</h3>
+          <div class="pricing-amount">
+            <span class="currency">$</span>
+            <span class="price">29</span>
+            <span class="period">/month</span>
+          </div>
+          <p class="pricing-description">
+            Full access for researchers and data professionals
+          </p>
+        </div>
+
+        <div class="pricing-features">
+          <h4>Everything in Free, plus:</h4>
+          <ul>
+            <li><i class="icon">✓</i> Access to all datasets</li>
+            <li><i class="icon">✓</i> Unlimited visualizations</li>
+            <li><i class="icon">✓</i> Advanced analytics & correlations</li>
+            <li><i class="icon">✓</i> Machine learning features</li>
+            <li><i class="icon">✓</i> Priority support</li>
+            <li><i class="icon">✓</i> Export data (CSV, JSON, Excel)</li>
+            <li><i class="icon">✓</i> 3D globe visualization</li>
+            <li><i class="icon">✓</i> Custom data queries</li>
+            <li><i class="icon">✓</i> API access</li>
+          </ul>
+        </div>
+
+        <div class="pricing-footer">
+          {% if current_user.is_authenticated and current_user.subscription_tier
+          == 'researcher' %}
+          <button class="btn btn-primary btn-large btn-block" disabled>
+            <span>Current Plan</span>
+          </button>
+          {% elif current_user.is_authenticated %}
+          <a
+            href="{{ url_for('auth.subscribe', tier='researcher') }}"
+            class="btn btn-primary btn-large btn-block"
+          >
+            <span>Upgrade to Researcher</span>
+          </a>
+          {% else %}
+          <a
+            href="{{ url_for('auth.register') }}"
+            class="btn btn-primary btn-large btn-block"
+          >
+            <span>Start Free Trial</span>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Admin Tier -->
+      <div class="pricing-card">
+        <div class="pricing-card-header">
+          <h3>Admin</h3>
+          <div class="pricing-amount">
+            <span class="price-custom">Contact Us</span>
+          </div>
+          <p class="pricing-description">
+            Complete platform access with administrative controls
+          </p>
+        </div>
+
+        <div class="pricing-features">
+          <h4>Everything in Researcher, plus:</h4>
+          <ul>
+            <li><i class="icon">✓</i> User management</li>
+            <li><i class="icon">✓</i> System administration</li>
+            <li><i class="icon">✓</i> Analytics dashboard</li>
+            <li><i class="icon">✓</i> Subscription management</li>
+            <li><i class="icon">✓</i> Platform configuration</li>
+            <li><i class="icon">✓</i> Audit logs</li>
+            <li><i class="icon">✓</i> Dedicated support</li>
+            <li><i class="icon">✓</i> Custom integrations</li>
+          </ul>
+        </div>
+
+        <div class="pricing-footer">
+          {% if current_user.is_authenticated and current_user.subscription_tier
+          == 'admin' %}
+          <button class="btn btn-secondary btn-large btn-block" disabled>
+            <span>Current Plan</span>
+          </button>
+          {% else %}
+          <a
+            href="mailto:admin@worldinsights.com"
+            class="btn btn-secondary btn-large btn-block"
+          >
+            <span>Contact Sales</span>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="pricing-faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>Can I change my plan later?</h4>
+          <p>
+            Yes! You can upgrade or downgrade your plan at any time from your
+            dashboard.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h4>Is there a free trial?</h4>
+          <p>
+            All new accounts start with the Free tier. You can upgrade to
+            Researcher anytime.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h4>What payment methods do you accept?</h4>
+          <p>
+            We accept all major credit cards through our secure payment
+            processor.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I cancel anytime?</h4>
+          <p>
+            Yes, you can cancel your subscription at any time with no
+            cancellation fees.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block extra_css %}
+<style>
+  .pricing-page {
+    padding: 4rem 2rem;
+    min-height: 80vh;
+  }
+
+  .pricing-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .pricing-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .pricing-header p {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+  }
+
+  .pricing-card {
+    background: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-xl);
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .pricing-card.featured {
+    border: 2px solid var(--primary);
+    background: linear-gradient(
+      135deg,
+      rgba(59, 130, 246, 0.05) 0%,
+      rgba(139, 92, 246, 0.05) 100%
+    );
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  }
+
+  .pricing-card-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .pricing-card-header h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .pricing-amount {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .currency {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-right: 0.25rem;
+  }
+
+  .price {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .period {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-left: 0.25rem;
+  }
+
+  .price-custom {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .pricing-description {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+
+  .pricing-features {
+    margin-bottom: 2rem;
+  }
+
+  .pricing-features h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .pricing-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .pricing-features li {
+    padding: 0.75rem 0;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .pricing-features .icon {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .pricing-footer {
+    margin-top: auto;
+  }
+
+  .btn-block {
+    width: 100%;
+    justify-content: center;
+  }
+  /* FAQ Section */
+
+  .pricing-faq {
+    max-width: 900px;
+    margin: 4rem auto 0;
+    padding-top: 4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .pricing-faq h2 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+
+  .faq-item {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .faq-item h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+
+  .faq-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  /* Responsive */
+
+  @media (max-width: 768px) {
+    .pricing-header h1 {
+      font-size: 2rem;
+    }
+    .pricing-grid {
+      grid-template-columns: 1fr;
+    }
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %}

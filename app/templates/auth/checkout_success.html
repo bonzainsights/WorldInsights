@@ -1,0 +1,207 @@
+{% extends "base.html" %} {% block title %}Success - WorldInsights{% endblock %}
+{% block content %}
+<section class="success-page">
+  <div class="container">
+    <div class="success-container">
+      <div class="success-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="40" fill="url(#successGradient)" />
+          <path
+            d="M25 40L35 50L55 30"
+            stroke="white"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <defs>
+            <linearGradient id="successGradient" x1="0" y1="0" x2="80" y2="80">
+              <stop offset="0%" stop-color="#10b981" />
+              <stop offset="100%" stop-color="#059669" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <h1>Subscription Successful!</h1>
+      <p class="success-message">
+        Welcome to the <strong>{{ tier_name }}</strong> tier! Your subscription
+        is now active.
+      </p>
+
+      <div class="subscription-details">
+        <h3>Subscription Details</h3>
+        <div class="detail-row">
+          <span>Plan:</span>
+          <span class="detail-value">{{ tier_name }}</span>
+        </div>
+        <div class="detail-row">
+          <span>Amount:</span>
+          <span class="detail-value">${{ "%.2f"|format(amount) }}/month</span>
+        </div>
+        <div class="detail-row">
+          <span>Status:</span>
+          <span class="detail-value status-active">Active</span>
+        </div>
+        <div class="detail-row">
+          <span>Started:</span>
+          <span class="detail-value">{{ started_at }}</span>
+        </div>
+      </div>
+
+      <div class="success-actions">
+        <a
+          href="{{ url_for('auth.dashboard') }}"
+          class="btn btn-primary btn-large"
+        >
+          <span>Go to Dashboard</span>
+        </a>
+        <a
+          href="{{ url_for('frontend.index') }}"
+          class="btn btn-secondary btn-large"
+        >
+          <span>Explore Data</span>
+        </a>
+      </div>
+
+      {% if developer_mode %}
+      <div class="dev-note">
+        <i class="icon">ℹ️</i>
+        <p>
+          Developer Mode: This was a mock transaction. No actual payment was
+          processed.
+        </p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %} {% block extra_css %}
+<style>
+  .success-page {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding: 4rem 2rem;
+  }
+
+  .success-container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .success-icon {
+    margin-bottom: 2rem;
+    animation: scaleIn 0.5s ease-out;
+  }
+
+  @keyframes scaleIn {
+    from {
+      transform: scale(0);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .success-container h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .success-message {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+  }
+
+  .success-message strong {
+    color: var(--primary);
+  }
+
+  .subscription-details {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 2rem;
+    text-align: left;
+  }
+
+  .subscription-details h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .detail-row:last-child {
+    border-bottom: none;
+  }
+
+  .detail-row span:first-child {
+    color: var(--text-secondary);
+  }
+
+  .detail-value {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .status-active {
+    color: #10b981;
+  }
+
+  .success-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .dev-note {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  .dev-note .icon {
+    font-size: 1.25rem;
+  }
+
+  .dev-note p {
+    margin: 0;
+  }
+  /* Responsive */
+
+  @media (max-width: 768px) {
+    .success-container h1 {
+      font-size: 2rem;
+    }
+    .success-actions {
+      flex-direction: column;
+    }
+    .success-actions .btn {
+      width: 100%;
+    }
+  }
+</style>
+{% endblock %}

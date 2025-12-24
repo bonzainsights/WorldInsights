@@ -1,0 +1,376 @@
+{% extends "base.html" %} {% block title %}Checkout - WorldInsights{% endblock
+%} {% block content %}
+<section class="checkout-page">
+  <div class="container">
+    {% if developer_mode %}
+    <div class="dev-banner">
+      <i class="icon">⚠️</i>
+      <div>
+        <strong>Developer Mode Active</strong>
+        <p>This is a mock checkout. No actual payment will be processed.</p>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="checkout-container">
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <h2>Order Summary</h2>
+        <div class="summary-item">
+          <span>{{ tier_info.name }} Plan</span>
+          <span class="summary-price"
+            >${{ "%.2f"|format(tier_info.price) }}</span
+          >
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-total">
+          <span>Total</span>
+          <span class="total-price"
+            >${{ "%.2f"|format(tier_info.price) }}/month</span
+          >
+        </div>
+
+        <div class="summary-features">
+          <h4>What's Included:</h4>
+          <ul>
+            {% for feature in tier_info.features %}
+            <li><i class="icon">✓</i> {{ feature }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Payment Form -->
+      <div class="payment-form-container">
+        <h2>Payment Information</h2>
+        <form method="POST" class="payment-form" id="checkoutForm">
+          <div class="form-group">
+            <label for="card-number">Card Number</label>
+            <input
+              type="text"
+              id="card-number"
+              name="card_number"
+              placeholder="4242 4242 4242 4242"
+              maxlength="19"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="expiry">Expiry Date</label>
+              <input
+                type="text"
+                id="expiry"
+                name="expiry"
+                placeholder="MM/YY"
+                maxlength="5"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="cvc">CVC</label>
+              <input
+                type="text"
+                id="cvc"
+                name="cvc"
+                placeholder="123"
+                maxlength="3"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cardholder">Cardholder Name</label>
+            <input
+              type="text"
+              id="cardholder"
+              name="cardholder"
+              placeholder="John Doe"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="terms" required />
+              <span
+                >I agree to the
+                <a href="#" class="link-primary">Terms of Service</a> and
+                <a href="#" class="link-primary">Privacy Policy</a></span
+              >
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-large btn-block">
+            <span
+              >Subscribe for ${{ "%.2f"|format(tier_info.price) }}/month</span
+            >
+          </button>
+
+          <p class="payment-note">
+            <i class="icon">🔒</i> Your payment information is secure and
+            encrypted
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block extra_css %}
+<style>
+  .checkout-page {
+    padding: 4rem 2rem;
+    min-height: 80vh;
+  }
+
+  .dev-banner {
+    max-width: 1000px;
+    margin: 0 auto 2rem;
+    background: linear-gradient(
+      135deg,
+      rgba(245, 158, 11, 0.1) 0%,
+      rgba(251, 191, 36, 0.1) 100%
+    );
+    border: 2px solid rgba(245, 158, 11, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .dev-banner .icon {
+    font-size: 2rem;
+  }
+
+  .dev-banner strong {
+    display: block;
+    color: #f59e0b;
+    font-size: 1.125rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .dev-banner p {
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .checkout-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 3rem;
+  }
+
+  .order-summary {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+  }
+
+  .order-summary h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+  }
+
+  .summary-price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .summary-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 1rem 0;
+  }
+
+  .summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    font-weight: 600;
+  }
+
+  .total-price {
+    font-size: 1.5rem;
+    color: var(--primary);
+  }
+
+  .summary-features {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .summary-features h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .summary-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .summary-features li {
+    padding: 0.5rem 0;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .summary-features .icon {
+    color: var(--primary);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .payment-form-container {
+    background: var(--surface);
+    padding: 2.5rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .payment-form-container h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+
+  .payment-form .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .payment-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .payment-form input[type="text"] {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: var(--background);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+
+  .payment-form input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    margin-top: 0.25rem;
+    cursor: pointer;
+  }
+
+  .link-primary {
+    color: var(--primary-light);
+    text-decoration: none;
+  }
+
+  .link-primary:hover {
+    color: var(--primary);
+  }
+
+  .btn-block {
+    width: 100%;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .payment-note {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  /* Responsive */
+
+  @media (max-width: 768px) {
+    .checkout-container {
+      grid-template-columns: 1fr;
+    }
+    .order-summary {
+      position: static;
+    }
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %} {% block extra_js %}
+<script>
+  // Format card number with spaces
+  document.getElementById('card-number').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s/g, '');
+      let formattedValue = value.match(/.{1,4}/g) ? .join(' ') || value;
+      e.target.value = formattedValue;
+  });
+
+  // Format expiry date
+  document.getElementById('expiry').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+          value = value.slice(0, 2) + '/' + value.slice(2, 4);
+      }
+      e.target.value = value;
+  });
+
+  // Only allow numbers in CVC
+  document.getElementById('cvc').addEventListener('input', function(e) {
+      e.target.value = e.target.value.replace(/\D/g, '');
+  });
+</script>
+{% endblock %}

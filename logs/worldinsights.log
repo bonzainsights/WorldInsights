@@ -547,3 +547,53 @@ WHERE user.email = ?
 2025-12-24 19:06:40 - worldinsights.auth_service - INFO - auth_service.py:533 - Password changed successfully for user: admin
 2025-12-24 19:09:42 - worldinsights.auth_service - INFO - auth_service.py:177 - User authenticated: admin
 2025-12-24 19:12:10 - worldinsights.auth_service - INFO - auth_service.py:533 - Password changed successfully for user: admin
+2025-12-24 20:01:44 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:01:44 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:01:44 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.subscription_tier
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-24 20:01:44 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:02:44 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:02:44 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:02:44 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.subscription_tier
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-24 20:02:44 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:03:01 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:03:01 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:03:01 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.subscription_tier
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-24 20:03:01 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:03:22 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:03:22 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:03:22 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.subscription_tier
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-24 20:03:22 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:06:01 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:06:01 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:06:01 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.subscription_tier
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-24 20:06:01 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
