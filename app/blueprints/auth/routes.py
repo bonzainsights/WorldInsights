@@ -9,7 +9,8 @@ from app.blueprints.auth import auth_bp
 from app.services.auth_service import (
     register_user, send_verification_email, verify_user_email,
     authenticate_user, change_user_role, delete_user_account, get_all_users,
-    toggle_user_verification, admin_delete_user, recover_user, update_profile
+    toggle_user_verification, admin_delete_user, recover_user, update_profile,
+    send_password_reset_email, reset_password, change_password
 )
 from app.infrastructure.db import User
 
@@ -291,4 +292,109 @@ def update_profile_route():
     
     return redirect(url_for('auth.profile'))
 
+
+
+@auth_bp.route('/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
+    """
+    Forgot password page and handler.
+    """
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    
+    if request.method == 'POST':
+        email = request.form.get('email', '').strip()
+        
+        if not email:
+            flash('Email address is required', 'error')
+            return render_template('auth/forgot_password.html')
+        
+        # Always show success message for security (don't reveal if email exists)
+        user = User.query.filter_by(email=email).first()
+        
+        if user and not user.is_deleted():
+            base_url = request.url_root.rstrip('/')
+            if send_password_reset_email(user, base_url):
+                flash('If an account exists with that email, you will receive password reset instructions.', 'success')
+            else:
+                flash('If an account exists with that email, you will receive password reset instructions.', 'success')
+        else:
+            # Show same message even if user doesn't exist (security)
+            flash('If an account exists with that email, you will receive password reset instructions.', 'success')
+        
+        return redirect(url_for('auth.login'))
+    
+    return render_template('auth/forgot_password.html')
+
+
+@auth_bp.route('/reset-password/<token>', methods=['GET', 'POST'])
+def reset_password_route(token):
+    """
+    Reset password page and handler.
+    """
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    
+    if request.method == 'POST':
+        new_password = request.form.get('password', '')
+        confirm_password = request.form.get('confirm_password', '')
+        
+        # Validation
+        if not new_password or not confirm_password:
+            flash('All fields are required', 'error')
+            return render_template('auth/reset_password.html', token=token)
+        
+        if len(new_password) < 8:
+            flash('Password must be at least 8 characters long', 'error')
+            return render_template('auth/reset_password.html', token=token)
+        
+        if new_password != confirm_password:
+            flash('Passwords do not match', 'error')
+            return render_template('auth/reset_password.html', token=token)
+        
+        # Reset password
+        success, error = reset_password(token, new_password)
+        
+        if success:
+            flash('Your password has been reset successfully. You can now log in with your new password.', 'success')
+            return redirect(url_for('auth.login'))
+        else:
+            flash(error or 'Failed to reset password', 'error')
+            return render_template('auth/reset_password.html', token=token)
+    
+    return render_template('auth/reset_password.html', token=token)
+
+
+@auth_bp.route('/change-password', methods=['POST'])
+@login_required
+def change_password_route():
+    """
+    Change password handler for logged-in users.
+    """
+    current_password = request.form.get('current_password', '')
+    new_password = request.form.get('new_password', '')
+    confirm_password = request.form.get('confirm_password', '')
+    
+    # Validation
+    if not current_password or not new_password or not confirm_password:
+        flash('All password fields are required', 'error')
+        return redirect(url_for('auth.profile'))
+    
+    if len(new_password) < 8:
+        flash('New password must be at least 8 characters long', 'error')
+        return redirect(url_for('auth.profile'))
+    
+    if new_password != confirm_password:
+        flash('New passwords do not match', 'error')
+        return redirect(url_for('auth.profile'))
+    
+    # Change password
+    success, error = change_password(current_user, current_password, new_password)
+    
+    if success:
+        flash('Password changed successfully', 'success')
+    else:
+        flash(error or 'Failed to change password', 'error')
+    
+    return redirect(url_for('auth.profile'))
 

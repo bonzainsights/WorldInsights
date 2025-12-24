@@ -411,3 +411,130 @@ def update_profile(user: User, first_name: str, last_name: str) -> Tuple[bool, O
         db.session.rollback()
         return False, "An error occurred while updating your profile"
 
+
+def send_password_reset_email(user: User, base_url: str) -> bool:
+    """
+    Send password reset email to user.
+    
+    Args:
+        user: User object
+        base_url: Base URL for reset link
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    from app.core.security import generate_password_reset_token
+    from datetime import datetime
+    
+    try:
+        token = generate_password_reset_token(user.id)
+        reset_url = f"{base_url}/auth/reset-password/{token}"
+        
+        msg = Message(
+            subject="Reset Your WorldInsights Password",
+            recipients=[user.email],
+            html=f"""
+            <html>
+                <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h2 style="color: #3B82F6;">Password Reset Request</h2>
+                    <p>Hello {user.username},</p>
+                    <p>We received a request to reset your password for your WorldInsights account. Click the button below to reset your password:</p>
+                    <p style="margin: 30px 0;">
+                        <a href="{reset_url}" style="background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%); color: white; padding: 12px 30px; text-decoration: none; border-radius: 8px; display: inline-block;">
+                            Reset Password
+                        </a>
+                    </p>
+                    <p>Or copy and paste this link into your browser:</p>
+                    <p style="color: #666; font-size: 14px;">{reset_url}</p>
+                    <p>This link will expire in 1 hour.</p>
+                    <p>If you didn't request a password reset, you can safely ignore this email. Your password will not be changed.</p>
+                    <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+                    <p style="color: #999; font-size: 12px;">WorldInsights - Global Data Intelligence Platform</p>
+                </body>
+            </html>
+            """
+        )
+        
+        mail.send(msg)
+        logger.info(f"Password reset email sent to {user.email}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"Error sending password reset email: {e}")
+        return False
+
+
+def reset_password(token: str, new_password: str) -> Tuple[bool, Optional[str]]:
+    """
+    Reset user password using token.
+    
+    Args:
+        token: Password reset token
+        new_password: New password
+    
+    Returns:
+        Tuple of (success, error_message)
+    """
+    from app.core.security import verify_token
+    from datetime import datetime
+    
+    try:
+        # Verify token
+        user_id = verify_token(token)
+        
+        if not user_id:
+            return False, "Invalid or expired password reset link"
+        
+        user = User.query.get(user_id)
+        if not user:
+            return False, "User not found"
+        
+        if user.is_deleted():
+            return False, "This account has been deleted"
+        
+        # Update password
+        user.password_hash = hash_password(new_password)
+        db.session.commit()
+        
+        logger.info(f"Password reset successful for user: {user.username}")
+        return True, None
+        
+    except Exception as e:
+        logger.error(f"Error resetting password: {e}")
+        db.session.rollback()
+        return False, "An error occurred while resetting your password"
+
+
+def change_password(user: User, current_password: str, new_password: str) -> Tuple[bool, Optional[str]]:
+    """
+    Change user password after verifying current password.
+    
+    Args:
+        user: User to update
+        current_password: Current password for verification
+        new_password: New password
+    
+    Returns:
+        Tuple of (success, error_message)
+    """
+    try:
+        # Verify current password
+        if not verify_password(current_password, user.password_hash):
+            return False, "Current password is incorrect"
+        
+        # Check if new password is different
+        if verify_password(new_password, user.password_hash):
+            return False, "New password must be different from current password"
+        
+        # Update password
+        user.password_hash = hash_password(new_password)
+        db.session.commit()
+        
+        logger.info(f"Password changed successfully for user: {user.username}")
+        return True, None
+        
+    except Exception as e:
+        logger.error(f"Error changing password: {e}")
+        db.session.rollback()
+        return False, "An error occurred while changing your password"
+

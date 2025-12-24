@@ -530,3 +530,20 @@ WHERE user.email = ?
 2025-12-24 18:51:08 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
 2025-12-24 18:53:16 - worldinsights.auth_service - INFO - auth_service.py:177 - User authenticated: admin
 2025-12-24 18:56:10 - worldinsights.auth_service - INFO - auth_service.py:177 - User authenticated: admin
+2025-12-24 19:00:31 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 19:00:31 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 19:00:31 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-24 19:00:31 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 19:00:57 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 19:00:57 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 19:00:57 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-24 19:00:57 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 19:01:15 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 19:01:15 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 19:01:15 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-24 19:01:15 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 19:04:06 - worldinsights.auth_service - INFO - auth_service.py:459 - Password reset email sent to admin@worldinsights.com
+2025-12-24 19:05:01 - worldinsights.auth_service - INFO - auth_service.py:177 - User authenticated: admin
+2025-12-24 19:06:40 - worldinsights.auth_service - INFO - auth_service.py:533 - Password changed successfully for user: admin
+2025-12-24 19:09:42 - worldinsights.auth_service - INFO - auth_service.py:177 - User authenticated: admin
+2025-12-24 19:12:10 - worldinsights.auth_service - INFO - auth_service.py:533 - Password changed successfully for user: admin
