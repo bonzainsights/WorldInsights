@@ -4,7 +4,52 @@
         <!-- Admin Dashboard Header -->
         <div class="admin-header">
             <h1>🛡️ Admin Dashboard</h1>
-            <p>Manage user roles and permissions</p>
+            <p>Manage users, roles, and subscriptions</p>
+        </div>
+
+        <!-- Subscription Overview -->
+        <div class="subscription-overview">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <h3>{{ subscription_stats.total_users }}</h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🆓</div>
+                    <div class="stat-info">
+                        <h3>{{ subscription_stats.by_tier.free }}</h3>
+                        <p>Free Users</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🔬</div>
+                    <div class="stat-info">
+                        <h3>{{ subscription_stats.by_tier.researcher }}</h3>
+                        <p>Researchers</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">👑</div>
+                    <div class="stat-info">
+                        <h3>{{ subscription_stats.by_tier.admin }}</h3>
+                        <p>Admins</p>
+                    </div>
+                </div>
+
+                <div class="stat-card revenue-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <h3>${{ "%.2f"|format(subscription_stats.revenue.monthly) }}</h3>
+                        <p>Monthly Revenue (Mock)</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Admin Dashboard -->
@@ -146,6 +191,56 @@
     .admin-header p {
         color: var(--text-secondary);
         font-size: 1.125rem;
+    }
+    
+    .subscription-overview {
+        margin-bottom: 2rem;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+        background: var(--surface);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(59, 130, 246, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .stat-card.revenue-card {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+        border-color: rgba(16, 185, 129, 0.2);
+    }
+    
+    .stat-icon {
+        font-size: 2.5rem;
+    }
+    
+    .stat-info h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+        color: var(--text-primary);
+    }
+    
+    .stat-info p {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin: 0;
     }
     
     .admin-dashboard {

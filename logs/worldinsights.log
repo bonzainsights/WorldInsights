@@ -597,3 +597,87 @@ WHERE user.email = ?
 [parameters: ('admin@worldinsights.com', 1, 0)]
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
 2025-12-24 20:06:01 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:07:15 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:07:15 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:07:15 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.subscription_tier
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-24 20:07:15 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:08:05 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:08:05 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:08:05 - worldinsights.database - ERROR - database.py:65 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.subscription_tier
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-24 20:08:05 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:08:15 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:08:15 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:08:15 - worldinsights.database - INFO - database.py:59 - Default admin user created successfully
+2025-12-24 20:08:15 - worldinsights.database - INFO - database.py:60 - Admin credentials - Email: admin@worldinsights.com, Password: Tahaxaina@1
+2025-12-24 20:08:15 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:08:15 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:08:15 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:08:15 - worldinsights.database - INFO - database.py:62 - Admin user already exists
+2025-12-24 20:08:15 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:09:38 - worldinsights.auth_service - INFO - auth_service.py:180 - User authenticated: admin
+2025-12-24 20:11:43 - worldinsights.subscription_service - INFO - subscription_service.py:160 - User admin subscribed to researcher tier (mock payment: $29.0)
+2025-12-24 20:23:53 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:23:53 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:23:53 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-24 20:23:53 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:25:38 - worldinsights.auth_service - INFO - auth_service.py:180 - User authenticated: admin
+2025-12-24 20:26:33 - worldinsights.auth_service - INFO - auth_service.py:180 - User authenticated: admin
+2025-12-24 20:27:39 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:27:39 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:27:39 - worldinsights.database - INFO - database.py:61 - Default admin user created successfully
+2025-12-24 20:27:39 - worldinsights.database - INFO - database.py:62 - Admin credentials - Email: admin@worldinsights.com, Password: Tahaxaina@1
+2025-12-24 20:27:39 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:34:55 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:34:55 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:34:55 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-24 20:34:55 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:39:08 - worldinsights.auth_service - ERROR - auth_service.py:63 - Error registering user: name 'datetime' is not defined
+2025-12-24 20:39:18 - worldinsights.auth_service - ERROR - auth_service.py:63 - Error registering user: name 'datetime' is not defined
+2025-12-24 20:40:05 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:40:05 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:40:05 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-24 20:40:05 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:40:27 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:40:27 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:40:28 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-24 20:40:28 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:40:28 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:40:28 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:40:28 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-24 20:40:28 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:40:34 - worldinsights.auth_service - ERROR - auth_service.py:63 - Error registering user: name 'datetime' is not defined
+2025-12-24 20:43:22 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:43:22 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:43:22 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-24 20:43:22 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:43:35 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:43:35 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:43:35 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-24 20:43:35 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:44:27 - worldinsights.auth_service - ERROR - auth_service.py:63 - Error registering user: name 'datetime' is not defined
+2025-12-24 20:45:20 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-24 20:45:20 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-24 20:45:20 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-24 20:45:20 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
+2025-12-24 20:46:07 - worldinsights.auth_service - INFO - auth_service.py:60 - New user registered: achbj
+2025-12-24 20:46:10 - worldinsights.auth_service - INFO - auth_service.py:110 - Verification email sent to ach.bj27@gmail.com
+2025-12-24 20:46:29 - worldinsights.auth_service - INFO - auth_service.py:146 - User verified: achbj
+2025-12-24 20:46:41 - worldinsights.auth_service - INFO - auth_service.py:181 - User authenticated: achbj
+2025-12-24 20:47:19 - worldinsights.auth_service - INFO - auth_service.py:181 - User authenticated: admin
+2025-12-24 20:51:56 - worldinsights.auth_service - INFO - auth_service.py:60 - New user registered: researcher
+2025-12-24 20:51:59 - worldinsights.auth_service - INFO - auth_service.py:110 - Verification email sent to ach.bj7@gmail.com
+2025-12-24 20:52:26 - worldinsights.auth_service - INFO - auth_service.py:146 - User verified: researcher
+2025-12-24 20:52:39 - worldinsights.auth_service - INFO - auth_service.py:181 - User authenticated: researcher
+2025-12-24 20:54:46 - worldinsights.subscription_service - INFO - subscription_service.py:154 - User researcher subscribed to researcher tier (mock payment: $29.0)

@@ -50,7 +50,9 @@ def create_default_admin():
                 email='admin@worldinsights.com',
                 password_hash=hash_password('Tahaxaina@1'),
                 is_verified=True,
-                role='admin'
+                role='admin',
+                subscription_tier='admin',
+                subscription_status='active'
             )
             
             db.session.add(admin)

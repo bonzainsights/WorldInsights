@@ -142,8 +142,14 @@ def admin_dashboard():
         flash('Unauthorized access', 'error')
         return redirect(url_for('auth.profile'))
     
+    from app.services.subscription_service import get_subscription_stats
+    
     all_users = get_all_users()
-    return render_template('auth/admin_dashboard.html', all_users=all_users)
+    subscription_stats = get_subscription_stats()
+    
+    return render_template('auth/admin_dashboard.html', 
+                         all_users=all_users,
+                         subscription_stats=subscription_stats)
 
 
 @auth_bp.route('/change-role', methods=['POST'])

@@ -9,6 +9,7 @@ from app.core.logging import get_logger
 from flask_mail import Message, Mail
 from typing import Optional, Tuple
 from flask import url_for
+from datetime import datetime
 
 logger = get_logger('auth_service')
 mail = Mail()

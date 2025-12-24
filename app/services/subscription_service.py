@@ -130,17 +130,11 @@ def subscribe_user(user: User, tier: str, payment_method: str = 'mock_card') -> 
         if not user.stripe_customer_id:
             user.stripe_customer_id = f"cus_mock_{secrets.token_hex(12)}"
         
-        # Update user subscription
+        # Update user subscription (keep role unchanged)
         user.subscription_tier = tier
         user.subscription_status = 'active'
         user.subscription_started_at = datetime.utcnow()
         user.subscription_expires_at = None  # No expiry for active subscriptions
-        
-        # Update role based on tier
-        if tier == 'researcher':
-            user.role = 'researcher'
-        elif tier == 'free':
-            user.role = 'user'
         
         # Create subscription record
         subscription = Subscription(
@@ -185,11 +179,10 @@ def cancel_subscription(user: User) -> Tuple[bool, Optional[str]]:
         if user.subscription_tier == 'admin':
             return False, "Admin subscriptions cannot be cancelled. Please contact support."
         
-        # Update user subscription status
+        # Update user subscription status (keep role unchanged)
         user.subscription_status = 'cancelled'
         user.subscription_expires_at = datetime.utcnow() + timedelta(days=30)  # Grace period
         user.subscription_tier = 'free'
-        user.role = 'user'
         
         # Mark current subscription as cancelled
         current_subscription = Subscription.query.filter_by(
@@ -300,11 +293,10 @@ def check_subscription_status(user: User) -> Dict:
         Dictionary with subscription status information
     """
     try:
-        # Check if subscription has expired
+        # Check if subscription has expired (keep role unchanged)
         if user.subscription_expires_at and user.subscription_expires_at < datetime.utcnow():
             user.subscription_status = 'expired'
             user.subscription_tier = 'free'
-            user.role = 'user'
             db.session.commit()
         
         return {

@@ -1,0 +1,479 @@
+{% extends "base.html" %} {% block title %}Dashboard - WorldInsights{% endblock
+%} {% block content %}
+<section class="dashboard-page">
+  <div class="container">
+    <div class="dashboard-header">
+      <h1>Welcome, {{ user.username }}!</h1>
+      <p>Manage your account and subscription</p>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Subscription Card -->
+      <div class="dashboard-card subscription-card">
+        <div class="card-header">
+          <h2>Your Subscription</h2>
+          <span class="subscription-badge {{ subscription_status.status }}">
+            {{ subscription_status.status|capitalize }}
+          </span>
+        </div>
+
+        <div class="card-body">
+          <div class="subscription-tier">
+            <div class="tier-icon">
+              {% if subscription_status.tier == 'free' %} 🆓 {% elif
+              subscription_status.tier == 'researcher' %} 🔬 {% else %} 👑 {%
+              endif %}
+            </div>
+            <div class="tier-info">
+              <h3>{{ subscription_status.tier_info.name }} Plan</h3>
+              <p class="tier-price">
+                {% if subscription_status.tier_info.price %} ${{
+                "%.2f"|format(subscription_status.tier_info.price) }}/month {%
+                else %} Contact Sales {% endif %}
+              </p>
+            </div>
+          </div>
+
+          <div class="subscription-details">
+            <div class="detail-item">
+              <span class="detail-label">Started:</span>
+              <span class="detail-value">
+                {{ subscription_status.started_at.strftime('%B %d, %Y') if
+                subscription_status.started_at else 'N/A' }}
+              </span>
+            </div>
+            {% if subscription_status.expires_at %}
+            <div class="detail-item">
+              <span class="detail-label">Expires:</span>
+              <span class="detail-value">
+                {{ subscription_status.expires_at.strftime('%B %d, %Y') }}
+              </span>
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="subscription-actions">
+            {% if subscription_status.tier == 'free' %}
+            <a
+              href="{{ url_for('auth.pricing') }}"
+              class="btn btn-primary btn-block"
+            >
+              <span>Upgrade to Researcher</span>
+            </a>
+            {% elif subscription_status.tier == 'researcher' %}
+            <form
+              method="POST"
+              action="{{ url_for('auth.cancel_subscription_route') }}"
+              style="margin: 0"
+            >
+              <button
+                type="submit"
+                class="btn btn-secondary btn-block"
+                onclick="return confirm('Are you sure you want to cancel your subscription?')"
+              >
+                <span>Cancel Subscription</span>
+              </button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Information Card -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h2>Account Information</h2>
+        </div>
+
+        <div class="card-body">
+          <div class="account-details">
+            <div class="detail-item">
+              <span class="detail-label">Username:</span>
+              <span class="detail-value">{{ user.username }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Email:</span>
+              <span class="detail-value">{{ user.email }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Role:</span>
+              <span class="detail-value role-badge {{ user.role }}"
+                >{{ user.role|capitalize }}</span
+              >
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Verified:</span>
+              <span class="detail-value">
+                {% if user.is_verified %}
+                <span class="status-verified">✓ Verified</span> {% else %}
+                <span class="status-unverified">✗ Not Verified</span> {% endif
+                %}
+              </span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Member Since:</span>
+              <span class="detail-value"
+                >{{ user.created_at.strftime('%B %d, %Y') }}</span
+              >
+            </div>
+          </div>
+
+          <div class="account-actions">
+            <a
+              href="{{ url_for('auth.profile') }}"
+              class="btn btn-secondary btn-block"
+            >
+              <span>Edit Profile</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions Card -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h2>Quick Actions</h2>
+        </div>
+
+        <div class="card-body">
+          <div class="quick-actions">
+            <a href="{{ url_for('frontend.index') }}" class="action-link">
+              <i class="icon">🌍</i>
+              <div>
+                <h4>Explore Data</h4>
+                <p>Browse global datasets</p>
+              </div>
+            </a>
+
+            <a href="{{ url_for('auth.pricing') }}" class="action-link">
+              <i class="icon">💳</i>
+              <div>
+                <h4>View Pricing</h4>
+                <p>Compare subscription plans</p>
+              </div>
+            </a>
+
+            {% if user.is_admin() %}
+            <a href="{{ url_for('auth.admin_dashboard') }}" class="action-link">
+              <i class="icon">⚙️</i>
+              <div>
+                <h4>Admin Dashboard</h4>
+                <p>Manage users and system</p>
+              </div>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Subscription History (if available) -->
+      {% if subscription_history %}
+      <div class="dashboard-card full-width">
+        <div class="card-header">
+          <h2>Subscription History</h2>
+        </div>
+
+        <div class="card-body">
+          <div class="history-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tier</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Started</th>
+                  <th>Expires</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for sub in subscription_history[:5] %}
+                <tr>
+                  <td><strong>{{ sub.tier|capitalize }}</strong></td>
+                  <td>${{ "%.2f"|format(sub.amount) }}</td>
+                  <td>
+                    <span class="status-badge {{ sub.status }}"
+                      >{{ sub.status|capitalize }}</span
+                    >
+                  </td>
+                  <td>
+                    {{ sub.started_at[:10] if sub.started_at else 'N/A' }}
+                  </td>
+                  <td>
+                    {{ sub.expires_at[:10] if sub.expires_at else 'N/A' }}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %} {% block extra_css %}
+<style>
+  .dashboard-page {
+    padding: 4rem 2rem;
+    min-height: 80vh;
+  }
+
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .dashboard-header p {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+  }
+
+  .dashboard-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+
+  .dashboard-card {
+    background: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+
+  .dashboard-card.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .card-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .subscription-badge {
+    padding: 0.375rem 0.875rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .subscription-badge.active {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+  }
+
+  .subscription-badge.cancelled {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+
+  .card-body {
+    padding: 2rem;
+  }
+
+  .subscription-tier {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .tier-icon {
+    font-size: 3rem;
+  }
+
+  .tier-info h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .tier-price {
+    color: var(--primary);
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .subscription-details,
+  .account-details {
+    margin-bottom: 2rem;
+  }
+
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .detail-item:last-child {
+    border-bottom: none;
+  }
+
+  .detail-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .detail-value {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .role-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+  }
+
+  .role-badge.user {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+  }
+
+  .role-badge.researcher {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8b5cf6;
+  }
+
+  .role-badge.admin {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+  }
+
+  .status-verified {
+    color: #10b981;
+  }
+
+  .status-unverified {
+    color: #ef4444;
+  }
+
+  .subscription-actions,
+  .account-actions {
+    margin-top: 1.5rem;
+  }
+
+  .btn-block {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .action-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--background);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+  }
+
+  .action-link:hover {
+    border-color: var(--primary);
+    transform: translateX(4px);
+  }
+
+  .action-link .icon {
+    font-size: 2rem;
+  }
+
+  .action-link h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .action-link p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .history-table {
+    overflow-x: auto;
+  }
+
+  .history-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .history-table th {
+    text-align: left;
+    padding: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .history-table td {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .status-badge.active {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+  }
+
+  .status-badge.cancelled {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+
+  .status-badge.expired {
+    background: rgba(107, 114, 128, 0.1);
+    color: #6b7280;
+  }
+  /* Responsive */
+
+  @media (max-width: 768px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+    .dashboard-header h1 {
+      font-size: 2rem;
+    }
+  }
+</style>
+{% endblock %}
