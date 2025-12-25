@@ -34,34 +34,11 @@ This project is **not** a demo, toy app, or static dashboard.
 
 ### 4.1 Approved Data Sources
 
-Initial supported data providers include:
-
-- World Bank
-- WHO
-- FAO
-- NASA / NOAA
-- Inequality / Wealth (via adapters)
-
 ## ⚠️Rules:
 
-- No manual downloads
-- No CSVs as primary data sources
-- APIs must be modular and replaceable
+- No manual downloads of api data just use api directly in plotting
 
 ---
-
-### 4.2 API Client Requirements
-
-Every API client must:
-
-- Live in its own file
-- Implement retry logic
-- Handle rate limiting
-- Normalize output to the schema:
-  `country | year | indicator | value | source`
-
-- Include unit tests
-- Support caching
 
 ## 5. Data Storage Rules
 
@@ -83,8 +60,6 @@ All analytics must:
 - Be data-source agnostic
 - Use Pandas, NumPy, or SciPy
 
----
-
 ### 6.2 Insight Requirements
 
 Each insight must include:
@@ -97,27 +72,6 @@ Each insight must include:
 - Unit tests
 
 Black-box analytics are not allowed.
-
----
-
-## 7. Machine Learning Rules (Phase 2+)
-
-ML support must be modular and optional.
-
-Rules:
-
-- No hard-coded datasets
-- Models must consume live API data
-- Training pipelines must be versioned
-- Models must be saved and reproducible
-- Evaluation metrics must be logged
-
-Allowed model families:
-
-- ARIMA / SARIMA
-- Prophet
-- Regression
-- Clustering
 
 ---
 
@@ -144,17 +98,8 @@ The frontend must:
 - Be responsive (mobile-first)
 - Be usable by researchers and general users
 - Provide clear navigation:
-  - Home
-  - Explore Data
-  - Visualizations
-  - Insights
-  - About
-  - Login
-  - others as necessary
 
 ## 10. Authentication Rules (Mandatory from Day One)
-
-Authentication must be implemented even if not fully enforced.
 
 Users must be able to:
 
@@ -163,13 +108,6 @@ Users must be able to:
 - admin login have access to admin dashboard
 - ⚠️Only Admin can change user's Role⚠️
 - Logout
-
-The system must be designed to support:
-
-- Premium researcher accounts
-- Saved insights and plots (future feature)
-
-## 11. Testing Rules (No Exceptions)
 
 ### 11.1 Test-Driven Development
 
@@ -180,20 +118,11 @@ For every module:
 3. Run tests
 4. Proceed only if tests pass
 
----
-
-### 11.2 Testing Stack
-
-- pytest
-- coverage
-
 Rules:
 
 - No untested core logic
 - No failing tests allowed
 - No skipped tests without justification
-
----
 
 ## 12. Git & Workflow Rules (Absolute)
 
@@ -201,22 +130,8 @@ Rules:
 
 - Use `bjach` branch of `https://github.com/bonzainsights/WorldInsights.git`
 - All development must happen on branch: `bjach`
-
----
-
-### 12.2 Commit Rules
-
 - Commit only after each completed module Test is Success
 - Commit messages must be meaningful
-
-Examples:
-
-```
-feat(auth): add authentication blueprint
-feat(data): add World Bank API client
-test(analytics): add inequality insight tests
-chore: update project scaffolding
-```
 
 ## 13. AI-Agent Rules (Critical)
 

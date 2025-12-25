@@ -74,7 +74,7 @@
                             <td>
                                 {{ u.username }} {% if u.deleted_at %}
                                 <span style="color: #EF4444; font-size: 0.75rem; display: block;">
-                                    (Deleted {{ ((now() - u.deleted_at).days) }} days ago)
+                                    (Deleted {{ ((now - u.deleted_at).days) }} days ago)
                                 </span> {% endif %}
                             </td>
                             <td>{{ u.email }}</td>

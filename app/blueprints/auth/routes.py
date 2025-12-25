@@ -143,13 +143,15 @@ def admin_dashboard():
         return redirect(url_for('auth.profile'))
     
     from app.services.subscription_service import get_subscription_stats
+    from datetime import datetime
     
     all_users = get_all_users()
     subscription_stats = get_subscription_stats()
     
     return render_template('auth/admin_dashboard.html', 
                          all_users=all_users,
-                         subscription_stats=subscription_stats)
+                         subscription_stats=subscription_stats,
+                         now=datetime.now())
 
 
 @auth_bp.route('/change-role', methods=['POST'])
