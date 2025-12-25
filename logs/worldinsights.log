@@ -754,3 +754,17 @@ WHERE user.email = ?
 2025-12-25 16:02:34 - worldinsights.auth_service - INFO - auth_service.py:181 - User authenticated: admin
 2025-12-25 16:04:54 - worldinsights.auth_service - INFO - auth_service.py:306 - Admin admin set achbj as unverified
 2025-12-25 16:05:00 - worldinsights.auth_service - INFO - auth_service.py:306 - Admin admin set achbj as verified
+2025-12-25 21:01:28 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 21:01:28 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 21:01:29 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$Zi8UQ2S8gyIV0bkxMfhhWemM.Q38VYHzet02RS5TvXNuic1.iCwWm', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-25 20:01:29.009627', None, None, '2025-12-25 20:01:29.009632', '2025-12-25 20:01:29.009632')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-25 21:01:29 - worldinsights - INFO - create_app.py:265 - WorldInsights application initialized successfully
+2025-12-25 21:01:44 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 21:01:44 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 21:01:44 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$KOlDn5dugXWcQ6YTB.e6PezdWGCxrmnkgQ8Vp6XCbJGo9sMVnZ.8i', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-25 20:01:44.565425', None, None, '2025-12-25 20:01:44.565431', '2025-12-25 20:01:44.565432')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-25 21:01:44 - worldinsights - INFO - create_app.py:265 - WorldInsights application initialized successfully

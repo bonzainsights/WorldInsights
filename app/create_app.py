@@ -204,6 +204,47 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
         
         return render_template('contact.html')
     
+    @app.route('/privacy', methods=['GET'])
+    def privacy():
+        """
+        Privacy Policy page.
+        
+        Returns:
+            Rendered privacy policy template
+        """
+        return render_template('privacy.html')
+    
+    @app.route('/terms', methods=['GET'])
+    def terms():
+        """
+        Terms of Service page.
+        
+        Returns:
+            Rendered terms of service template
+        """
+        return render_template('terms.html')
+    
+    @app.route('/data-usage', methods=['GET'])
+    def data_usage():
+        """
+        Data Usage Policy page.
+        
+        Returns:
+            Rendered data usage policy template
+        """
+        return render_template('data_usage.html')
+    
+    @app.route('/about', methods=['GET'])
+    def about():
+        """
+        About Us page.
+        
+        Returns:
+            Rendered about page template
+        """
+        return render_template('about.html')
+    
+    
     # ============================================
     # CORS Configuration (for API routes)
     # ============================================

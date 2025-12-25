@@ -1,0 +1,553 @@
+{% extends "base.html" %} {% block title %}About Us - WorldInsights{% endblock
+%} {% block content %}
+<section class="about-page">
+  <div class="container">
+    <!-- Hero Section -->
+    <div class="about-hero">
+      <h1>About WorldInsights</h1>
+      <p class="hero-subtitle">
+        Empowering researchers, scientists, and analysts with trusted global
+        data intelligence
+      </p>
+    </div>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+      <h2>Our Mission</h2>
+      <p>
+        WorldInsights serves as a single trusted platform for understanding
+        global patterns, trends, and insights across economic, agricultural,
+        social, health, and geographical perspectives. We are committed to
+        providing reliable, verifiable, and reproducible analytics that empower
+        informed decision-making.
+      </p>
+      <p>
+        Built for researchers, by researchers, our platform aggregates open
+        world data from authoritative sources and presents it through
+        interactive visualizations, advanced analytics, and AI-assisted research
+        capabilities.
+      </p>
+    </section>
+
+    <!-- Core Principles -->
+    <section class="principles-section">
+      <h2>Core Principles</h2>
+      <div class="principles-grid">
+        <div class="principle-card">
+          <div class="principle-icon">🔬</div>
+          <h3>Scientific Credibility</h3>
+          <p>
+            All analytics are reproducible, deterministic, and backed by
+            transparent methodologies. No black-box analytics.
+          </p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-icon">🌐</div>
+          <h3>Open Data</h3>
+          <p>
+            We source data from trusted public databases: World Bank, FAO, WHO,
+            and NASA/NOAA, ensuring accessibility and transparency.
+          </p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-icon">📊</div>
+          <h3>Reproducibility</h3>
+          <p>
+            Every insight includes its methodology, assumptions, and
+            limitations. Research should be verifiable and repeatable.
+          </p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-icon">🤖</div>
+          <h3>AI-Ready</h3>
+          <p>
+            Our platform is designed to support AI-assisted research with clean
+            APIs, structured data, and machine learning features.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Platform Capabilities -->
+    <section class="capabilities-section">
+      <h2>Platform Capabilities</h2>
+      <div class="capabilities-grid">
+        <div class="capability-item">
+          <h4>📈 Interactive Visualizations</h4>
+          <p>
+            Dynamic 2D charts and 3D globe visualizations with real-time
+            filtering and drill-down capabilities
+          </p>
+        </div>
+        <div class="capability-item">
+          <h4>🔍 Advanced Analytics</h4>
+          <p>
+            Statistical analysis, correlation detection, and trend
+            identification using Pandas, NumPy, and SciPy
+          </p>
+        </div>
+        <div class="capability-item">
+          <h4>🧠 Machine Learning</h4>
+          <p>
+            ML-powered insights for pattern recognition, forecasting, and
+            anomaly detection
+          </p>
+        </div>
+        <div class="capability-item">
+          <h4>🔌 API Access</h4>
+          <p>
+            RESTful API for programmatic data access and integration with your
+            research workflows
+          </p>
+        </div>
+        <div class="capability-item">
+          <h4>📥 Data Export</h4>
+          <p>
+            Export data in multiple formats (CSV, JSON, Excel) for offline
+            analysis and reporting
+          </p>
+        </div>
+        <div class="capability-item">
+          <h4>🌍 Global Coverage</h4>
+          <p>
+            Comprehensive data across 200+ countries and territories with
+            historical time-series
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+      <h2>Our Team</h2>
+      <p class="team-intro">
+        WorldInsights is built by a dedicated team of data scientists,
+        researchers, and engineers passionate about making global data
+        accessible and actionable.
+      </p>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-avatar">
+            <span class="avatar-initial">A</span>
+          </div>
+          <h3>Aeliana Stormweaver</h3>
+          <p class="member-role">Lead Data Architect</p>
+          <p class="member-bio">
+            Specializes in distributed data systems and API design. Ensures
+            WorldInsights maintains scientific rigor and architectural
+            cleanliness across all data pipelines.
+          </p>
+        </div>
+
+        <div class="team-member">
+          <div class="member-avatar">
+            <span class="avatar-initial">T</span>
+          </div>
+          <h3>Theron Brightforge</h3>
+          <p class="member-role">Chief Analytics Officer</p>
+          <p class="member-bio">
+            Expert in statistical modeling and machine learning. Develops
+            reproducible analytics methodologies and ensures all insights are
+            scientifically sound.
+          </p>
+        </div>
+
+        <div class="team-member">
+          <div class="member-avatar">
+            <span class="avatar-initial">L</span>
+          </div>
+          <h3>Lyra Moonwhisper</h3>
+          <p class="member-role">Visualization Lead</p>
+          <p class="member-bio">
+            Creates intuitive and beautiful data visualizations. Bridges the gap
+            between complex global data and accessible insights for researchers
+            and policymakers.
+          </p>
+        </div>
+
+        <div class="team-member">
+          <div class="member-avatar">
+            <span class="avatar-initial">K</span>
+          </div>
+          <h3>Kael Shadowmend</h3>
+          <p class="member-role">Platform Engineer</p>
+          <p class="member-bio">
+            Ensures platform reliability, security, and performance. Implements
+            robust testing frameworks and maintains the infrastructure that
+            powers WorldInsights.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="tech-section">
+      <h2>Technology</h2>
+      <p>WorldInsights is built with modern, proven technologies:</p>
+      <div class="tech-stack">
+        <div class="tech-item">
+          <strong>Backend:</strong> Python, Flask, DuckDB
+        </div>
+        <div class="tech-item">
+          <strong>Analytics:</strong> Pandas, NumPy, SciPy, Scikit-learn
+        </div>
+        <div class="tech-item">
+          <strong>Visualization:</strong> Plotly, D3.js, Three.js
+        </div>
+        <div class="tech-item">
+          <strong>Infrastructure:</strong> Cloud-native, API-first architecture
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Sources -->
+    <section class="sources-section">
+      <h2>Data Sources</h2>
+      <p>
+        We aggregate data from the world's most trusted open data providers:
+      </p>
+      <div class="sources-grid">
+        <div class="source-card">
+          <h4>🏦 World Bank</h4>
+          <p>
+            Economic indicators, development statistics, and global financial
+            data
+          </p>
+        </div>
+        <div class="source-card">
+          <h4>🌾 FAO</h4>
+          <p>Agricultural production, food security, and nutrition data</p>
+        </div>
+        <div class="source-card">
+          <h4>🏥 WHO</h4>
+          <p>
+            Global health statistics, disease surveillance, and healthcare
+            metrics
+          </p>
+        </div>
+        <div class="source-card">
+          <h4>🛰️ NASA/NOAA</h4>
+          <p>
+            Climate data, environmental monitoring, and geospatial information
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="contact-cta">
+      <h2>Get in Touch</h2>
+      <p>
+        Have questions? Want to learn more about WorldInsights or discuss
+        enterprise solutions?
+      </p>
+      <div class="cta-buttons">
+        <a href="/contact" class="btn btn-primary btn-large">Contact Us</a>
+        <a href="/pricing" class="btn btn-secondary btn-large">View Pricing</a>
+      </div>
+    </section>
+  </div>
+</section>
+
+{% endblock %} {% block extra_css %}
+<style>
+  .about-page {
+    padding: 4rem 2rem;
+  }
+
+  .about-hero {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 3rem 0;
+  }
+
+  .about-hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  /* Sections */
+
+  section {
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+  }
+
+  section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--text-primary);
+  }
+
+  section p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+  }
+  /* Mission Section */
+
+  .mission-section {
+    background: var(--surface);
+    padding: 3rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  /* Principles Grid */
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .principle-card {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .principle-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .principle-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .principle-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .principle-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+  /* Capabilities Grid */
+
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .capability-item {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .capability-item h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .capability-item p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+  /* Team Section */
+
+  .team-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .team-member {
+    text-align: center;
+    background: var(--surface);
+    padding: 2.5rem 2rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .team-member:hover {
+    transform: translateY(-8px);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .member-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+  }
+
+  .avatar-initial {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .team-member h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .member-role {
+    font-size: 1rem;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .member-bio {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+  /* Technology Stack */
+
+  .tech-stack {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .tech-item {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 1rem;
+    color: var(--text-secondary);
+  }
+
+  .tech-item strong {
+    color: var(--primary);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  /* Data Sources */
+
+  .sources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .source-card {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+  }
+
+  .source-card h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .source-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+  /* Contact CTA */
+
+  .contact-cta {
+    text-align: center;
+    background: linear-gradient(
+      135deg,
+      rgba(59, 130, 246, 0.1) 0%,
+      rgba(139, 92, 246, 0.1) 100%
+    );
+    padding: 4rem 2rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+  }
+
+  .contact-cta h2 {
+    margin-bottom: 1rem;
+  }
+
+  .contact-cta p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  /* Responsive */
+
+  @media (max-width: 768px) {
+    .about-hero h1 {
+      font-size: 2.5rem;
+    }
+    .hero-subtitle {
+      font-size: 1.125rem;
+    }
+    section h2 {
+      font-size: 2rem;
+    }
+    .principles-grid,
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+    .cta-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>
+{% endblock %}

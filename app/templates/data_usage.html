@@ -1,0 +1,552 @@
+{% extends "base.html" %} {% block title %}Data Usage Policy - WorldInsights{%
+endblock %} {% block content %}
+<section class="legal-page">
+  <div class="container">
+    <div class="legal-header">
+      <h1>Data Usage Policy</h1>
+      <p class="last-updated">Last Updated: December 25, 2025</p>
+    </div>
+
+    <div class="legal-content">
+      <section class="legal-section">
+        <h2>1. Introduction</h2>
+        <p>
+          WorldInsights is a global data intelligence platform dedicated to
+          providing reliable, verifiable, and reproducible insights from open
+          world data. This Data Usage Policy explains how we source, process,
+          store, and present data, as well as your rights and responsibilities
+          when using our platform.
+        </p>
+        <p>
+          Our mission is to serve as a single trusted place for understanding
+          global patterns, trends, and insights across economic, agricultural,
+          social, health, and geographical perspectives.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>2. Data Sources and Attribution</h2>
+
+        <h3>2.1 Primary Data Sources</h3>
+        <p>
+          WorldInsights aggregates data from reputable, publicly available
+          sources:
+        </p>
+        <ul>
+          <li>
+            <strong>World Bank Open Data:</strong> Economic indicators,
+            development statistics, and global financial data
+          </li>
+          <li>
+            <strong>Food and Agriculture Organization (FAO):</strong>
+            Agricultural production, food security, and nutrition data
+          </li>
+          <li>
+            <strong>World Health Organization (WHO):</strong> Global health
+            statistics, disease surveillance, and healthcare metrics
+          </li>
+          <li>
+            <strong>NASA/NOAA:</strong> Climate data, environmental monitoring,
+            and geospatial information
+          </li>
+        </ul>
+
+        <h3>2.2 Data Licensing</h3>
+        <p>All data sources used by WorldInsights are:</p>
+        <ul>
+          <li>Publicly available under open data licenses</li>
+          <li>Properly attributed to their original sources</li>
+          <li>
+            Subject to the terms and conditions of their respective providers
+          </li>
+          <li>Accessed through official APIs or authorized channels</li>
+        </ul>
+
+        <h3>2.3 Attribution Requirements</h3>
+        <p>
+          When using WorldInsights data in publications, research, or reports,
+          we encourage you to:
+        </p>
+        <ul>
+          <li>
+            Cite the original data source (World Bank, FAO, WHO, NASA/NOAA)
+          </li>
+          <li>Acknowledge WorldInsights as the platform used for analysis</li>
+          <li>Include the date of data access</li>
+          <li>Specify any transformations or calculations applied</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>3. Data Processing and Quality</h2>
+
+        <h3>3.1 API-First Approach</h3>
+        <p>WorldInsights follows an API-first data strategy:</p>
+        <ul>
+          <li>
+            Data is fetched directly from source APIs in real-time or
+            near-real-time
+          </li>
+          <li>
+            We do not store large datasets locally to avoid data staleness
+          </li>
+          <li>
+            This ensures you always access the most current data available
+          </li>
+          <li>Caching is minimal and used only for performance optimization</li>
+        </ul>
+
+        <h3>3.2 Data Transformation</h3>
+        <p>WorldInsights may apply the following transformations:</p>
+        <ul>
+          <li>
+            <strong>Normalization:</strong> Standardizing units and formats
+            across sources
+          </li>
+          <li>
+            <strong>Aggregation:</strong> Combining data points for
+            visualization and analysis
+          </li>
+          <li>
+            <strong>Interpolation:</strong> Filling gaps in time-series data
+            (clearly marked)
+          </li>
+          <li>
+            <strong>Statistical Analysis:</strong> Calculating correlations,
+            trends, and patterns
+          </li>
+        </ul>
+        <p>
+          All transformations are documented and reproducible. The methodology
+          is available to Researcher and Enterprise tier users.
+        </p>
+
+        <h3>3.3 Data Quality Assurance</h3>
+        <p>We maintain data quality through:</p>
+        <ul>
+          <li>Automated validation checks on incoming data</li>
+          <li>Anomaly detection for outliers and inconsistencies</li>
+          <li>Version tracking for data source updates</li>
+          <li>User reporting mechanisms for data issues</li>
+        </ul>
+
+        <h3>3.4 Reproducibility</h3>
+        <p>WorldInsights is committed to scientific reproducibility:</p>
+        <ul>
+          <li>All analytics are deterministic and reproducible</li>
+          <li>Data queries can be saved and re-executed</li>
+          <li>
+            API endpoints provide consistent results for the same parameters
+          </li>
+          <li>Methodology and assumptions are clearly documented</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>4. Data Storage and Retention</h2>
+
+        <h3>4.1 Database Technology</h3>
+        <p>WorldInsights uses DuckDB for efficient data processing:</p>
+        <ul>
+          <li>
+            Optimized for analytical queries and large-scale data operations
+          </li>
+          <li>Minimal local storage to maintain platform performance</li>
+          <li>Proper schema management for raw and processed data</li>
+          <li>Database schemas are versioned and documented</li>
+        </ul>
+
+        <h3>4.2 User-Generated Data</h3>
+        <p>
+          Data you create on WorldInsights (queries, visualizations, custom
+          analyses) is:
+        </p>
+        <ul>
+          <li>Stored securely in our database</li>
+          <li>Associated with your user account</li>
+          <li>Accessible only to you (unless explicitly shared)</li>
+          <li>Retained according to our Privacy Policy</li>
+          <li>
+            Deleted when you delete your account (after 30-day recovery period)
+          </li>
+        </ul>
+
+        <h3>4.3 Data Immutability</h3>
+        <p>Raw data from external sources is immutable:</p>
+        <ul>
+          <li>Original data is never modified or deleted</li>
+          <li>Transformations create new derived datasets</li>
+          <li>Historical data remains accessible for longitudinal studies</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>5. Data Access and Permissions</h2>
+
+        <h3>5.1 Tier-Based Access</h3>
+        <p>Data access varies by subscription tier:</p>
+
+        <h4>Free Tier</h4>
+        <ul>
+          <li>Access to basic datasets (limited indicators)</li>
+          <li>Limited visualizations (5 per month)</li>
+          <li>Basic analytics capabilities</li>
+          <li>CSV export only</li>
+          <li>No API access</li>
+        </ul>
+
+        <h4>Researcher Tier ($29/month)</h4>
+        <ul>
+          <li>Access to all datasets and indicators</li>
+          <li>Unlimited visualizations</li>
+          <li>Advanced analytics and correlations</li>
+          <li>Machine learning features</li>
+          <li>Multiple export formats (CSV, JSON, Excel)</li>
+          <li>3D globe visualization</li>
+          <li>Custom data queries</li>
+          <li>API access (10,000 calls/day)</li>
+        </ul>
+
+        <h4>Enterprise Tier (Custom)</h4>
+        <ul>
+          <li>All Researcher features</li>
+          <li>Custom data integrations</li>
+          <li>Unlimited API calls</li>
+          <li>White-label options</li>
+          <li>On-premise deployment</li>
+          <li>Custom data pipelines</li>
+        </ul>
+
+        <h3>5.2 Role-Based Access Control</h3>
+        <p>User roles determine platform capabilities:</p>
+        <ul>
+          <li>
+            <strong>User:</strong> Standard access based on subscription tier
+          </li>
+          <li>
+            <strong>Researcher:</strong> Enhanced access to advanced features
+            (independent of subscription)
+          </li>
+          <li>
+            <strong>Admin:</strong> Platform administration, user management,
+            and system configuration
+          </li>
+        </ul>
+        <p>
+          Note: User roles are managed by administrators and are separate from
+          subscription tiers.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>6. API Usage Policy</h2>
+
+        <h3>6.1 API Access</h3>
+        <p>
+          API access is available to Researcher and Enterprise tier subscribers:
+        </p>
+        <ul>
+          <li>RESTful API with JSON responses</li>
+          <li>Authentication via API keys</li>
+          <li>Comprehensive documentation available</li>
+          <li>Rate limiting based on subscription tier</li>
+        </ul>
+
+        <h3>6.2 Rate Limits</h3>
+        <ul>
+          <li><strong>Free Tier:</strong> 100 API calls per day</li>
+          <li><strong>Researcher Tier:</strong> 10,000 API calls per day</li>
+          <li><strong>Enterprise Tier:</strong> Unlimited API calls</li>
+        </ul>
+        <p>
+          Exceeding rate limits will result in temporary throttling. Contact us
+          for higher limits.
+        </p>
+
+        <h3>6.3 Acceptable API Use</h3>
+        <p>When using our API, you must:</p>
+        <ul>
+          <li>Respect rate limits and not attempt to circumvent them</li>
+          <li>Not resell or redistribute API data without authorization</li>
+          <li>Implement proper error handling and retry logic</li>
+          <li>Cache responses appropriately to minimize redundant calls</li>
+          <li>Attribute data sources in applications using our API</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>7. Data Export and Portability</h2>
+
+        <h3>7.1 Export Formats</h3>
+        <p>WorldInsights supports multiple export formats:</p>
+        <ul>
+          <li><strong>CSV:</strong> Available to all tiers</li>
+          <li><strong>JSON:</strong> Researcher and Enterprise tiers</li>
+          <li>
+            <strong>Excel (XLSX):</strong> Researcher and Enterprise tiers
+          </li>
+          <li><strong>API:</strong> Researcher and Enterprise tiers</li>
+        </ul>
+
+        <h3>7.2 Data Portability Rights</h3>
+        <p>You have the right to:</p>
+        <ul>
+          <li>Export your user-generated content at any time</li>
+          <li>Download your visualizations and analyses</li>
+          <li>Retrieve your query history</li>
+          <li>Request a complete data export upon account deletion</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>8. Data Privacy and Security</h2>
+
+        <h3>8.1 User Data Protection</h3>
+        <p>Your personal data and usage patterns are protected:</p>
+        <ul>
+          <li>Encrypted transmission (SSL/TLS)</li>
+          <li>Secure storage with access controls</li>
+          <li>Regular security audits and vulnerability testing</li>
+          <li>Compliance with data protection regulations (GDPR, etc.)</li>
+        </ul>
+
+        <h3>8.2 Data Anonymization</h3>
+        <p>When we use aggregated usage data for platform improvement:</p>
+        <ul>
+          <li>Personal identifiers are removed</li>
+          <li>Data is aggregated across multiple users</li>
+          <li>Individual users cannot be identified</li>
+        </ul>
+
+        <h3>8.3 Third-Party Data Sharing</h3>
+        <p>We do not share your data with third parties except:</p>
+        <ul>
+          <li>As required by law</li>
+          <li>With your explicit consent</li>
+          <li>
+            With service providers under strict confidentiality agreements
+          </li>
+        </ul>
+        <p>
+          See our <a href="/privacy">Privacy Policy</a> for complete details.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>9. Data Accuracy and Limitations</h2>
+
+        <h3>9.1 Data Accuracy</h3>
+        <p>While we strive for accuracy:</p>
+        <ul>
+          <li>Data accuracy depends on source providers</li>
+          <li>We cannot guarantee 100% accuracy or completeness</li>
+          <li>Data may be revised or updated by source providers</li>
+          <li>Users should verify critical data independently</li>
+        </ul>
+
+        <h3>9.2 Known Limitations</h3>
+        <ul>
+          <li>Data availability varies by country and indicator</li>
+          <li>Historical data may have gaps or inconsistencies</li>
+          <li>
+            Real-time data may have delays based on source update frequency
+          </li>
+          <li>Some indicators are estimates or projections</li>
+        </ul>
+
+        <h3>9.3 Disclaimer</h3>
+        <p>
+          WorldInsights provides data "as is" without warranty. We are not
+          responsible for decisions made based on our data. Always verify data
+          for critical applications.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>10. Intellectual Property</h2>
+
+        <h3>10.1 Source Data</h3>
+        <p>
+          Original data belongs to source providers (World Bank, FAO, WHO,
+          NASA/NOAA) and is subject to their respective licenses.
+        </p>
+
+        <h3>10.2 Platform Analytics</h3>
+        <p>WorldInsights owns the intellectual property rights to:</p>
+        <ul>
+          <li>Our analytical algorithms and methodologies</li>
+          <li>Platform software and visualizations</li>
+          <li>Derived insights and correlations</li>
+          <li>User interface and design</li>
+        </ul>
+
+        <h3>10.3 User Content</h3>
+        <p>
+          You retain ownership of your analyses and visualizations created on
+          WorldInsights. By using our platform, you grant us a license to host
+          and display your content as necessary to provide our services.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>11. Updates to This Policy</h2>
+        <p>We may update this Data Usage Policy to reflect:</p>
+        <ul>
+          <li>Changes in data sources or methodologies</li>
+          <li>New features or capabilities</li>
+          <li>Legal or regulatory requirements</li>
+          <li>User feedback and best practices</li>
+        </ul>
+        <p>
+          Material changes will be communicated via email and posted on this
+          page with an updated "Last Updated" date.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>12. Contact Us</h2>
+        <p>For questions about our data practices, sources, or this policy:</p>
+        <ul>
+          <li>
+            <strong>Email:</strong>
+            <a href="mailto:data@worldinsights.bonzainsights.com"
+              >data@worldinsights.bonzainsights.com</a
+            >
+          </li>
+          <li>
+            <strong>Contact Form:</strong> <a href="/contact">Contact Us</a>
+          </li>
+          <li>
+            <strong>Documentation:</strong>
+            <a href="/docs">Platform Documentation</a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <p
+          style="
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-style: italic;
+            color: var(--text-secondary);
+          "
+        >
+          WorldInsights is committed to transparency, reproducibility, and
+          scientific credibility in all our data practices.
+        </p>
+      </section>
+    </div>
+  </div>
+</section>
+
+{% endblock %} {% block extra_css %}
+<style>
+  .legal-page {
+    padding: 4rem 2rem;
+    min-height: 80vh;
+  }
+
+  .legal-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid rgba(59, 130, 246, 0.2);
+  }
+
+  .legal-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .last-updated {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+
+  .legal-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .legal-section {
+    margin-bottom: 3rem;
+  }
+
+  .legal-section h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .legal-section h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .legal-section h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .legal-section p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .legal-section ul {
+    margin: 1rem 0 1rem 1.5rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .legal-section li {
+    margin-bottom: 0.5rem;
+  }
+
+  .legal-section strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .legal-section a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .legal-section a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .legal-header h1 {
+      font-size: 2rem;
+    }
+    .legal-section h2 {
+      font-size: 1.5rem;
+    }
+    .legal-section h3 {
+      font-size: 1.125rem;
+    }
+  }
+</style>
+{% endblock %}
