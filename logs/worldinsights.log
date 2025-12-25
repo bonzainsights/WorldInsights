@@ -840,3 +840,49 @@ WHERE user.email = ?
 2025-12-25 21:26:36 - worldinsights.migration - INFO - add_security_fields.py:58 - Added last_successful_login column to user table
 2025-12-25 21:26:36 - worldinsights.migration - INFO - add_security_fields.py:60 - Security tracking fields migration completed successfully
 2025-12-25 21:27:35 - worldinsights.auth_service - INFO - auth_service.py:224 - User authenticated: admin
+2025-12-25 21:54:00 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-25 21:54:00 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 21:54:00 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$CfuZ0zXpaAc1xpSw/evRYOIM6yxDflsBpb1d5XgC6ESA1YII3qx66', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-25 20:54:00.323228', None, None, 0, None, None, None, '2025-12-25 20:54:00.323232', '2025-12-25 20:54:00.323232')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-25 21:54:00 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-25 21:54:00 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-25 21:54:00 - worldinsights - INFO - create_app.py:317 - WorldInsights application initialized successfully
+2025-12-25 21:54:36 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-25 21:54:36 - worldinsights.WorldBankClient - INFO - worldbank.py:92 - Fetched 10 countries from World Bank API
+2025-12-25 21:54:36 - worldinsights.WorldBankClient - INFO - worldbank.py:135 - Fetched 10 indicators from World Bank API
+2025-12-25 21:54:37 - worldinsights.WorldBankClient - INFO - worldbank.py:194 - Fetched 6 data points for USA - NY.GDP.MKTP.CD
+2025-12-25 21:54:37 - worldinsights.WorldBankClient - INFO - worldbank.py:194 - Fetched 1 data points for USA - SP.POP.TOTL
+2025-12-25 21:54:37 - worldinsights.WorldBankClient - INFO - worldbank.py:194 - Fetched 1 data points for CHN - SP.POP.TOTL
+2025-12-25 21:54:38 - worldinsights.WorldBankClient - INFO - worldbank.py:194 - Fetched 1 data points for IND - SP.POP.TOTL
+2025-12-25 21:54:38 - worldinsights.WorldBankClient - INFO - worldbank.py:194 - Fetched 1 data points for GBR - SP.POP.TOTL
+2025-12-25 21:54:38 - worldinsights.WorldBankClient - INFO - worldbank.py:194 - Fetched 1 data points for DEU - SP.POP.TOTL
+2025-12-25 21:54:39 - worldinsights.WorldBankClient - INFO - worldbank.py:194 - Fetched 11 data points for USA - NY.GDP.MKTP.CD
+2025-12-25 22:00:53 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-25 22:00:53 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 22:00:53 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$MjF2iJszAOrrMxTOQh5TEu5n46Q9Fs/CdyD1kWxBtAKEbdU1niQBS', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-25 21:00:53.968612', None, None, 0, None, None, None, '2025-12-25 21:00:53.968616', '2025-12-25 21:00:53.968617')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-25 22:00:53 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-25 22:00:53 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-25 22:00:53 - worldinsights - INFO - create_app.py:317 - WorldInsights application initialized successfully
+2025-12-25 22:01:50 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-25 22:01:50 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 22:01:50 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$3vq0Z68UqA71KZjTGAKRJ.U.QV7aVtn6yVHJA.b8/CXOGlG1LWvdW', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-25 21:01:50.550194', None, None, 0, None, None, None, '2025-12-25 21:01:50.550199', '2025-12-25 21:01:50.550199')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-25 22:01:50 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-25 22:01:50 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-25 22:01:50 - worldinsights - INFO - create_app.py:317 - WorldInsights application initialized successfully
+2025-12-25 22:01:52 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-25 22:01:52 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 22:01:52 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$CwHh3cBIAeD9ZLNjnBlg9epVB.6Xu6x41hTrYvneTGTxNc9KGgHly', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-25 21:01:52.312742', None, None, 0, None, None, None, '2025-12-25 21:01:52.312747', '2025-12-25 21:01:52.312747')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-25 22:01:52 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-25 22:01:52 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-25 22:01:52 - worldinsights - INFO - create_app.py:317 - WorldInsights application initialized successfully
