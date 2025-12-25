@@ -3,7 +3,7 @@ Authentication routes for WorldInsights.
 
 Handles login, registration, email verification, profile, and admin functions.
 """
-from flask import render_template, redirect, url_for, flash, request, session
+from flask import render_template, redirect, url_for, flash, request, session, current_app
 from flask_login import login_user, logout_user, login_required, current_user
 from app.blueprints.auth import auth_bp
 from app.services.auth_service import (
@@ -15,11 +15,22 @@ from app.services.auth_service import (
 from app.infrastructure.db import User
 
 
+def get_limiter():
+    """Get limiter instance from app extensions."""
+    return current_app.extensions.get('limiter')
+
+
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     """
     User registration page and handler.
+    Rate limited to 3 attempts per minute to prevent abuse.
     """
+    # Apply rate limiting if available
+    limiter = get_limiter()
+    if limiter:
+        limiter.limit("3 per minute")(lambda: None)()
+    
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     
@@ -34,10 +45,7 @@ def register():
             flash('All fields are required', 'error')
             return render_template('auth/register.html')
         
-        if len(password) < 8:
-            flash('Password must be at least 8 characters long', 'error')
-            return render_template('auth/register.html')
-        
+        # Password strength is now validated in register_user service
         if password != confirm_password:
             flash('Passwords do not match', 'error')
             return render_template('auth/register.html')
@@ -80,7 +88,13 @@ def verify_email(token):
 def login():
     """
     User login page and handler.
+    Rate limited to 5 attempts per minute to prevent brute force attacks.
     """
+    # Apply rate limiting if available
+    limiter = get_limiter()
+    if limiter:
+        limiter.limit("5 per minute")(lambda: None)()
+    
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     
@@ -93,7 +107,7 @@ def login():
             flash('Email and password are required', 'error')
             return render_template('auth/login.html')
         
-        # Authenticate user
+        # Authenticate user (includes account lockout logic)
         user, error = authenticate_user(email, password)
         
         if error:
@@ -306,7 +320,13 @@ def update_profile_route():
 def forgot_password():
     """
     Forgot password page and handler.
+    Rate limited to 3 attempts per hour to prevent abuse.
     """
+    # Apply rate limiting if available
+    limiter = get_limiter()
+    if limiter:
+        limiter.limit("3 per hour")(lambda: None)()
+    
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     

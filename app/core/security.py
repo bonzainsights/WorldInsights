@@ -11,12 +11,15 @@ Functions:
     - generate_password_reset_token: Generate password reset token
     - verify_token: Verify and decode a token
     - validate_email: Validate email address format
+    - validate_password_strength: Validate password meets security requirements
 """
 import bcrypt
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from email_validator import validate_email as email_validate, EmailNotValidError
-from typing import Optional
+from typing import Optional, Tuple, List
 import os
+import re
+from zxcvbn import zxcvbn
 
 
 def hash_password(password: str) -> str:
@@ -199,3 +202,129 @@ def generate_secure_token(length: int = 32) -> str:
     """
     import secrets
     return secrets.token_urlsafe(length)
+
+
+# Common weak passwords to reject
+COMMON_PASSWORDS = {
+    'password', 'password123', '123456', '12345678', 'qwerty', 'abc123',
+    'monkey', '1234567', 'letmein', 'trustno1', 'dragon', 'baseball',
+    'iloveyou', 'master', 'sunshine', 'ashley', 'bailey', 'passw0rd',
+    'shadow', '123123', '654321', 'superman', 'qazwsx', 'michael',
+    'football', 'welcome', 'jesus', 'ninja', 'mustang', 'password1'
+}
+
+
+def validate_password_strength(
+    password: str,
+    username: Optional[str] = None,
+    email: Optional[str] = None,
+    min_length: int = 12
+) -> Tuple[bool, Optional[str]]:
+    """
+    Validate password strength against security requirements.
+    
+    Requirements:
+    - Minimum length (default 12 characters)
+    - At least one uppercase letter
+    - At least one lowercase letter
+    - At least one digit
+    - At least one special character
+    - Not in common password list
+    - Not similar to username or email
+    
+    Args:
+        password: Password to validate
+        username: Optional username to check similarity
+        email: Optional email to check similarity
+        min_length: Minimum password length (default: 12)
+    
+    Returns:
+        Tuple of (is_valid, error_message)
+        If valid: (True, None)
+        If invalid: (False, error message)
+    
+    Example:
+        >>> valid, error = validate_password_strength("MySecure123!")
+        >>> valid
+        True
+        >>> valid, error = validate_password_strength("weak")
+        >>> valid
+        False
+        >>> error
+        'Password must be at least 12 characters long'
+    """
+    # Check minimum length
+    if len(password) < min_length:
+        return False, f"Password must be at least {min_length} characters long"
+    
+    # Check for uppercase letter
+    if not re.search(r'[A-Z]', password):
+        return False, "Password must contain at least one uppercase letter"
+    
+    # Check for lowercase letter
+    if not re.search(r'[a-z]', password):
+        return False, "Password must contain at least one lowercase letter"
+    
+    # Check for digit
+    if not re.search(r'\d', password):
+        return False, "Password must contain at least one number"
+    
+    # Check for special character
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\;\'/`~]', password):
+        return False, "Password must contain at least one special character (!@#$%^&* etc.)"
+    
+    # Check against common passwords
+    if password.lower() in COMMON_PASSWORDS:
+        return False, "This password is too common. Please choose a more unique password"
+    
+    # Check similarity to username
+    if username and username.lower() in password.lower():
+        return False, "Password cannot contain your username"
+    
+    # Check similarity to email
+    if email:
+        email_local = email.split('@')[0].lower()
+        if email_local in password.lower():
+            return False, "Password cannot contain your email address"
+    
+    # Use zxcvbn for advanced strength checking
+    user_inputs = []
+    if username:
+        user_inputs.append(username)
+    if email:
+        user_inputs.extend(email.split('@'))
+    
+    result = zxcvbn(password, user_inputs=user_inputs)
+    
+    # zxcvbn score: 0-4 (0=weak, 4=strong)
+    # Require at least score of 3
+    if result['score'] < 3:
+        feedback = result.get('feedback', {}).get('warning', '')
+        suggestions = result.get('feedback', {}).get('suggestions', [])
+        
+        if feedback:
+            return False, f"Password is too weak: {feedback}"
+        elif suggestions:
+            return False, f"Password is too weak. {suggestions[0]}"
+        else:
+            return False, "Password is too weak. Please choose a stronger password"
+    
+    return True, None
+
+
+def get_password_requirements() -> List[str]:
+    """
+    Get list of password requirements for display to users.
+    
+    Returns:
+        List of password requirement strings
+    """
+    return [
+        "At least 12 characters long",
+        "Contains at least one uppercase letter (A-Z)",
+        "Contains at least one lowercase letter (a-z)",
+        "Contains at least one number (0-9)",
+        "Contains at least one special character (!@#$%^&* etc.)",
+        "Not a common or easily guessable password",
+        "Does not contain your username or email"
+    ]

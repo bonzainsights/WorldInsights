@@ -768,3 +768,75 @@ WHERE user.email = ?
 [parameters: ('admin', 'admin@worldinsights.com', '$2b$12$KOlDn5dugXWcQ6YTB.e6PezdWGCxrmnkgQ8Vp6XCbJGo9sMVnZ.8i', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-25 20:01:44.565425', None, None, '2025-12-25 20:01:44.565431', '2025-12-25 20:01:44.565432')]
 (Background on this error at: https://sqlalche.me/e/20/gkpj)
 2025-12-25 21:01:44 - worldinsights - INFO - create_app.py:265 - WorldInsights application initialized successfully
+2025-12-25 21:23:58 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 21:23:58 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 21:23:58 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.failed_login_attempts
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-25 21:23:58 - worldinsights - INFO - create_app.py:265 - WorldInsights application initialized successfully
+2025-12-25 21:23:58 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 21:23:58 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 21:23:58 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.failed_login_attempts
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-25 21:23:58 - worldinsights - INFO - create_app.py:265 - WorldInsights application initialized successfully
+2025-12-25 21:24:46 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 21:24:46 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 21:24:46 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.failed_login_attempts
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-25 21:24:46 - worldinsights - INFO - create_app.py:265 - WorldInsights application initialized successfully
+2025-12-25 21:25:15 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-25 21:25:15 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 21:25:15 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.failed_login_attempts
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-25 21:25:15 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-25 21:25:15 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-25 21:25:15 - worldinsights - INFO - create_app.py:317 - WorldInsights application initialized successfully
+2025-12-25 21:26:01 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-25 21:26:01 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 21:26:01 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.failed_login_attempts
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-25 21:26:01 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-25 21:26:01 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-25 21:26:01 - worldinsights - INFO - create_app.py:317 - WorldInsights application initialized successfully
+2025-12-25 21:26:36 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-25 21:26:36 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 21:26:36 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.failed_login_attempts
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-25 21:26:36 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-25 21:26:36 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-25 21:26:36 - worldinsights - INFO - create_app.py:317 - WorldInsights application initialized successfully
+2025-12-25 21:26:36 - worldinsights.migration - INFO - add_security_fields.py:34 - Added failed_login_attempts column to user table
+2025-12-25 21:26:36 - worldinsights.migration - INFO - add_security_fields.py:42 - Added locked_until column to user table
+2025-12-25 21:26:36 - worldinsights.migration - INFO - add_security_fields.py:50 - Added last_login_attempt column to user table
+2025-12-25 21:26:36 - worldinsights.migration - INFO - add_security_fields.py:58 - Added last_successful_login column to user table
+2025-12-25 21:26:36 - worldinsights.migration - INFO - add_security_fields.py:60 - Security tracking fields migration completed successfully
+2025-12-25 21:27:35 - worldinsights.auth_service - INFO - auth_service.py:224 - User authenticated: admin

@@ -134,6 +134,16 @@ class Config:
             'researcher': {'price': 29.00, 'name': 'Researcher'},
             'admin': {'price': None, 'name': 'Admin'}
         }
+        
+        # ============================================
+        # Security Hardening Configuration
+        # ============================================
+        self._RATE_LIMIT_ENABLED = _get_env('RATE_LIMIT_ENABLED', True, bool)
+        self._RATE_LIMIT_STORAGE_URL = _get_env('RATE_LIMIT_STORAGE_URL', 'memory://')
+        self._MAX_LOGIN_ATTEMPTS = _get_env('MAX_LOGIN_ATTEMPTS', 5, int)
+        self._LOCKOUT_DURATION = _get_env('LOCKOUT_DURATION', 15, int)  # minutes
+        self._PASSWORD_MIN_LENGTH = _get_env('PASSWORD_MIN_LENGTH', 12, int)
+        self._REQUIRE_HTTPS = _get_env('REQUIRE_HTTPS', False, bool)  # Enable in production
     
     # Property accessors to make attributes read-only
     @property
@@ -252,6 +262,30 @@ class Config:
     def SUBSCRIPTION_TIERS(self) -> Dict:
         return self._SUBSCRIPTION_TIERS
     
+    @property
+    def RATE_LIMIT_ENABLED(self) -> bool:
+        return self._RATE_LIMIT_ENABLED
+    
+    @property
+    def RATE_LIMIT_STORAGE_URL(self) -> str:
+        return self._RATE_LIMIT_STORAGE_URL
+    
+    @property
+    def MAX_LOGIN_ATTEMPTS(self) -> int:
+        return self._MAX_LOGIN_ATTEMPTS
+    
+    @property
+    def LOCKOUT_DURATION(self) -> int:
+        return self._LOCKOUT_DURATION
+    
+    @property
+    def PASSWORD_MIN_LENGTH(self) -> int:
+        return self._PASSWORD_MIN_LENGTH
+    
+    @property
+    def REQUIRE_HTTPS(self) -> bool:
+        return self._REQUIRE_HTTPS
+    
     def to_dict(self, redact_secrets: bool = True) -> Dict[str, Any]:
         """
         Convert configuration to dictionary.
@@ -287,6 +321,12 @@ class Config:
             'WTF_CSRF_ENABLED': self._WTF_CSRF_ENABLED,
             'DEVELOPER_MODE': self._DEVELOPER_MODE,
             'SUBSCRIPTION_TIERS': self._SUBSCRIPTION_TIERS,
+            'RATE_LIMIT_ENABLED': self._RATE_LIMIT_ENABLED,
+            'RATE_LIMIT_STORAGE_URL': self._RATE_LIMIT_STORAGE_URL,
+            'MAX_LOGIN_ATTEMPTS': self._MAX_LOGIN_ATTEMPTS,
+            'LOCKOUT_DURATION': self._LOCKOUT_DURATION,
+            'PASSWORD_MIN_LENGTH': self._PASSWORD_MIN_LENGTH,
+            'REQUIRE_HTTPS': self._REQUIRE_HTTPS,
         }
         
         # Add sensitive fields with redaction option

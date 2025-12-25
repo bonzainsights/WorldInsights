@@ -4,12 +4,16 @@ Authentication service for WorldInsights.
 Handles user registration, login, email verification, and role management.
 """
 from app.infrastructure.db import db, User
-from app.core.security import hash_password, verify_password, generate_verification_token, validate_email
+from app.core.security import (
+    hash_password, verify_password, generate_verification_token,
+    validate_email, validate_password_strength
+)
 from app.core.logging import get_logger
+from app.core.config import Config
 from flask_mail import Message, Mail
 from typing import Optional, Tuple
 from flask import url_for
-from datetime import datetime
+from datetime import datetime, timedelta
 
 logger = get_logger('auth_service')
 mail = Mail()
@@ -17,7 +21,7 @@ mail = Mail()
 
 def register_user(username: str, email: str, password: str) -> Tuple[Optional[User], Optional[str]]:
     """
-    Register a new user.
+    Register a new user with password strength validation.
     
     Args:
         username: Username
@@ -33,6 +37,11 @@ def register_user(username: str, email: str, password: str) -> Tuple[Optional[Us
         # Validate email
         if not validate_email(email):
             return None, "Invalid email address"
+        
+        # Validate password strength
+        is_valid, error_msg = validate_password_strength(password, username=username, email=email)
+        if not is_valid:
+            return None, error_msg
         
         # Check if username already exists
         if User.query.filter_by(username=username).first():
@@ -154,7 +163,7 @@ def verify_user_email(token: str) -> Tuple[bool, Optional[str]]:
 
 def authenticate_user(email: str, password: str) -> Tuple[Optional[User], Optional[str]]:
     """
-    Authenticate user with email and password.
+    Authenticate user with email and password, including account lockout protection.
     
     Args:
         email: Email address
@@ -164,19 +173,53 @@ def authenticate_user(email: str, password: str) -> Tuple[Optional[User], Option
         Tuple of (User, error_message)
     """
     try:
+        # Get configuration
+        config = Config()
+        max_attempts = config.MAX_LOGIN_ATTEMPTS
+        lockout_duration = config.LOCKOUT_DURATION
+        
         user = User.query.filter_by(email=email).first()
         
         if not user:
             return None, "Invalid email or password"
         
-        if not verify_password(password, user.password_hash):
-            return None, "Invalid email or password"
+        # Check if account is locked
+        if user.is_account_locked():
+            remaining_time = (user.locked_until - datetime.utcnow()).total_seconds() / 60
+            return None, f"Account is locked due to too many failed login attempts. Please try again in {int(remaining_time)} minutes."
         
+        # Update last login attempt timestamp
+        user.last_login_attempt = datetime.utcnow()
+        
+        # Verify password
+        if not verify_password(password, user.password_hash):
+            # Increment failed attempts
+            user.failed_login_attempts += 1
+            
+            # Lock account if max attempts reached
+            if user.failed_login_attempts >= max_attempts:
+                user.locked_until = datetime.utcnow() + timedelta(minutes=lockout_duration)
+                db.session.commit()
+                logger.warning(f"Account locked for user {user.username} after {max_attempts} failed attempts")
+                return None, f"Account locked due to too many failed login attempts. Please try again in {lockout_duration} minutes."
+            
+            db.session.commit()
+            remaining_attempts = max_attempts - user.failed_login_attempts
+            logger.warning(f"Failed login attempt for user {user.username}. {remaining_attempts} attempts remaining.")
+            return None, f"Invalid email or password. {remaining_attempts} attempts remaining before account lockout."
+        
+        # Check if email is verified
         if not user.is_verified:
             return None, "Please verify your email address before logging in"
         
+        # Check if account is deleted
         if user.is_deleted():
             return None, "This account has been deleted. Contact support to recover your account."
+        
+        # Successful login - reset failed attempts
+        user.reset_failed_attempts()
+        user.last_successful_login = datetime.utcnow()
+        db.session.commit()
         
         logger.info(f"User authenticated: {user.username}")
         return user, None

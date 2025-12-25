@@ -13,6 +13,9 @@ Following Clean Architecture:
 from flask import Flask, jsonify, render_template, request, url_for, flash, redirect
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from flask_talisman import Talisman
 from typing import Optional, Union, Dict, Any
 
 from app.core.config import Config
@@ -104,6 +107,55 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     mail.init_app(app)
     # Update service mail instance
     service_mail.init_app(app)
+    
+    # ============================================
+    # Initialize Flask-Limiter (Rate Limiting)
+    # ============================================
+    if app.config.get('RATE_LIMIT_ENABLED', True):
+        limiter = Limiter(
+            app=app,
+            key_func=get_remote_address,
+            storage_uri=app.config.get('RATE_LIMIT_STORAGE_URL', 'memory://'),
+            default_limits=["200 per day", "50 per hour"],
+            storage_options={}
+        )
+        logger.info("Rate limiting enabled")
+        # Store limiter in app extensions for access in blueprints
+        app.extensions['limiter'] = limiter
+    else:
+        logger.warning("Rate limiting is DISABLED")
+    
+    # ============================================
+    # Initialize Flask-Talisman (HTTPS & Security Headers)
+    # ============================================
+    if app.config.get('REQUIRE_HTTPS', False) and not app.config.get('TESTING', False):
+        # Content Security Policy
+        csp = {
+            'default-src': "'self'",
+            'script-src': ["'self'", "'unsafe-inline'", "https://cdn.plot.ly", "https://cdn.jsdelivr.net"],
+            'style-src': ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            'font-src': ["'self'", "https://fonts.gstatic.com"],
+            'img-src': ["'self'", "data:", "https:"],
+            'connect-src': ["'self'"],
+        }
+        
+        Talisman(
+            app,
+            force_https=True,
+            strict_transport_security=True,
+            strict_transport_security_max_age=31536000,  # 1 year
+            content_security_policy=csp,
+            content_security_policy_nonce_in=['script-src'],
+            referrer_policy='strict-origin-when-cross-origin',
+            feature_policy={
+                'geolocation': "'none'",
+                'microphone': "'none'",
+                'camera': "'none'"
+            }
+        )
+        logger.info("HTTPS enforcement and security headers enabled")
+    else:
+        logger.warning("HTTPS enforcement is DISABLED (development mode)")
     
     # ============================================
     # Register error handlers

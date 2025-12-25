@@ -32,6 +32,12 @@ class User(UserMixin, db.Model):
     subscription_expires_at = db.Column(db.DateTime, nullable=True)  # For trial/cancellation handling
     stripe_customer_id = db.Column(db.String(100), nullable=True)  # Mock ID in dev mode
     
+    # Security tracking fields
+    failed_login_attempts = db.Column(db.Integer, default=0, nullable=False)
+    locked_until = db.Column(db.DateTime, nullable=True)  # Account lockout expiration
+    last_login_attempt = db.Column(db.DateTime, nullable=True)  # Last login attempt timestamp
+    last_successful_login = db.Column(db.DateTime, nullable=True)  # Last successful login
+    
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
@@ -83,6 +89,17 @@ class User(UserMixin, db.Model):
     def can_access_premium_features(self):
         """Check if user can access premium features (researcher or admin)."""
         return self.subscription_tier in ('researcher', 'admin') and self.has_active_subscription()
+    
+    def is_account_locked(self):
+        """Check if account is currently locked."""
+        if self.locked_until is None:
+            return False
+        return datetime.utcnow() < self.locked_until
+    
+    def reset_failed_attempts(self):
+        """Reset failed login attempts counter."""
+        self.failed_login_attempts = 0
+        self.locked_until = None
 
 
 class Subscription(db.Model):
