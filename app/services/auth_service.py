@@ -542,3 +542,52 @@ def change_password(user: User, current_password: str, new_password: str) -> Tup
         db.session.rollback()
         return False, "An error occurred while changing your password"
 
+
+def send_contact_email(name: str, email: str, issue_type: str, message: str) -> bool:
+    """
+    Send contact form email to support.
+    
+    Args:
+        name: Sender's name
+        email: Sender's email address
+        issue_type: Type of issue (Account Related, Enterprise, Other Issues)
+        message: Message content
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        msg = Message(
+            subject=f"[{issue_type}] Contact Form Submission from {name}",
+            recipients=['contact@worldinsights.bonzainsights.com'],
+            reply_to=email,
+            html=f"""
+            <html>
+                <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h2 style="color: #3B82F6;">New Contact Form Submission</h2>
+                    <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                        <p><strong>Name:</strong> {name}</p>
+                        <p><strong>Email:</strong> {email}</p>
+                        <p><strong>Issue Type:</strong> {issue_type}</p>
+                    </div>
+                    <h3 style="color: #333;">Message:</h3>
+                    <div style="background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+                        <p style="white-space: pre-wrap;">{message}</p>
+                    </div>
+                    <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+                    <p style="color: #999; font-size: 12px;">
+                        This email was sent from the WorldInsights contact form.<br>
+                        Reply directly to this email to respond to {name}.
+                    </p>
+                </body>
+            </html>
+            """
+        )
+        
+        mail.send(msg)
+        logger.info(f"Contact form email sent from {email} - Issue: {issue_type}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"Error sending contact form email: {e}")
+        return False

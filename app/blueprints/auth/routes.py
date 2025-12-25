@@ -420,14 +420,6 @@ from app.core.config import Config
 from datetime import datetime
 
 
-@auth_bp.route('/pricing')
-def pricing():
-    """
-    Pricing page showing subscription tiers.
-    """
-    return render_template('auth/pricing.html')
-
-
 @auth_bp.route('/subscribe/<tier>')
 @login_required
 def subscribe(tier):
@@ -438,7 +430,7 @@ def subscribe(tier):
     tiers = get_pricing_tiers()
     if tier not in tiers:
         flash('Invalid subscription tier', 'error')
-        return redirect(url_for('auth.pricing'))
+        return redirect(url_for('pricing'))
     
     # Don't allow subscribing to current tier
     if current_user.subscription_tier == tier:
@@ -468,7 +460,7 @@ def process_subscription(tier):
     tiers = get_pricing_tiers()
     if tier not in tiers:
         flash('Invalid subscription tier', 'error')
-        return redirect(url_for('auth.pricing'))
+        return redirect(url_for('pricing'))
     
     # Subscribe user
     success, error = subscribe_user(current_user, tier, payment_method='mock_card')

@@ -691,3 +691,43 @@ WHERE user.email = ?
 2025-12-25 11:45:41 - worldinsights.database - INFO - database.py:64 - Admin user already exists
 2025-12-25 11:45:41 - worldinsights - INFO - create_app.py:183 - WorldInsights application initialized successfully
 2025-12-25 11:46:56 - worldinsights.auth_service - INFO - auth_service.py:384 - Admin admin recovered user achbj
+2025-12-25 12:25:44 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 12:25:44 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 12:25:44 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-25 12:25:44 - worldinsights - INFO - create_app.py:193 - WorldInsights application initialized successfully
+2025-12-25 12:25:47 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 12:25:47 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 12:25:47 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-25 12:25:47 - worldinsights - INFO - create_app.py:193 - WorldInsights application initialized successfully
+2025-12-25 12:26:09 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 12:26:09 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 12:26:09 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-25 12:26:09 - worldinsights - INFO - create_app.py:193 - WorldInsights application initialized successfully
+2025-12-25 12:57:06 - worldinsights.auth_service - INFO - auth_service.py:181 - User authenticated: achbj
+2025-12-25 12:57:20 - worldinsights.auth_service - INFO - auth_service.py:181 - User authenticated: researcher
+2025-12-25 13:03:01 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 13:03:01 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 13:03:01 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-25 13:03:01 - worldinsights - INFO - create_app.py:193 - WorldInsights application initialized successfully
+2025-12-25 13:03:04 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 13:03:04 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 13:03:04 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-25 13:03:04 - worldinsights - INFO - create_app.py:225 - WorldInsights application initialized successfully
+2025-12-25 13:05:25 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 13:05:25 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 13:05:25 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-25 13:05:25 - worldinsights - INFO - create_app.py:225 - WorldInsights application initialized successfully
+2025-12-25 13:11:38 - worldinsights.auth_service - INFO - auth_service.py:588 - Contact form email sent from ach.bj27@gmail.com - Issue: Account Related
+2025-12-25 13:13:09 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 13:13:09 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 13:13:09 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-25 13:13:09 - worldinsights - INFO - create_app.py:225 - WorldInsights application initialized successfully
+2025-12-25 13:13:20 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 13:13:20 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 13:13:20 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-25 13:13:20 - worldinsights - INFO - create_app.py:225 - WorldInsights application initialized successfully
+2025-12-25 13:13:39 - worldinsights - INFO - create_app.py:80 - WorldInsights application starting in development mode
+2025-12-25 13:13:39 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-25 13:13:39 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-25 13:13:39 - worldinsights - INFO - create_app.py:224 - WorldInsights application initialized successfully
+2025-12-25 13:13:59 - worldinsights.auth_service - INFO - auth_service.py:588 - Contact form email sent from ach.bj27@gmail.com - Issue: Account Related

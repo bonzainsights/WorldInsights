@@ -93,10 +93,11 @@
         </div>
 
         <div class="pricing-footer">
-          {% if current_user.is_authenticated and current_user.subscription_tier
-          == 'researcher' %}
+          {% if current_user.is_authenticated and
+          (current_user.subscription_tier == 'researcher' or
+          current_user.is_admin()) %}
           <button class="btn btn-primary btn-large btn-block" disabled>
-            <span>Current Plan</span>
+            <span>Subscribed</span>
           </button>
           {% elif current_user.is_authenticated %}
           <a
@@ -116,46 +117,39 @@
         </div>
       </div>
 
-      <!-- Admin Tier -->
+      <!-- Enterprise Tier -->
       <div class="pricing-card">
         <div class="pricing-card-header">
-          <h3>Admin</h3>
+          <h3>Enterprise</h3>
           <div class="pricing-amount">
             <span class="price-custom">Contact Us</span>
           </div>
           <p class="pricing-description">
-            Complete platform access with administrative controls
+            Custom solutions for organizations and teams
           </p>
         </div>
 
         <div class="pricing-features">
           <h4>Everything in Researcher, plus:</h4>
           <ul>
-            <li><i class="icon">✓</i> User management</li>
-            <li><i class="icon">✓</i> System administration</li>
-            <li><i class="icon">✓</i> Analytics dashboard</li>
-            <li><i class="icon">✓</i> Subscription management</li>
-            <li><i class="icon">✓</i> Platform configuration</li>
-            <li><i class="icon">✓</i> Audit logs</li>
-            <li><i class="icon">✓</i> Dedicated support</li>
-            <li><i class="icon">✓</i> Custom integrations</li>
+            <li><i class="icon">✓</i> Unlimited team members</li>
+            <li><i class="icon">✓</i> Custom data integrations</li>
+            <li><i class="icon">✓</i> White-label options</li>
+            <li><i class="icon">✓</i> SLA guarantees</li>
+            <li><i class="icon">✓</i> Dedicated account manager</li>
+            <li><i class="icon">✓</i> On-premise deployment</li>
+            <li><i class="icon">✓</i> 24/7 priority support</li>
+            <li><i class="icon">✓</i> Custom training sessions</li>
           </ul>
         </div>
 
         <div class="pricing-footer">
-          {% if current_user.is_authenticated and current_user.subscription_tier
-          == 'admin' %}
-          <button class="btn btn-secondary btn-large btn-block" disabled>
-            <span>Current Plan</span>
-          </button>
-          {% else %}
           <a
-            href="mailto:admin@worldinsights.com"
+            href="mailto:sales@worldinsights.com"
             class="btn btn-secondary btn-large btn-block"
           >
             <span>Contact Sales</span>
           </a>
-          {% endif %}
         </div>
       </div>
     </div>

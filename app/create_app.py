@@ -10,7 +10,7 @@ Following Clean Architecture:
 - Does NOT contain business logic
 - Registers blueprints and middleware
 """
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request, url_for, flash, redirect
 from flask_login import LoginManager
 from flask_mail import Mail
 from typing import Optional, Union, Dict, Any
@@ -162,6 +162,47 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
             Rendered homepage template
         """
         return render_template('index.html')
+    
+    @app.route('/pricing', methods=['GET'])
+    def pricing():
+        """
+        Pricing page showing subscription tiers.
+        
+        Returns:
+            Rendered pricing template
+        """
+        return render_template('auth/pricing.html')
+    
+    @app.route('/contact', methods=['GET', 'POST'])
+    def contact():
+        """
+        Contact page and form handler.
+        
+        Returns:
+            Rendered contact template or redirect after submission
+        """
+        from app.services.auth_service import send_contact_email
+        
+        if request.method == 'POST':
+            name = request.form.get('name', '').strip()
+            email = request.form.get('email', '').strip()
+            issue_type = request.form.get('issue_type', '').strip()
+            message = request.form.get('message', '').strip()
+            
+            # Validation
+            if not name or not email or not issue_type or not message:
+                flash('All fields are required', 'error')
+                return render_template('contact.html')
+            
+            # Send email
+            if send_contact_email(name, email, issue_type, message):
+                flash('Thank you for contacting us! We will get back to you soon.', 'success')
+            else:
+                flash('There was an error sending your message. Please try again later.', 'error')
+            
+            return redirect(url_for('contact'))
+        
+        return render_template('contact.html')
     
     # ============================================
     # CORS Configuration (for API routes)

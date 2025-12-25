@@ -55,7 +55,7 @@
           <div class="subscription-actions">
             {% if subscription_status.tier == 'free' %}
             <a
-              href="{{ url_for('auth.pricing') }}"
+              href="{{ url_for('pricing') }}"
               class="btn btn-primary btn-block"
             >
               <span>Upgrade to Researcher</span>
@@ -145,7 +145,7 @@
               </div>
             </a>
 
-            <a href="{{ url_for('auth.pricing') }}" class="action-link">
+            <a href="{{ url_for('pricing') }}" class="action-link">
               <i class="icon">💳</i>
               <div>
                 <h4>View Pricing</h4>
