@@ -94,7 +94,7 @@ class Config:
         self._MAIL_USE_SSL = _get_env('MAIL_USE_SSL', False, bool)
         self._MAIL_USERNAME = _get_env('MAIL_USERNAME')
         self._MAIL_PASSWORD = _get_env('MAIL_PASSWORD')
-        self._MAIL_DEFAULT_SENDER = _get_env('MAIL_DEFAULT_SENDER', 'noreply@worldinsights.com')
+        self._MAIL_DEFAULT_SENDER = _get_env('MAIL_DEFAULT_SENDER', 'noreply@worldinsights.bonzainsights.com')
         
         # ============================================
         # API Configuration

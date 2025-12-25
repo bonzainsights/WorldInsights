@@ -248,7 +248,7 @@ def delete_user_account(user: User, password: str) -> Tuple[bool, Optional[str]]
             return False, "Incorrect password"
         
         # Don't allow deleting admin account
-        if user.is_admin() and user.email == 'admin@worldinsights.com':
+        if user.is_admin() and user.email == 'admin@worldinsights.bonzainsights.com':
             return False, "Cannot delete the default admin account"
         
         # Soft delete - mark for deletion
@@ -337,7 +337,7 @@ def admin_delete_user(admin: User, target_user_id: int) -> Tuple[bool, Optional[
             return False, "You cannot delete your own account"
         
         # Don't allow deleting the default admin
-        if target_user.is_admin() and target_user.email == 'admin@worldinsights.com':
+        if target_user.is_admin() and target_user.email == 'admin@worldinsights.bonzainsights.com':
             return False, "Cannot delete the default admin account"
         
         # Soft delete - mark for deletion
