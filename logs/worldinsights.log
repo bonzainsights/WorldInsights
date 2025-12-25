@@ -681,3 +681,7 @@ WHERE user.email = ?
 2025-12-24 20:52:26 - worldinsights.auth_service - INFO - auth_service.py:146 - User verified: researcher
 2025-12-24 20:52:39 - worldinsights.auth_service - INFO - auth_service.py:181 - User authenticated: researcher
 2025-12-24 20:54:46 - worldinsights.subscription_service - INFO - subscription_service.py:154 - User researcher subscribed to researcher tier (mock payment: $29.0)
+2025-12-25 11:37:11 - worldinsights.auth_service - INFO - auth_service.py:181 - User authenticated: admin
+2025-12-25 11:41:04 - worldinsights.auth_service - INFO - auth_service.py:348 - Admin admin marked user achbj for deletion
+2025-12-25 11:41:38 - worldinsights.auth_service - INFO - auth_service.py:181 - User authenticated: admin
+2025-12-25 11:42:23 - worldinsights.auth_service - INFO - auth_service.py:181 - User authenticated: researcher

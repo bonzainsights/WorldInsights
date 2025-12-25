@@ -111,7 +111,9 @@
                                                 {% if u.is_verified %}❌{% else %}✅{% endif %}
                                             </button>
                                     </form>
-                                    <button onclick="showAdminDeleteModal({{ u.id }}, '{{ u.username }}')" class="btn-icon btn-delete" title="Delete User">🗑️</button>
+                                    <button class="btn-icon btn-delete" data-id="{{ u.id }}" data-username="{{ u.username }}" title="Delete User">
+                                        🗑️
+                                    </button>
                                 </div>
                                 {% endif %} {% else %}
                                 <span class="text-muted">You</span> {% endif %}
@@ -444,6 +446,12 @@
                 }
             });
         }
+    });
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.btn-delete');
+        if (!btn) return;
+
+        showAdminDeleteModal(btn.dataset.id, btn.dataset.username);
     });
 </script>
 {% endblock %}
