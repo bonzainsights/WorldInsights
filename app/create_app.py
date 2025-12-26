@@ -314,6 +314,9 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     from app.blueprints.auth import auth_bp
     app.register_blueprint(auth_bp)
     
+    from app.blueprints.api import api_bp
+    app.register_blueprint(api_bp)
+    
     logger.info("WorldInsights application initialized successfully")
     
     return app

@@ -886,3 +886,45 @@ WHERE user.email = ?
 2025-12-25 22:01:52 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
 2025-12-25 22:01:52 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
 2025-12-25 22:01:52 - worldinsights - INFO - create_app.py:317 - WorldInsights application initialized successfully
+2025-12-26 09:49:03 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 09:49:03 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 09:49:03 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$RQ6y.tS2CdR32iNV8dVhdOqfG/VycBBMMKKJ.93XTE0veb4xl9RSm', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-26 08:49:03.726275', None, None, 0, None, None, None, '2025-12-26 08:49:03.726280', '2025-12-26 08:49:03.726280')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-26 09:49:03 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 09:49:03 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 09:49:03 - worldinsights - INFO - create_app.py:317 - WorldInsights application initialized successfully
+2025-12-26 09:49:24 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 09:49:24 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 09:49:24 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$XiRiodJoBiY/ipdH5HInUuLg6av5ohonW8B2Q.h3ehDFaQ.csSwzK', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-26 08:49:24.834939', None, None, 0, None, None, None, '2025-12-26 08:49:24.834943', '2025-12-26 08:49:24.834943')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-26 09:49:24 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 09:49:24 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 09:49:24 - worldinsights - INFO - create_app.py:317 - WorldInsights application initialized successfully
+2025-12-26 09:49:26 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 09:49:26 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 09:49:26 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$EAiWiekVw1kzOy7z3obfGeiqac9kJdXhxJhXEjtcr.iS7fg313gXC', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-26 08:49:26.612836', None, None, 0, None, None, None, '2025-12-26 08:49:26.612846', '2025-12-26 08:49:26.612847')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-26 09:49:26 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 09:49:26 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 09:49:26 - worldinsights - INFO - create_app.py:317 - WorldInsights application initialized successfully
+2025-12-26 09:49:45 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 09:49:45 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 09:49:45 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$EhMUDkIsrFZvTzRcv5OEEendxde74BUYp73oUFZ4lXJM2fhhU64XK', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-26 08:49:45.704774', None, None, 0, None, None, None, '2025-12-26 08:49:45.704779', '2025-12-26 08:49:45.704779')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-26 09:49:45 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 09:49:45 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 09:49:46 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 09:49:46 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 09:49:46 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 09:49:46 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 09:49:46 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 09:49:46 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 09:49:46 - worldinsights - INFO - create_app.py:320 - WorldInsights application initialized successfully
