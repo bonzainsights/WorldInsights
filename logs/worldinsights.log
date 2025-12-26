@@ -1054,3 +1054,169 @@ WHERE user.email = ?
 2025-12-26 09:57:04 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
 2025-12-26 09:57:04 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
 2025-12-26 09:57:04 - worldinsights - INFO - create_app.py:320 - WorldInsights application initialized successfully
+2025-12-26 09:59:02 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 09:59:02 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 09:59:02 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$ooGWj6AiOc0t/92V/gmG2.r.DwMTsOK3forbQ.S0oatm3DZIUzBAa', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-26 08:59:02.378135', None, None, 0, None, None, None, '2025-12-26 08:59:02.378139', '2025-12-26 08:59:02.378139')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-26 09:59:02 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 09:59:02 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 09:59:02 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 09:59:02 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 09:59:02 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 09:59:02 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 09:59:02 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 09:59:02 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 09:59:02 - worldinsights - INFO - create_app.py:323 - WorldInsights application initialized successfully
+2025-12-26 10:01:33 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 10:01:33 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 10:01:33 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$2u..K.6MoEAyBJYmIm/0Iuj13T/QnVx9nWrIm8nxyAnJc9uPB3km.', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-26 09:01:33.665023', None, None, 0, None, None, None, '2025-12-26 09:01:33.665028', '2025-12-26 09:01:33.665029')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-26 10:01:33 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 10:01:33 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 10:01:34 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 10:01:34 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 10:01:34 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 10:01:34 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 10:01:34 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 10:01:34 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 10:01:34 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 10:01:34 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 10:01:34 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 10:01:34 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.com', '$2b$12$XyzhBR8dyfY6RDbAm5NzKO89brFuJumPoKLMHxc9IEL3Bo/b/gfcK', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-26 09:01:34.702496', None, None, 0, None, None, None, '2025-12-26 09:01:34.702501', '2025-12-26 09:01:34.702502')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-26 10:01:34 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 10:01:34 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 10:01:35 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 10:01:35 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 10:01:35 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 10:01:35 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 10:01:35 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 10:01:35 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 10:01:35 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 10:01:43 - worldinsights.app.blueprints.api.routes - INFO - routes.py:49 - Fetching available indicators
+2025-12-26 10:01:43 - worldinsights.app.services.plot_service - INFO - plot_service.py:75 - Fetching available indicators from all sources
+2025-12-26 10:01:43 - worldinsights.app.blueprints.api.routes - INFO - routes.py:90 - Fetching available countries
+2025-12-26 10:01:43 - worldinsights.app.services.plot_service - INFO - plot_service.py:174 - Fetching available countries from all sources
+2025-12-26 10:01:43 - worldinsights.WorldBankClient - INFO - worldbank.py:135 - Fetched 100 indicators from World Bank API
+2025-12-26 10:01:43 - worldinsights.app.services.plot_service - INFO - plot_service.py:89 - Fetched 100 indicators from World Bank
+2025-12-26 10:01:43 - worldinsights.WorldBankClient - INFO - worldbank.py:92 - Fetched 296 countries from World Bank API
+2025-12-26 10:01:43 - worldinsights.app.services.plot_service - INFO - plot_service.py:192 - Fetched 296 countries from World Bank
+2025-12-26 10:01:43 - worldinsights.WHOClient - INFO - who.py:105 - Fetched 100 indicators from WHO API
+2025-12-26 10:01:43 - worldinsights.app.services.plot_service - INFO - plot_service.py:104 - Fetched 100 indicators from WHO
+2025-12-26 10:01:44 - worldinsights.WHOClient - INFO - who.py:75 - Fetched 234 countries from WHO API
+2025-12-26 10:01:44 - worldinsights.app.services.plot_service - INFO - plot_service.py:210 - Added 0 new countries from WHO
+2025-12-26 10:01:59 - worldinsights.app.blueprints.api.routes - INFO - routes.py:49 - Fetching available indicators
+2025-12-26 10:01:59 - worldinsights.app.blueprints.api.routes - INFO - routes.py:90 - Fetching available countries
+2025-12-26 10:01:59 - worldinsights.app.services.plot_service - INFO - plot_service.py:75 - Fetching available indicators from all sources
+2025-12-26 10:01:59 - worldinsights.app.services.plot_service - INFO - plot_service.py:174 - Fetching available countries from all sources
+2025-12-26 10:02:00 - worldinsights.WorldBankClient - INFO - worldbank.py:92 - Fetched 296 countries from World Bank API
+2025-12-26 10:02:00 - worldinsights.app.services.plot_service - INFO - plot_service.py:192 - Fetched 296 countries from World Bank
+2025-12-26 10:02:00 - worldinsights.WorldBankClient - INFO - worldbank.py:135 - Fetched 100 indicators from World Bank API
+2025-12-26 10:02:00 - worldinsights.app.services.plot_service - INFO - plot_service.py:89 - Fetched 100 indicators from World Bank
+2025-12-26 10:02:00 - worldinsights.WHOClient - INFO - who.py:75 - Fetched 234 countries from WHO API
+2025-12-26 10:02:00 - worldinsights.app.services.plot_service - INFO - plot_service.py:210 - Added 0 new countries from WHO
+2025-12-26 10:02:00 - worldinsights.WHOClient - INFO - who.py:105 - Fetched 100 indicators from WHO API
+2025-12-26 10:02:00 - worldinsights.app.services.plot_service - INFO - plot_service.py:104 - Fetched 100 indicators from WHO
+2025-12-26 10:02:09 - worldinsights.FAOClient - ERROR - base_client.py:164 - HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL
+2025-12-26 10:02:09 - worldinsights.app.services.plot_service - WARNING - plot_service.py:114 - Failed to fetch FAO indicators: HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL
+2025-12-26 10:02:09 - worldinsights.app.services.plot_service - INFO - plot_service.py:134 - Fetched 7 indicators from Open-Meteo
+2025-12-26 10:02:09 - worldinsights.app.services.plot_service - INFO - plot_service.py:149 - Fetched 7 indicators from NASA
+2025-12-26 10:02:09 - worldinsights.app.services.plot_service - INFO - plot_service.py:159 - Successfully aggregated 214 indicators from 5 sources
+2025-12-26 10:02:09 - worldinsights.app.blueprints.api.routes - INFO - routes.py:58 - Successfully fetched 214 indicators
+2025-12-26 10:02:10 - worldinsights.FAOClient - ERROR - base_client.py:164 - HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL
+2025-12-26 10:02:10 - worldinsights.app.services.plot_service - WARNING - plot_service.py:220 - Failed to fetch FAO countries: HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL
+2025-12-26 10:02:10 - worldinsights.app.services.plot_service - INFO - plot_service.py:241 - Successfully aggregated 314 unique countries
+2025-12-26 10:02:10 - worldinsights.app.blueprints.api.routes - INFO - routes.py:99 - Successfully fetched 314 countries
+2025-12-26 10:02:11 - worldinsights.FAOClient - ERROR - base_client.py:164 - HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL
+2025-12-26 10:02:11 - worldinsights.app.services.plot_service - WARNING - plot_service.py:114 - Failed to fetch FAO indicators: HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL
+2025-12-26 10:02:11 - worldinsights.app.services.plot_service - INFO - plot_service.py:134 - Fetched 7 indicators from Open-Meteo
+2025-12-26 10:02:11 - worldinsights.app.services.plot_service - INFO - plot_service.py:149 - Fetched 7 indicators from NASA
+2025-12-26 10:02:11 - worldinsights.app.services.plot_service - INFO - plot_service.py:159 - Successfully aggregated 214 indicators from 5 sources
+2025-12-26 10:02:11 - worldinsights.app.blueprints.api.routes - INFO - routes.py:58 - Successfully fetched 214 indicators
+2025-12-26 10:02:27 - worldinsights.FAOClient - ERROR - base_client.py:164 - HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL
+2025-12-26 10:02:27 - worldinsights.app.services.plot_service - WARNING - plot_service.py:220 - Failed to fetch FAO countries: HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL
+2025-12-26 10:02:27 - worldinsights.app.services.plot_service - INFO - plot_service.py:241 - Successfully aggregated 314 unique countries
+2025-12-26 10:02:27 - worldinsights.app.blueprints.api.routes - INFO - routes.py:99 - Successfully fetched 314 countries
+2025-12-26 10:03:05 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 10:03:05 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 10:03:05 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 10:03:05 - worldinsights.app.services.plot_service - WARNING - plot_service.py:302 - Failed to fetch data: Invalid response format from World Bank API
+2025-12-26 10:03:05 - worldinsights.app.services.plot_service - ERROR - plot_service.py:313 - Failed to fetch any data: worldbank/1111000/NPL: Invalid response format from World Bank API
+2025-12-26 10:03:05 - worldinsights.app.blueprints.api.routes - ERROR - routes.py:174 - Failed to fetch plot data: worldbank/1111000/NPL: Invalid response format from World Bank API
+2025-12-26 10:04:01 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 10:04:01 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 10:04:01 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 10:04:02 - worldinsights.WorldBankClient - WARNING - worldbank.py:188 - No data found for NPL - 1.1.PGap.1.90usd
+2025-12-26 10:04:02 - worldinsights.app.services.plot_service - INFO - plot_service.py:316 - Successfully fetched 0 data points
+2025-12-26 10:04:02 - worldinsights.app.blueprints.api.routes - INFO - routes.py:184 - Transforming data for line chart
+2025-12-26 10:04:02 - worldinsights.app.blueprints.api.routes - WARNING - routes.py:188 - Failed to transform data: No data to transform
+2025-12-26 10:04:02 - worldinsights.app.blueprints.api.routes - INFO - routes.py:193 - Successfully fetched 0 data points
+2025-12-26 10:05:53 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 10:05:53 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 10:05:53 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 10:05:54 - worldinsights.WorldBankClient - WARNING - worldbank.py:188 - No data found for NLD - 1.1.PGap.1.90usd
+2025-12-26 10:05:54 - worldinsights.app.services.plot_service - INFO - plot_service.py:316 - Successfully fetched 0 data points
+2025-12-26 10:05:54 - worldinsights.app.blueprints.api.routes - INFO - routes.py:184 - Transforming data for line chart
+2025-12-26 10:05:54 - worldinsights.app.blueprints.api.routes - WARNING - routes.py:188 - Failed to transform data: No data to transform
+2025-12-26 10:05:54 - worldinsights.app.blueprints.api.routes - INFO - routes.py:193 - Successfully fetched 0 data points
+2025-12-26 10:06:00 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 10:06:00 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 10:06:00 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 10:06:00 - worldinsights.app.services.plot_service - WARNING - plot_service.py:302 - Failed to fetch data: Invalid response format from World Bank API
+2025-12-26 10:06:00 - worldinsights.app.services.plot_service - ERROR - plot_service.py:313 - Failed to fetch any data: worldbank/T2M/NLD: Invalid response format from World Bank API
+2025-12-26 10:06:00 - worldinsights.app.blueprints.api.routes - ERROR - routes.py:174 - Failed to fetch plot data: worldbank/T2M/NLD: Invalid response format from World Bank API
+2025-12-26 10:06:04 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 10:06:04 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 10:06:04 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 10:06:04 - worldinsights.app.services.plot_service - WARNING - plot_service.py:302 - Failed to fetch data: Invalid response format from World Bank API
+2025-12-26 10:06:04 - worldinsights.app.services.plot_service - ERROR - plot_service.py:313 - Failed to fetch any data: worldbank/T2M/NLD: Invalid response format from World Bank API
+2025-12-26 10:06:04 - worldinsights.app.blueprints.api.routes - ERROR - routes.py:174 - Failed to fetch plot data: worldbank/T2M/NLD: Invalid response format from World Bank API
+2025-12-26 10:06:07 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 10:06:07 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 10:06:07 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 10:06:07 - worldinsights.app.services.plot_service - WARNING - plot_service.py:302 - Failed to fetch data: Invalid response format from World Bank API
+2025-12-26 10:06:07 - worldinsights.app.services.plot_service - ERROR - plot_service.py:313 - Failed to fetch any data: worldbank/T2M/NLD: Invalid response format from World Bank API
+2025-12-26 10:06:07 - worldinsights.app.blueprints.api.routes - ERROR - routes.py:174 - Failed to fetch plot data: worldbank/T2M/NLD: Invalid response format from World Bank API
+2025-12-26 10:06:10 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 10:06:10 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 10:06:10 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 10:06:11 - worldinsights.app.services.plot_service - WARNING - plot_service.py:302 - Failed to fetch data: Invalid response format from World Bank API
+2025-12-26 10:06:11 - worldinsights.app.services.plot_service - ERROR - plot_service.py:313 - Failed to fetch any data: worldbank/PRECTOTCORR/NLD: Invalid response format from World Bank API
+2025-12-26 10:06:11 - worldinsights.app.blueprints.api.routes - ERROR - routes.py:174 - Failed to fetch plot data: worldbank/PRECTOTCORR/NLD: Invalid response format from World Bank API
+2025-12-26 10:06:17 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 10:06:17 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 10:06:17 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 10:06:17 - worldinsights.app.services.plot_service - WARNING - plot_service.py:302 - Failed to fetch data: Country NLD not supported. Available: ['USA', 'GBR', 'CHN', 'IND', 'DEU', 'FRA', 'JPN', 'BRA', 'CAN', 'AUS']
+2025-12-26 10:06:17 - worldinsights.app.services.plot_service - ERROR - plot_service.py:313 - Failed to fetch any data: openmeteo/temperature_2m_mean/NLD: Country NLD not supported. Available: ['USA', 'GBR', 'CHN', 'IND', 'DEU', 'FRA', 'JPN', 'BRA', 'CAN', 'AUS']
+2025-12-26 10:06:17 - worldinsights.app.blueprints.api.routes - ERROR - routes.py:174 - Failed to fetch plot data: openmeteo/temperature_2m_mean/NLD: Country NLD not supported. Available: ['USA', 'GBR', 'CHN', 'IND', 'DEU', 'FRA', 'JPN', 'BRA', 'CAN', 'AUS']
+2025-12-26 10:06:37 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 10:06:37 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 10:06:37 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 10:06:37 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:155 - Fetched 3287 weather data points for AUS
+2025-12-26 10:06:37 - worldinsights.app.services.plot_service - INFO - plot_service.py:316 - Successfully fetched 3287 data points
+2025-12-26 10:06:37 - worldinsights.app.blueprints.api.routes - INFO - routes.py:184 - Transforming data for scatter chart
+2025-12-26 10:06:37 - worldinsights.app.services.plot_service - INFO - plot_service.py:374 - Transforming 3287 records for scatter chart
+2025-12-26 10:06:37 - worldinsights.app.services.plot_service - WARNING - plot_service.py:441 - Scatter plot requires at least 2 indicators
+2025-12-26 10:06:37 - worldinsights.app.blueprints.api.routes - INFO - routes.py:193 - Successfully fetched 3287 data points
+2025-12-26 10:06:42 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 10:06:42 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 10:06:42 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 10:06:42 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:155 - Fetched 3287 weather data points for AUS
+2025-12-26 10:06:42 - worldinsights.app.services.plot_service - INFO - plot_service.py:316 - Successfully fetched 3287 data points
+2025-12-26 10:06:42 - worldinsights.app.blueprints.api.routes - INFO - routes.py:184 - Transforming data for bar chart
+2025-12-26 10:06:42 - worldinsights.app.services.plot_service - INFO - plot_service.py:374 - Transforming 3287 records for bar chart
+2025-12-26 10:06:42 - worldinsights.app.blueprints.api.routes - INFO - routes.py:193 - Successfully fetched 3287 data points
+2025-12-26 10:06:45 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 10:06:45 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 10:06:45 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 10:06:45 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:155 - Fetched 3287 weather data points for AUS
+2025-12-26 10:06:45 - worldinsights.app.services.plot_service - INFO - plot_service.py:316 - Successfully fetched 3287 data points
+2025-12-26 10:06:45 - worldinsights.app.blueprints.api.routes - INFO - routes.py:184 - Transforming data for line chart
+2025-12-26 10:06:45 - worldinsights.app.services.plot_service - INFO - plot_service.py:374 - Transforming 3287 records for line chart
+2025-12-26 10:06:45 - worldinsights.app.blueprints.api.routes - INFO - routes.py:193 - Successfully fetched 3287 data points

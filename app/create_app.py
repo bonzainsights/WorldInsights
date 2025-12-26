@@ -163,11 +163,7 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     @app.errorhandler(404)
     def not_found(error):
         """Handle 404 errors."""
-        return jsonify({
-            'error': 'Not Found',
-            'message': 'The requested resource was not found',
-            'status': 404
-        }), 404
+        return render_template('404.html'), 404
     
     @app.errorhandler(500)
     def internal_error(error):
