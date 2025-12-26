@@ -153,3 +153,62 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
   document.head.appendChild(style);
 });
+
+// Flash Message Auto-Dismiss
+document.addEventListener("DOMContentLoaded", function () {
+  const flashMessages = document.querySelectorAll(".flash-message");
+
+  flashMessages.forEach(function (message) {
+    let dismissTimer;
+    let isPaused = false;
+
+    // Function to dismiss message
+    function dismissMessage() {
+      message.classList.add("fade-out");
+      setTimeout(function () {
+        message.remove();
+        // Remove container if no more messages
+        const container = document.querySelector(".flash-messages-container");
+        if (
+          container &&
+          container.querySelectorAll(".flash-message").length === 0
+        ) {
+          container.remove();
+        }
+      }, 300); // Match fade-out animation duration
+    }
+
+    // Auto-dismiss after 5 seconds
+    function startDismissTimer() {
+      dismissTimer = setTimeout(dismissMessage, 5000);
+    }
+
+    // Pause timer on hover
+    message.addEventListener("mouseenter", function () {
+      if (dismissTimer) {
+        clearTimeout(dismissTimer);
+        isPaused = true;
+      }
+    });
+
+    // Resume timer on mouse leave
+    message.addEventListener("mouseleave", function () {
+      if (isPaused) {
+        startDismissTimer();
+        isPaused = false;
+      }
+    });
+
+    // Add close button functionality (if needed in future)
+    const closeBtn = message.querySelector(".close-btn");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", function () {
+        clearTimeout(dismissTimer);
+        dismissMessage();
+      });
+    }
+
+    // Start the auto-dismiss timer
+    startDismissTimer();
+  });
+});
