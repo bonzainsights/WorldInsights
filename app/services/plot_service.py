@@ -14,6 +14,7 @@ from functools import lru_cache
 import pandas as pd
 import numpy as np
 from app.core.logging import get_logger
+from app.core.cache import get_cache
 from app.infrastructure.api_clients.worldbank import WorldBankClient
 from app.infrastructure.api_clients.who import WHOClient
 from app.infrastructure.api_clients.fao import FAOClient
@@ -33,7 +34,7 @@ class PlotService:
     - Fetches data from multiple sources simultaneously
     - Transforms data for different chart types
     - Calculates correlations between indicators
-    - Implements caching for performance
+    - Implements file-based caching for performance
     
     Example usage:
         >>> service = PlotService()
@@ -42,7 +43,7 @@ class PlotService:
     """
     
     def __init__(self):
-        """Initialize PlotService with all API clients."""
+        """Initialize PlotService with all API clients and cache."""
         self.worldbank = WorldBankClient()
         self.who = WHOClient()
         self.fao = FAOClient()
@@ -57,7 +58,10 @@ class PlotService:
             'nasa': self.nasa
         }
         
-        logger.info("PlotService initialized with all API clients")
+        # Initialize cache
+        self.cache = get_cache()
+        
+        logger.info("PlotService initialized with all API clients and caching")
     
     @lru_cache(maxsize=1)
     def get_available_indicators(self) -> Tuple[Optional[List[Dict]], Optional[str]]:
