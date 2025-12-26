@@ -1,0 +1,237 @@
+{% extends "base.html" %} {% block title %}Plot Explorer - WorldInsights{%
+endblock %} {% block extra_css %}
+<style>
+  .plot-container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+  }
+
+  .plot-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .plot-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .plot-controls {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+
+  .control-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .control-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .control-group select,
+  .control-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+
+  .control-group select:focus,
+  .control-group input:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+
+  .control-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .btn-generate {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+  }
+
+  .btn-generate:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .plot-display {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-height: 500px;
+  }
+
+  #plotly-chart {
+    width: 100%;
+    min-height: 500px;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 3rem;
+    color: #667eea;
+  }
+
+  .loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .error-message {
+    background: #fee;
+    color: #c33;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+  }
+
+  .info-box {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+  }
+
+  select[multiple] {
+    min-height: 150px;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="plot-container">
+  <div class="plot-header">
+    <h1>🌍 Interactive Plot Explorer</h1>
+    <p>
+      Explore global data with interactive visualizations from World Bank, WHO,
+      FAO, and more
+    </p>
+  </div>
+
+  <div class="info-box">
+    <strong>📊 How to use:</strong> Select indicators and countries below,
+    choose a date range and chart type, then click "Generate Plot" to visualize
+    the data.
+  </div>
+
+  <div class="plot-controls">
+    <div class="control-group">
+      <label for="indicators"
+        >Select Indicators (hold Ctrl/Cmd to select multiple):</label
+      >
+      <select id="indicators" multiple>
+        <option value="">Loading indicators...</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label for="countries"
+        >Select Countries (hold Ctrl/Cmd to select multiple):</label
+      >
+      <select id="countries" multiple>
+        <option value="">Loading countries...</option>
+      </select>
+    </div>
+
+    <div class="control-row">
+      <div class="control-group">
+        <label for="start-year">Start Year:</label>
+        <input
+          type="number"
+          id="start-year"
+          min="1960"
+          max="2024"
+          value="2015"
+          placeholder="e.g., 2015"
+        />
+      </div>
+
+      <div class="control-group">
+        <label for="end-year">End Year:</label>
+        <input
+          type="number"
+          id="end-year"
+          min="1960"
+          max="2024"
+          value="2023"
+          placeholder="e.g., 2023"
+        />
+      </div>
+
+      <div class="control-group">
+        <label for="chart-type">Chart Type:</label>
+        <select id="chart-type">
+          <option value="line">Line Chart (Time Series)</option>
+          <option value="bar">Bar Chart (Comparison)</option>
+          <option value="scatter">Scatter Plot (Correlation)</option>
+          <option value="choropleth">Choropleth Map</option>
+        </select>
+      </div>
+    </div>
+
+    <button id="generate-btn" class="btn-generate" onclick="generatePlot()">
+      Generate Plot
+    </button>
+  </div>
+
+  <div class="plot-display">
+    <div id="loading" class="loading" style="display: none">
+      <div class="loading-spinner"></div>
+      <p>Fetching data and generating plot...</p>
+    </div>
+    <div id="error" class="error-message" style="display: none"></div>
+    <div id="plotly-chart"></div>
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
+<!-- Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<script src="{{ url_for('static', filename='js/plot.js') }}"></script>
+{% endblock %}

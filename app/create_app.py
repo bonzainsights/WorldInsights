@@ -317,6 +317,9 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     from app.blueprints.api import api_bp
     app.register_blueprint(api_bp)
     
+    from app.blueprints.frontend import frontend_bp
+    app.register_blueprint(frontend_bp)
+    
     logger.info("WorldInsights application initialized successfully")
     
     return app
