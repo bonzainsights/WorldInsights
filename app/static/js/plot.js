@@ -389,3 +389,24 @@ function showError(message) {
 function hideError() {
   document.getElementById("error").style.display = "none";
 }
+
+/**
+ * Show warning message
+ */
+function showWarning(message) {
+  const warningDiv = document.getElementById("warning");
+  if (warningDiv) {
+    warningDiv.textContent = message;
+    warningDiv.style.display = "block";
+  }
+}
+
+/**
+ * Hide warning message
+ */
+function hideWarning() {
+  const warningDiv = document.getElementById("warning");
+  if (warningDiv) {
+    warningDiv.style.display = "none";
+  }
+}
