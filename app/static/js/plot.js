@@ -131,6 +131,7 @@ async function generatePlot() {
   // Show loading
   showLoading();
   hideError();
+  hideWarning();
 
   try {
     // Build API URL
@@ -153,6 +154,11 @@ async function generatePlot() {
       showError(data.error);
       hideLoading();
       return;
+    }
+
+    // Show warning if partial results
+    if (data.warning) {
+      showWarning(data.warning);
     }
 
     // Render chart

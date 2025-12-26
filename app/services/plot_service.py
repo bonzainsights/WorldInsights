@@ -63,10 +63,9 @@ class PlotService:
         
         logger.info("PlotService initialized with all API clients and caching")
     
-    @lru_cache(maxsize=1)
     def get_available_indicators(self) -> Tuple[Optional[List[Dict]], Optional[str]]:
         """
-        Aggregate indicators from all data sources.
+        Aggregate indicators from all data sources with caching.
         
         Returns:
             Tuple of (indicators_list, error_message)
@@ -76,7 +75,15 @@ class PlotService:
                 - description: str
                 - source: str (worldbank, who, fao, openmeteo, nasa)
         """
-        logger.info("Fetching available indicators from all sources")
+        # Try cache first (7 day TTL since indicators rarely change)
+        cache_key = 'plot_service:indicators:all'
+        cached_data = self.cache.get(cache_key)
+        
+        if cached_data is not None:
+            logger.info(f"Returning {len(cached_data)} indicators from cache")
+            return cached_data, None
+        
+        logger.info("Fetching available indicators from all sources (cache miss)")
         all_indicators = []
         errors = []
         
@@ -160,13 +167,17 @@ class PlotService:
             logger.error(f"Failed to fetch indicators from all sources: {error_msg}")
             return None, error_msg
         
+        # Cache the results (7 days TTL)
+        if all_indicators:
+            self.cache.set(cache_key, all_indicators, ttl=7 * 24 * 3600)
+            logger.info(f"Cached {len(all_indicators)} indicators for 7 days")
+        
         logger.info(f"Successfully aggregated {len(all_indicators)} indicators from {len(self.clients)} sources")
         return all_indicators, None
     
-    @lru_cache(maxsize=1)
     def get_available_countries(self) -> Tuple[Optional[List[Dict]], Optional[str]]:
         """
-        Aggregate countries from all data sources.
+        Aggregate countries from all data sources with caching.
         
         Returns:
             Tuple of (countries_list, error_message)
@@ -175,7 +186,15 @@ class PlotService:
                 - name: str
                 - source: str
         """
-        logger.info("Fetching available countries from all sources")
+        # Try cache first (7 day TTL since countries rarely change)
+        cache_key = 'plot_service:countries:all'
+        cached_data = self.cache.get(cache_key)
+        
+        if cached_data is not None:
+            logger.info(f"Returning {len(cached_data)} countries from cache")
+            return cached_data, None
+        
+        logger.info("Fetching available countries from all sources (cache miss)")
         all_countries = []
         country_codes_seen = set()
         errors = []
@@ -242,6 +261,11 @@ class PlotService:
         # Sort by name
         all_countries.sort(key=lambda x: x.get('name', ''))
         
+        # Cache the results (7 days TTL)
+        if all_countries:
+            self.cache.set(cache_key, all_countries, ttl=7 * 24 * 3600)
+            logger.info(f"Cached {len(all_countries)} countries for 7 days")
+        
         logger.info(f"Successfully aggregated {len(all_countries)} unique countries")
         return all_countries, None
     
@@ -253,7 +277,7 @@ class PlotService:
         end_year: Optional[int] = None
     ) -> Tuple[Optional[List[Dict]], Optional[str]]:
         """
-        Fetch data for plotting from appropriate data sources.
+        Fetch data for plotting from appropriate data sources with caching and partial results support.
         
         Args:
             indicators: List of indicator codes (e.g., ['NY.GDP.MKTP.CD', 'SP.POP.TOTL'])
@@ -269,6 +293,9 @@ class PlotService:
                 - indicator: str
                 - value: float
                 - source: str
+            
+            Note: Returns partial results if some combinations fail.
+                  Error message contains warnings about failed combinations.
         """
         if not indicators:
             return None, "At least one indicator is required"
@@ -276,10 +303,20 @@ class PlotService:
         if not countries:
             return None, "At least one country is required"
         
+        # Try cache first (1 hour TTL for data)
+        cache_key = f"plot_data:{','.join(sorted(indicators))}:{','.join(sorted(countries))}:{start_year}:{end_year}"
+        cached_data = self.cache.get(cache_key)
+        
+        if cached_data is not None:
+            logger.info(f"Returning cached plot data ({len(cached_data)} points)")
+            return cached_data, None
+        
         logger.info(f"Fetching plot data for {len(indicators)} indicators, {len(countries)} countries")
         
         all_data = []
         errors = []
+        successful_combinations = []
+        failed_combinations = []
         
         # Determine which source each indicator belongs to
         indicator_sources = self._map_indicators_to_sources(indicators)
@@ -290,6 +327,8 @@ class PlotService:
             
             if not client:
                 logger.warning(f"No client found for source: {source}")
+                for country in countries:
+                    failed_combinations.append(f"{country}/{indicator} (no client for {source})")
                 continue
             
             for country in countries:
@@ -302,23 +341,45 @@ class PlotService:
                     )
                     
                     if error:
+                        failed_combinations.append(f"{country}/{indicator}")
                         errors.append(f"{source}/{indicator}/{country}: {error}")
                         logger.warning(f"Failed to fetch data: {error}")
                     elif data:
                         all_data.extend(data)
+                        successful_combinations.append(f"{country}/{indicator}")
                         logger.debug(f"Fetched {len(data)} data points for {country}/{indicator}")
+                    else:
+                        # No error but no data either
+                        failed_combinations.append(f"{country}/{indicator} (no data)")
+                        logger.debug(f"No data available for {country}/{indicator}")
                     
                 except Exception as e:
+                    failed_combinations.append(f"{country}/{indicator}")
                     errors.append(f"{source}/{indicator}/{country}: {str(e)}")
                     logger.error(f"Exception fetching data: {str(e)}")
         
-        if not all_data and errors:
-            error_msg = "; ".join(errors[:5])  # Limit error messages
-            logger.error(f"Failed to fetch any data: {error_msg}")
-            return None, error_msg
+        # Build informative error/warning message
+        warning_msg = None
+        if failed_combinations:
+            if all_data:
+                # Partial success
+                warning_msg = f"Data unavailable for {len(failed_combinations)} combinations: {', '.join(failed_combinations[:5])}"
+                if len(failed_combinations) > 5:
+                    warning_msg += f" and {len(failed_combinations) - 5} more"
+                logger.warning(warning_msg)
+            else:
+                # Total failure
+                error_msg = f"No data available. Failed combinations: {', '.join(failed_combinations[:10])}"
+                logger.error(error_msg)
+                return None, error_msg
         
-        logger.info(f"Successfully fetched {len(all_data)} data points")
-        return all_data, None
+        # Cache successful results (1 hour TTL)
+        if all_data:
+            self.cache.set(cache_key, all_data, ttl=3600)
+            logger.info(f"Cached {len(all_data)} data points for 1 hour")
+        
+        logger.info(f"Successfully fetched {len(all_data)} data points ({len(successful_combinations)} combinations succeeded, {len(failed_combinations)} failed)")
+        return all_data, warning_msg
     
     def _map_indicators_to_sources(self, indicators: List[str]) -> Dict[str, str]:
         """

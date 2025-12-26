@@ -162,22 +162,28 @@ def get_plot_data() -> tuple[Dict[str, Any], int]:
         
         logger.info(f"Fetching data for {len(indicators)} indicators, {len(countries)} countries")
         
-        # Fetch data
-        data, error = plot_service.fetch_plot_data(
+        # Fetch data (may return partial results with warnings)
+        data, warning = plot_service.fetch_plot_data(
             indicators=indicators,
             countries=countries,
             start_year=start_year,
             end_year=end_year
         )
         
-        if error:
-            logger.error(f"Failed to fetch plot data: {error}")
-            return jsonify({'error': error}), 500
+        # If no data at all, treat warning as error
+        if data is None:
+            logger.error(f"Failed to fetch plot data: {warning}")
+            return jsonify({'error': warning}), 500
         
         response = {
             'data': data,
             'count': len(data)
         }
+        
+        # Include warning if partial results
+        if warning:
+            response['warning'] = warning
+            logger.info(f"Returning partial results with warning: {warning}")
         
         # Transform data if chart_type specified
         if chart_type:
