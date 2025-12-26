@@ -1,0 +1,871 @@
+{% extends "base.html" %} {% block title %}API Documentation - WorldInsights{%
+endblock %} {% block meta_description %}Comprehensive documentation for
+WorldInsights data sources and API endpoints. Access global data from World
+Bank, WHO, FAO, NASA, and Open-Meteo.{% endblock %} {% block content %}
+<!-- Hero Section -->
+<section class="hero" style="padding: 80px 0 60px">
+  <div class="container">
+    <div
+      class="hero-content"
+      style="text-align: center; max-width: 800px; margin: 0 auto"
+    >
+      <h1 class="hero-title">
+        API <span class="gradient-text">Documentation</span>
+      </h1>
+      <p class="hero-subtitle">
+        Explore our data sources and API endpoints. All data is freely
+        accessible from trusted global organizations.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- External Data Sources Section -->
+<section class="features" style="padding: 40px 0">
+  <div class="container">
+    <div class="section-header">
+      <h2>🌍 External Data Sources</h2>
+      <p>We aggregate data from the world's most authoritative organizations</p>
+    </div>
+
+    <!-- World Bank -->
+    <div class="api-source-card">
+      <div class="api-source-header">
+        <div class="api-source-icon">🏦</div>
+        <div>
+          <h3>World Bank Open Data</h3>
+          <a href="https://data.worldbank.org" target="_blank" class="api-link"
+            >data.worldbank.org ↗</a
+          >
+        </div>
+      </div>
+      <div class="api-source-body">
+        <p class="api-description">
+          The World Bank provides free and open access to global development
+          data covering economic, social, environmental, and institutional
+          indicators for 200+ countries from 1960 onwards.
+        </p>
+
+        <div class="api-features">
+          <h4>📊 Key Features</h4>
+          <ul>
+            <li>
+              <strong>16,000+ Indicators</strong> - GDP, population, poverty,
+              education, health, infrastructure
+            </li>
+            <li>
+              <strong>200+ Countries</strong> - Comprehensive global coverage
+              including regions and income groups
+            </li>
+            <li>
+              <strong>60+ Years</strong> - Historical data from 1960 to present
+            </li>
+            <li>
+              <strong>No Authentication</strong> - Free access, no API key
+              required
+            </li>
+          </ul>
+        </div>
+
+        <div class="api-examples">
+          <h4>🔗 API Endpoints</h4>
+          <div class="code-block">
+            <code>https://api.worldbank.org/v2/country</code>
+            <span class="code-label">Get all countries</span>
+          </div>
+          <div class="code-block">
+            <code>https://api.worldbank.org/v2/indicator</code>
+            <span class="code-label">Get all indicators</span>
+          </div>
+          <div class="code-block">
+            <code
+              >https://api.worldbank.org/v2/country/USA/indicator/NY.GDP.MKTP.CD</code
+            >
+            <span class="code-label">Get GDP data for USA</span>
+          </div>
+        </div>
+
+        <div class="api-stats">
+          <div class="stat-badge">
+            <span class="stat-value">16K+</span>
+            <span class="stat-label">Indicators</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-value">200+</span>
+            <span class="stat-label">Countries</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-value">1960+</span>
+            <span class="stat-label">Start Year</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHO -->
+    <div class="api-source-card">
+      <div class="api-source-header">
+        <div class="api-source-icon">⚕️</div>
+        <div>
+          <h3>World Health Organization (WHO)</h3>
+          <a
+            href="https://www.who.int/data/gho"
+            target="_blank"
+            class="api-link"
+            >who.int/data/gho ↗</a
+          >
+        </div>
+      </div>
+      <div class="api-source-body">
+        <p class="api-description">
+          WHO Global Health Observatory provides access to health statistics for
+          194 member states, covering mortality, disease burden, health systems,
+          and risk factors.
+        </p>
+
+        <div class="api-features">
+          <h4>📊 Key Features</h4>
+          <ul>
+            <li>
+              <strong>2,000+ Indicators</strong> - Disease prevalence, mortality
+              rates, vaccination coverage, health infrastructure
+            </li>
+            <li><strong>194 Countries</strong> - All WHO member states</li>
+            <li>
+              <strong>Authoritative Health Data</strong> - Official statistics
+              from national health systems
+            </li>
+            <li>
+              <strong>Regular Updates</strong> - Annual updates with latest
+              health statistics
+            </li>
+          </ul>
+        </div>
+
+        <div class="api-examples">
+          <h4>🔗 API Endpoints</h4>
+          <div class="code-block">
+            <code>https://ghoapi.azureedge.net/api/DIMENSION/COUNTRY</code>
+            <span class="code-label">Get all countries</span>
+          </div>
+          <div class="code-block">
+            <code>https://ghoapi.azureedge.net/api/Indicator</code>
+            <span class="code-label">Get all health indicators</span>
+          </div>
+        </div>
+
+        <div class="api-stats">
+          <div class="stat-badge">
+            <span class="stat-value">2K+</span>
+            <span class="stat-label">Indicators</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-value">194</span>
+            <span class="stat-label">Countries</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-value">Health</span>
+            <span class="stat-label">Focus Area</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAO -->
+    <div class="api-source-card">
+      <div class="api-source-header">
+        <div class="api-source-icon">🌾</div>
+        <div>
+          <h3>Food and Agriculture Organization (FAO)</h3>
+          <a href="https://www.fao.org/faostat" target="_blank" class="api-link"
+            >fao.org/faostat ↗</a
+          >
+        </div>
+      </div>
+      <div class="api-source-body">
+        <p class="api-description">
+          FAOSTAT provides comprehensive statistics on food, agriculture, land
+          use, and nutrition for 245+ countries and territories from 1961
+          onwards.
+        </p>
+
+        <div class="api-features">
+          <h4>📊 Key Features</h4>
+          <ul>
+            <li>
+              <strong>Agriculture Data</strong> - Crop production, livestock,
+              fertilizers, pesticides, land use
+            </li>
+            <li>
+              <strong>Food Security</strong> - Food balances, supply
+              utilization, nutrition indicators
+            </li>
+            <li>
+              <strong>245+ Territories</strong> - Comprehensive global
+              agricultural coverage
+            </li>
+            <li>
+              <strong>Historical Data</strong> - Data from 1961 to present
+            </li>
+          </ul>
+        </div>
+
+        <div class="api-examples">
+          <h4>🔗 API Endpoints</h4>
+          <div class="code-block">
+            <code
+              >https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL</code
+            >
+            <span class="code-label">Get countries for crops dataset</span>
+          </div>
+          <div class="code-block">
+            <code
+              >https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL</code
+            >
+            <span class="code-label">Get crop indicators</span>
+          </div>
+        </div>
+
+        <div class="api-stats">
+          <div class="stat-badge">
+            <span class="stat-value">1000+</span>
+            <span class="stat-label">Indicators</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-value">245+</span>
+            <span class="stat-label">Territories</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-value">1961+</span>
+            <span class="stat-label">Start Year</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NASA -->
+    <div class="api-source-card">
+      <div class="api-source-header">
+        <div class="api-source-icon">🛰️</div>
+        <div>
+          <h3>NASA POWER</h3>
+          <a href="https://power.larc.nasa.gov" target="_blank" class="api-link"
+            >power.larc.nasa.gov ↗</a
+          >
+        </div>
+      </div>
+      <div class="api-source-body">
+        <p class="api-description">
+          NASA's Prediction Of Worldwide Energy Resources (POWER) provides solar
+          and meteorological data for renewable energy, building design, and
+          agriculture applications.
+        </p>
+
+        <div class="api-features">
+          <h4>📊 Key Features</h4>
+          <ul>
+            <li>
+              <strong>Solar Radiation</strong> - Global horizontal irradiance,
+              direct normal irradiance
+            </li>
+            <li>
+              <strong>Meteorological Data</strong> - Temperature, humidity, wind
+              speed, precipitation
+            </li>
+            <li>
+              <strong>Global Coverage</strong> - Satellite-derived data for any
+              location on Earth
+            </li>
+            <li>
+              <strong>40+ Years</strong> - Historical data from 1981 onwards
+            </li>
+          </ul>
+        </div>
+
+        <div class="api-examples">
+          <h4>🔗 API Endpoints</h4>
+          <div class="code-block">
+            <code>https://power.larc.nasa.gov/api/temporal/daily/point</code>
+            <span class="code-label">Get daily solar/weather data</span>
+          </div>
+        </div>
+
+        <div class="api-stats">
+          <div class="stat-badge">
+            <span class="stat-value">Solar</span>
+            <span class="stat-label">Energy Data</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-value">Global</span>
+            <span class="stat-label">Coverage</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-value">1981+</span>
+            <span class="stat-label">Start Year</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Open-Meteo -->
+    <div class="api-source-card">
+      <div class="api-source-header">
+        <div class="api-source-icon">🌡️</div>
+        <div>
+          <h3>Open-Meteo</h3>
+          <a href="https://open-meteo.com" target="_blank" class="api-link"
+            >open-meteo.com ↗</a
+          >
+        </div>
+      </div>
+      <div class="api-source-body">
+        <p class="api-description">
+          Open-Meteo provides free weather and climate data without requiring
+          authentication. Historical weather data, forecasts, and climate
+          projections available globally.
+        </p>
+
+        <div class="api-features">
+          <h4>📊 Key Features</h4>
+          <ul>
+            <li>
+              <strong>Historical Weather</strong> - Temperature, precipitation,
+              wind from 1940 onwards
+            </li>
+            <li><strong>Weather Forecasts</strong> - Up to 16 days ahead</li>
+            <li>
+              <strong>Climate Models</strong> - Climate projections and
+              scenarios
+            </li>
+            <li>
+              <strong>No API Key</strong> - Free for non-commercial use (10,000
+              requests/day)
+            </li>
+          </ul>
+        </div>
+
+        <div class="api-examples">
+          <h4>🔗 API Endpoints</h4>
+          <div class="code-block">
+            <code>https://archive-api.open-meteo.com/v1/archive</code>
+            <span class="code-label">Get historical weather data</span>
+          </div>
+        </div>
+
+        <div class="api-stats">
+          <div class="stat-badge">
+            <span class="stat-value">Weather</span>
+            <span class="stat-label">Climate Data</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-value">Global</span>
+            <span class="stat-label">Coverage</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-value">1940+</span>
+            <span class="stat-label">Start Year</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Internal API Section -->
+<section class="data-sources" style="padding: 60px 0">
+  <div class="container">
+    <div class="section-header">
+      <h2>🔌 WorldInsights Internal API</h2>
+      <p>Our unified API endpoints for accessing aggregated global data</p>
+    </div>
+
+    <div class="api-endpoints-grid">
+      <!-- Get Indicators -->
+      <div class="endpoint-card">
+        <div class="endpoint-method get">GET</div>
+        <div class="endpoint-info">
+          <h4>/api/plot/indicators</h4>
+          <p>Retrieve all available indicators from all data sources</p>
+          <div class="endpoint-response">
+            <strong>Response:</strong>
+            <pre><code>{
+  "indicators": [
+    {
+      "code": "NY.GDP.MKTP.CD",
+      "name": "GDP (current US$)",
+      "description": "GDP at purchaser prices",
+      "source": "worldbank"
+    }
+  ],
+  "count": 500
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Get Countries -->
+      <div class="endpoint-card">
+        <div class="endpoint-method get">GET</div>
+        <div class="endpoint-info">
+          <h4>/api/plot/countries</h4>
+          <p>Retrieve all available countries from all data sources</p>
+          <div class="endpoint-response">
+            <strong>Response:</strong>
+            <pre><code>{
+  "countries": [
+    {
+      "code": "USA",
+      "name": "United States",
+      "source": "worldbank"
+    }
+  ],
+  "count": 200
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Get Plot Data -->
+      <div class="endpoint-card">
+        <div class="endpoint-method get">GET</div>
+        <div class="endpoint-info">
+          <h4>/api/plot/data</h4>
+          <p>Fetch data for specified indicators and countries</p>
+          <div class="endpoint-params">
+            <strong>Query Parameters:</strong>
+            <ul>
+              <li>
+                <code>indicators</code> - Comma-separated indicator codes
+                (required)
+              </li>
+              <li>
+                <code>countries</code> - Comma-separated country codes
+                (required)
+              </li>
+              <li>
+                <code>start_year</code> - Start year for data range (optional)
+              </li>
+              <li>
+                <code>end_year</code> - End year for data range (optional)
+              </li>
+              <li>
+                <code>chart_type</code> - line, bar, scatter, or choropleth
+                (optional)
+              </li>
+            </ul>
+          </div>
+          <div class="endpoint-example">
+            <strong>Example:</strong>
+            <code
+              >/api/plot/data?indicators=NY.GDP.MKTP.CD&countries=USA,GBR&start_year=2015&end_year=2020</code
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Get Correlations -->
+      <div class="endpoint-card">
+        <div class="endpoint-method get">GET</div>
+        <div class="endpoint-info">
+          <h4>/api/plot/correlations</h4>
+          <p>Calculate correlations between multiple indicators</p>
+          <div class="endpoint-params">
+            <strong>Query Parameters:</strong>
+            <ul>
+              <li>
+                <code>indicators</code> - Comma-separated indicator codes (min
+                2, required)
+              </li>
+              <li>
+                <code>countries</code> - Comma-separated country codes
+                (required)
+              </li>
+              <li><code>start_year</code> - Start year (optional)</li>
+              <li><code>end_year</code> - End year (optional)</li>
+            </ul>
+          </div>
+          <div class="endpoint-response">
+            <strong>Response:</strong>
+            <pre><code>{
+  "correlations": {
+    "NY.GDP.MKTP.CD": {
+      "NY.GDP.MKTP.CD": 1.0,
+      "SP.POP.TOTL": 0.85
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Health Check -->
+      <div class="endpoint-card">
+        <div class="endpoint-method get">GET</div>
+        <div class="endpoint-info">
+          <h4>/api/health</h4>
+          <p>Check API health status</p>
+          <div class="endpoint-response">
+            <strong>Response:</strong>
+            <pre><code>{
+  "status": "healthy",
+  "service": "plot-api"
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Usage Guidelines -->
+<section
+  class="features"
+  style="
+    padding: 60px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  "
+>
+  <div class="container">
+    <div class="section-header" style="color: white">
+      <h2>📖 Usage Guidelines</h2>
+      <p style="color: rgba(255, 255, 255, 0.9)">
+        Best practices for using our APIs
+      </p>
+    </div>
+
+    <div class="guidelines-grid">
+      <div class="guideline-card">
+        <div class="guideline-icon">⚡</div>
+        <h4>Rate Limiting</h4>
+        <p>
+          Be respectful to external APIs. Our system implements automatic rate
+          limiting and retry logic.
+        </p>
+      </div>
+
+      <div class="guideline-card">
+        <div class="guideline-icon">💾</div>
+        <h4>Caching</h4>
+        <p>
+          Responses are cached to improve performance. Indicator and country
+          lists are cached for 7 days.
+        </p>
+      </div>
+
+      <div class="guideline-card">
+        <div class="guideline-icon">🔄</div>
+        <h4>Data Freshness</h4>
+        <p>
+          Data is updated based on source schedules. World Bank updates
+          quarterly, WHO annually.
+        </p>
+      </div>
+
+      <div class="guideline-card">
+        <div class="guideline-icon">📝</div>
+        <h4>Attribution</h4>
+        <p>
+          Please cite the original data sources when using this data in
+          publications or reports.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Start Exploring Data</h2>
+      <p>
+        Use our interactive plot explorer to visualize global data from all
+        sources
+      </p>
+      <div class="cta-buttons">
+        <a href="/plot" class="btn btn-primary btn-large">Plot Explorer</a>
+        <a href="/contact" class="btn btn-outline btn-large">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* API Documentation Styles */
+
+  .api-source-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+  }
+
+  .api-source-card:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .api-source-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f3f4f6;
+  }
+
+  .api-source-icon {
+    font-size: 48px;
+    line-height: 1;
+  }
+
+  .api-source-header h3 {
+    margin: 0 0 8px 0;
+    color: #1f2937;
+    font-size: 24px;
+  }
+
+  .api-link {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .api-link:hover {
+    color: #764ba2;
+  }
+
+  .api-description {
+    color: #4b5563;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    font-size: 16px;
+  }
+
+  .api-features {
+    margin-bottom: 24px;
+  }
+
+  .api-features h4 {
+    color: #1f2937;
+    margin-bottom: 12px;
+    font-size: 18px;
+  }
+
+  .api-features ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .api-features li {
+    padding: 8px 0;
+    color: #4b5563;
+    line-height: 1.6;
+  }
+
+  .api-features li strong {
+    color: #667eea;
+    font-weight: 600;
+  }
+
+  .api-examples {
+    margin-bottom: 24px;
+  }
+
+  .api-examples h4 {
+    color: #1f2937;
+    margin-bottom: 12px;
+    font-size: 18px;
+  }
+
+  .code-block {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    font-family: "Monaco", "Courier New", monospace;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .code-block code {
+    color: #059669;
+    word-break: break-all;
+  }
+
+  .code-label {
+    color: #6b7280;
+    font-size: 12px;
+    font-style: italic;
+    white-space: nowrap;
+    margin-left: 12px;
+  }
+
+  .api-stats {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .stat-badge {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 120px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    opacity: 0.9;
+  }
+  /* Internal API Endpoints */
+
+  .api-endpoints-grid {
+    display: grid;
+    gap: 24px;
+  }
+
+  .endpoint-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    gap: 16px;
+  }
+
+  .endpoint-method {
+    background: #10b981;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    height: fit-content;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .endpoint-info {
+    flex: 1;
+  }
+
+  .endpoint-info h4 {
+    margin: 0 0 8px 0;
+    color: #1f2937;
+    font-family: "Monaco", "Courier New", monospace;
+    font-size: 18px;
+  }
+
+  .endpoint-info p {
+    color: #6b7280;
+    margin-bottom: 16px;
+  }
+
+  .endpoint-params ul,
+  .endpoint-response,
+  .endpoint-example {
+    margin-top: 12px;
+  }
+
+  .endpoint-params ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .endpoint-params li {
+    padding: 6px 0;
+    color: #4b5563;
+    font-size: 14px;
+  }
+
+  .endpoint-params code,
+  .endpoint-example code {
+    background: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #059669;
+  }
+
+  .endpoint-response pre {
+    background: #1f2937;
+    color: #10b981;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-top: 8px;
+  }
+
+  .endpoint-response code {
+    font-family: "Monaco", "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  /* Guidelines */
+
+  .guidelines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .guideline-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .guideline-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+
+  .guideline-card h4 {
+    color: white;
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+
+  .guideline-card p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .api-source-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .endpoint-card {
+      flex-direction: column;
+    }
+    .api-stats {
+      justify-content: center;
+    }
+  }
+</style>
+{% endblock %}

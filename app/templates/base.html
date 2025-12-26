@@ -70,6 +70,11 @@
               >About</a
             >
             <a
+              href="/api"
+              class="nav-link {% if request.endpoint == 'frontend.api_docs' %}active{% endif %}"
+              >API</a
+            >
+            <a
               href="/pricing"
               class="nav-link {% if request.endpoint == 'pricing' %}active{% endif %}"
               >Pricing</a
