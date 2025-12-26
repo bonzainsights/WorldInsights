@@ -38,6 +38,9 @@ class User(UserMixin, db.Model):
     last_login_attempt = db.Column(db.DateTime, nullable=True)  # Last login attempt timestamp
     last_successful_login = db.Column(db.DateTime, nullable=True)  # Last successful login
     
+    # Terms acceptance tracking
+    terms_accepted_at = db.Column(db.DateTime, nullable=True)  # When user accepted Terms of Service
+    
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
@@ -62,6 +65,7 @@ class User(UserMixin, db.Model):
             'subscription_started_at': self.subscription_started_at.isoformat() if self.subscription_started_at else None,
             'subscription_expires_at': self.subscription_expires_at.isoformat() if self.subscription_expires_at else None,
             'deleted_at': self.deleted_at.isoformat() if self.deleted_at else None,
+            'terms_accepted_at': self.terms_accepted_at.isoformat() if self.terms_accepted_at else None,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }

@@ -39,10 +39,16 @@ def register():
         email = request.form.get('email', '').strip()
         password = request.form.get('password', '')
         confirm_password = request.form.get('confirm_password', '')
+        terms_accepted = request.form.get('terms_accepted') == 'on'
         
         # Validation
         if not username or not email or not password:
             flash('All fields are required', 'error')
+            return render_template('auth/register.html')
+        
+        # Check terms acceptance
+        if not terms_accepted:
+            flash('You must accept the Terms of Service and Privacy Policy to create an account', 'error')
             return render_template('auth/register.html')
         
         # Password strength is now validated in register_user service
@@ -51,7 +57,7 @@ def register():
             return render_template('auth/register.html')
         
         # Register user
-        user, error = register_user(username, email, password)
+        user, error = register_user(username, email, password, terms_accepted=terms_accepted)
         
         if error:
             flash(error, 'error')

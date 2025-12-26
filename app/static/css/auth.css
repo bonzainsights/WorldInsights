@@ -1,115 +1,168 @@
 /* Auth Pages Styles */
 
 .auth-page {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    padding: 4rem 2rem;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 2rem;
 }
 
 .auth-container {
-    max-width: 450px;
-    margin: 0 auto;
-    background: var(--surface);
-    padding: 3rem;
-    border-radius: var(--radius-xl);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+  max-width: 450px;
+  margin: 0 auto;
+  background: var(--surface);
+  padding: 3rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .auth-header {
-    text-align: center;
-    margin-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .auth-header h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
 .auth-header p {
-    color: var(--text-secondary);
+  color: var(--text-secondary);
 }
 
 .auth-form {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--text-primary);
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
 }
 
 .form-group input {
-    width: 100%;
-    padding: 0.875rem 1rem;
-    background: var(--background);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-md);
-    color: var(--text-primary);
-    font-size: 1rem;
-    transition: all 0.2s ease;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: var(--background);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
 .form-group input:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .form-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
 .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
 }
 
 .checkbox-label input[type="checkbox"] {
-    width: auto;
-    cursor: pointer;
+  width: auto;
+  cursor: pointer;
 }
 
 .link-text {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.875rem;
 }
 
 .link-text:hover {
-    color: var(--primary-light);
+  color: var(--primary-light);
 }
 
 .btn-block {
-    width: 100%;
-    justify-content: center;
+  width: 100%;
+  justify-content: center;
 }
 
 .auth-footer {
-    text-align: center;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .link-primary {
-    color: var(--primary-light);
-    text-decoration: none;
-    font-weight: 600;
+  color: var(--primary-light);
+  text-decoration: none;
+  font-weight: 600;
 }
 
 .link-primary:hover {
-    color: var(--primary);
+  color: var(--primary);
+}
+
+/* Terms Acceptance Styling */
+
+.terms-acceptance {
+  margin-bottom: 1.5rem;
+}
+
+.terms-acceptance .checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.terms-acceptance input[type="checkbox"] {
+  margin-top: 0.25rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  cursor: pointer;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+
+.terms-acceptance .checkbox-text {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.terms-acceptance .checkbox-text a {
+  color: var(--primary-light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.terms-acceptance .checkbox-text a:hover {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 2rem 1.5rem;
+  }
+  .terms-acceptance .checkbox-text {
+    font-size: 0.875rem;
+  }
 }

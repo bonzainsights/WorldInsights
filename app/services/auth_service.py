@@ -19,7 +19,7 @@ logger = get_logger('auth_service')
 mail = Mail()
 
 
-def register_user(username: str, email: str, password: str) -> Tuple[Optional[User], Optional[str]]:
+def register_user(username: str, email: str, password: str, terms_accepted: bool = False) -> Tuple[Optional[User], Optional[str]]:
     """
     Register a new user with password strength validation.
     
@@ -27,6 +27,7 @@ def register_user(username: str, email: str, password: str) -> Tuple[Optional[Us
         username: Username
         email: Email address
         password: Password
+        terms_accepted: Whether user accepted terms of service
     
     Returns:
         Tuple of (User, error_message)
@@ -60,7 +61,8 @@ def register_user(username: str, email: str, password: str) -> Tuple[Optional[Us
             role='user',
             subscription_tier='free',
             subscription_status='active',
-            subscription_started_at=datetime.utcnow()
+            subscription_started_at=datetime.utcnow(),
+            terms_accepted_at=datetime.utcnow() if terms_accepted else None
         )
         
         db.session.add(user)

@@ -1236,3 +1236,152 @@ WHERE user.email = ?
 2025-12-26 10:13:27 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
 2025-12-26 10:13:27 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
 2025-12-26 10:15:32 - worldinsights.auth_service - INFO - auth_service.py:224 - User authenticated: admin
+2025-12-26 10:16:41 - worldinsights.auth_service - INFO - auth_service.py:224 - User authenticated: admin
+2025-12-26 10:17:03 - worldinsights.auth_service - INFO - auth_service.py:349 - Admin admin set achbj as unverified
+2025-12-26 10:17:08 - worldinsights.auth_service - INFO - auth_service.py:349 - Admin admin set achbj as verified
+2025-12-26 10:22:56 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 10:22:56 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 10:22:56 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.terms_accepted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.terms_accepted_at AS user_terms_accepted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-26 10:22:56 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 10:22:56 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 10:22:57 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 10:22:57 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 10:22:57 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 10:22:57 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 10:22:57 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 10:22:57 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 10:22:57 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 10:23:02 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 10:23:02 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 10:23:02 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.terms_accepted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.terms_accepted_at AS user_terms_accepted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-26 10:23:02 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 10:23:02 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 10:23:02 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 10:23:02 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 10:23:02 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 10:23:02 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 10:23:02 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 10:23:02 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 10:23:02 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 10:23:54 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 10:23:54 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 10:23:54 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.terms_accepted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.terms_accepted_at AS user_terms_accepted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-26 10:23:54 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 10:23:54 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 10:23:55 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 10:23:55 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 10:23:55 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 10:23:55 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 10:23:55 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 10:23:55 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 10:23:55 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 10:27:42 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 10:27:42 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 10:27:42 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.terms_accepted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.terms_accepted_at AS user_terms_accepted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-26 10:27:42 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 10:27:42 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 10:27:43 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 10:27:43 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 10:27:43 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.terms_accepted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.terms_accepted_at AS user_terms_accepted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-26 10:27:43 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 10:27:43 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 10:27:43 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 10:27:43 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 10:27:43 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 10:27:43 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 10:27:43 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 10:27:43 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 10:27:43 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 10:27:44 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 10:27:44 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 10:27:44 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.OperationalError) no such column: user.terms_accepted_at
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.first_name AS user_first_name, user.last_name AS user_last_name, user.is_verified AS user_is_verified, user.role AS user_role, user.deleted_at AS user_deleted_at, user.subscription_tier AS user_subscription_tier, user.subscription_status AS user_subscription_status, user.subscription_started_at AS user_subscription_started_at, user.subscription_expires_at AS user_subscription_expires_at, user.stripe_customer_id AS user_stripe_customer_id, user.failed_login_attempts AS user_failed_login_attempts, user.locked_until AS user_locked_until, user.last_login_attempt AS user_last_login_attempt, user.last_successful_login AS user_last_successful_login, user.terms_accepted_at AS user_terms_accepted_at, user.created_at AS user_created_at, user.updated_at AS user_updated_at 
+FROM user 
+WHERE user.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@worldinsights.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-12-26 10:27:44 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 10:27:44 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 10:27:44 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 10:27:44 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 10:27:44 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 10:27:44 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 10:27:44 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 10:27:44 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 10:27:44 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 10:28:04 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 10:28:04 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 10:28:04 - worldinsights.database - INFO - database.py:61 - Default admin user created successfully
+2025-12-26 10:28:04 - worldinsights.database - INFO - database.py:62 - Admin credentials - Email: admin@worldinsights.com, Password: Tahaxaina@1
+2025-12-26 10:28:04 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 10:28:04 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 10:28:04 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 10:28:04 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 10:28:04 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 10:28:04 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 10:28:04 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 10:28:04 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 10:28:04 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 10:28:05 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 10:28:05 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 10:28:05 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-26 10:28:05 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 10:28:05 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 10:28:05 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 10:28:05 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 10:28:05 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 10:28:05 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 10:28:05 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 10:28:05 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 10:28:05 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 10:30:14 - worldinsights.auth_service - INFO - auth_service.py:71 - New user registered: finaltest
+2025-12-26 10:30:19 - worldinsights.auth_service - INFO - auth_service.py:121 - Verification email sent to finaltest@example.com
+2025-12-26 10:30:56 - worldinsights.auth_service - INFO - auth_service.py:71 - New user registered: finaltest3
+2025-12-26 10:31:00 - worldinsights.auth_service - INFO - auth_service.py:121 - Verification email sent to finaltest3@example.com
+2025-12-26 17:47:35 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 17:47:35 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 17:47:35 - worldinsights.database - ERROR - database.py:67 - Error creating default admin user: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (username, email, password_hash, first_name, last_name, is_verified, role, deleted_at, subscription_tier, subscription_status, subscription_started_at, subscription_expires_at, stripe_customer_id, failed_login_attempts, locked_until, last_login_attempt, last_successful_login, terms_accepted_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('admin', 'admin@worldinsights.bonzainsights.com', '$2b$12$/DCxKTVqdeD32HlGSt8yIOF34n9uq5CdfVTujQ9IIS.xDt/757kIG', None, None, 1, 'admin', None, 'admin', 'active', '2025-12-26 16:47:35.675922', None, None, 0, None, None, None, None, '2025-12-26 16:47:35.675928', '2025-12-26 16:47:35.675929')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-12-26 17:47:35 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 17:47:35 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 17:47:36 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 17:47:36 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 17:47:36 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 17:47:36 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 17:47:36 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 17:47:36 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 17:47:36 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 18:16:53 - worldinsights.auth_service - INFO - auth_service.py:226 - User authenticated: admin

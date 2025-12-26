@@ -34,20 +34,20 @@ def create_default_admin():
     
     Default credentials:
     - Username: admin
-    - Email: admin@worldinsights.com
+    - Email: admin@worldinsights.bonzainsights.com
     - Password: Tahaxaina@1
     - Role: admin
     - Verified: True
     """
     try:
         # Check if admin user already exists
-        admin = User.query.filter_by(email='admin@worldinsights.com').first()
+        admin = User.query.filter_by(email='admin@worldinsights.bonzainsights.com').first()
         
         if not admin:
             # Create admin user
             admin = User(
                 username='admin',
-                email='admin@worldinsights.com',
+                email='admin@worldinsights.bonzainsights.com',
                 password_hash=hash_password('Tahaxaina@1'),
                 is_verified=True,
                 role='admin',
@@ -59,7 +59,7 @@ def create_default_admin():
             db.session.commit()
             
             logger.info("Default admin user created successfully")
-            logger.info("Admin credentials - Email: admin@worldinsights.com, Password: Tahaxaina@1")
+            logger.info("Admin credentials - Email: admin@worldinsights.bonzainsights.com, Password: Tahaxaina@1")
         else:
             logger.info("Admin user already exists")
             
