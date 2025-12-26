@@ -1399,3 +1399,49 @@ WHERE user.email = ?
 2025-12-26 18:24:52 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
 2025-12-26 18:26:30 - worldinsights.auth_service - INFO - auth_service.py:226 - User authenticated: admin
 2025-12-26 18:30:36 - worldinsights.auth_service - INFO - auth_service.py:226 - User authenticated: admin
+2025-12-26 19:13:42 - worldinsights.app.blueprints.api.routes - INFO - routes.py:49 - Fetching available indicators
+2025-12-26 19:13:42 - worldinsights.app.services.plot_service - INFO - plot_service.py:75 - Fetching available indicators from all sources
+2025-12-26 19:13:42 - worldinsights.app.blueprints.api.routes - INFO - routes.py:90 - Fetching available countries
+2025-12-26 19:13:42 - worldinsights.app.services.plot_service - INFO - plot_service.py:174 - Fetching available countries from all sources
+2025-12-26 19:13:42 - worldinsights.WorldBankClient - INFO - worldbank.py:135 - Fetched 100 indicators from World Bank API
+2025-12-26 19:13:42 - worldinsights.app.services.plot_service - INFO - plot_service.py:89 - Fetched 100 indicators from World Bank
+2025-12-26 19:13:42 - worldinsights.WorldBankClient - INFO - worldbank.py:92 - Fetched 296 countries from World Bank API
+2025-12-26 19:13:42 - worldinsights.app.services.plot_service - INFO - plot_service.py:192 - Fetched 296 countries from World Bank
+2025-12-26 19:13:42 - worldinsights.WHOClient - INFO - who.py:105 - Fetched 100 indicators from WHO API
+2025-12-26 19:13:42 - worldinsights.app.services.plot_service - INFO - plot_service.py:104 - Fetched 100 indicators from WHO
+2025-12-26 19:13:43 - worldinsights.WHOClient - INFO - who.py:75 - Fetched 234 countries from WHO API
+2025-12-26 19:13:43 - worldinsights.app.services.plot_service - INFO - plot_service.py:210 - Added 0 new countries from WHO
+2025-12-26 19:14:11 - worldinsights.FAOClient - ERROR - base_client.py:164 - HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL
+2025-12-26 19:14:11 - worldinsights.FAOClient - ERROR - base_client.py:164 - HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL
+2025-12-26 19:14:11 - worldinsights.app.services.plot_service - WARNING - plot_service.py:220 - Failed to fetch FAO countries: HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL
+2025-12-26 19:14:11 - worldinsights.app.services.plot_service - WARNING - plot_service.py:114 - Failed to fetch FAO indicators: HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL
+2025-12-26 19:14:11 - worldinsights.app.services.plot_service - INFO - plot_service.py:241 - Successfully aggregated 314 unique countries
+2025-12-26 19:14:11 - worldinsights.app.services.plot_service - INFO - plot_service.py:134 - Fetched 7 indicators from Open-Meteo
+2025-12-26 19:14:11 - worldinsights.app.blueprints.api.routes - INFO - routes.py:99 - Successfully fetched 314 countries
+2025-12-26 19:14:11 - worldinsights.app.services.plot_service - INFO - plot_service.py:149 - Fetched 7 indicators from NASA
+2025-12-26 19:14:11 - worldinsights.app.services.plot_service - INFO - plot_service.py:159 - Successfully aggregated 214 indicators from 5 sources
+2025-12-26 19:14:11 - worldinsights.app.blueprints.api.routes - INFO - routes.py:58 - Successfully fetched 214 indicators
+2025-12-26 19:14:32 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 19:14:32 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 19:14:32 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 19:14:32 - worldinsights.app.services.plot_service - WARNING - plot_service.py:302 - Failed to fetch data: Invalid response format from World Bank API
+2025-12-26 19:14:32 - worldinsights.app.services.plot_service - ERROR - plot_service.py:313 - Failed to fetch any data: worldbank/T2M/AFG: Invalid response format from World Bank API
+2025-12-26 19:14:32 - worldinsights.app.blueprints.api.routes - ERROR - routes.py:174 - Failed to fetch plot data: worldbank/T2M/AFG: Invalid response format from World Bank API
+2025-12-26 19:14:47 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 19:14:47 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 19:14:47 - worldinsights.app.services.plot_service - INFO - plot_service.py:275 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 19:14:47 - worldinsights.app.services.plot_service - WARNING - plot_service.py:302 - Failed to fetch data: Invalid response format from World Bank API
+2025-12-26 19:14:47 - worldinsights.app.services.plot_service - ERROR - plot_service.py:313 - Failed to fetch any data: worldbank/1500000/DZA: Invalid response format from World Bank API
+2025-12-26 19:14:47 - worldinsights.app.blueprints.api.routes - ERROR - routes.py:174 - Failed to fetch plot data: worldbank/1500000/DZA: Invalid response format from World Bank API
+2025-12-26 19:40:19 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 19:40:19 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 19:40:19 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-26 19:40:19 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 19:40:19 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 19:40:20 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 19:40:20 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 19:40:20 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 19:40:20 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 19:40:20 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 19:40:20 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 19:40:20 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
