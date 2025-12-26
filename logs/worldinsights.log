@@ -1545,3 +1545,33 @@ WHERE user.email = ?
 2025-12-26 19:46:33 - worldinsights.app.core.cache - INFO - cache.py:53 - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
 2025-12-26 19:46:33 - worldinsights.app.services.plot_service - INFO - plot_service.py:64 - PlotService initialized with all API clients and caching
 2025-12-26 19:46:33 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 19:48:35 - worldinsights.app.blueprints.api.routes - INFO - routes.py:49 - Fetching available indicators
+2025-12-26 19:48:35 - worldinsights.app.blueprints.api.routes - INFO - routes.py:90 - Fetching available countries
+2025-12-26 19:48:35 - worldinsights.app.services.plot_service - INFO - plot_service.py:86 - Fetching available indicators from all sources (cache miss)
+2025-12-26 19:48:35 - worldinsights.app.services.plot_service - INFO - plot_service.py:197 - Fetching available countries from all sources (cache miss)
+2025-12-26 19:48:36 - worldinsights.WorldBankClient - INFO - worldbank.py:92 - Fetched 296 countries from World Bank API
+2025-12-26 19:48:36 - worldinsights.app.services.plot_service - INFO - plot_service.py:215 - Fetched 296 countries from World Bank
+2025-12-26 19:48:36 - worldinsights.WorldBankClient - INFO - worldbank.py:135 - Fetched 100 indicators from World Bank API
+2025-12-26 19:48:36 - worldinsights.app.services.plot_service - INFO - plot_service.py:100 - Fetched 100 indicators from World Bank
+2025-12-26 19:48:36 - worldinsights.WHOClient - INFO - who.py:75 - Fetched 234 countries from WHO API
+2025-12-26 19:48:36 - worldinsights.app.services.plot_service - INFO - plot_service.py:233 - Added 0 new countries from WHO
+2025-12-26 19:48:36 - worldinsights.WHOClient - INFO - who.py:105 - Fetched 100 indicators from WHO API
+2025-12-26 19:48:36 - worldinsights.app.services.plot_service - INFO - plot_service.py:115 - Fetched 100 indicators from WHO
+2025-12-26 19:49:03 - worldinsights.FAOClient - ERROR - base_client.py:164 - HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL
+2025-12-26 19:49:03 - worldinsights.app.services.plot_service - WARNING - plot_service.py:243 - Failed to fetch FAO countries: HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/area/QCL
+2025-12-26 19:49:03 - worldinsights.app.services.plot_service - INFO - plot_service.py:267 - Cached 314 countries for 7 days
+2025-12-26 19:49:03 - worldinsights.app.services.plot_service - INFO - plot_service.py:269 - Successfully aggregated 314 unique countries
+2025-12-26 19:49:03 - worldinsights.app.blueprints.api.routes - INFO - routes.py:99 - Successfully fetched 314 countries
+2025-12-26 19:49:03 - worldinsights.FAOClient - ERROR - base_client.py:164 - HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL
+2025-12-26 19:49:03 - worldinsights.app.services.plot_service - WARNING - plot_service.py:125 - Failed to fetch FAO indicators: HTTP error from https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL: 521 - 521 Server Error: <none> for url: https://fenixservices.fao.org/faostat/api/v1/en/dimensions/item/QCL
+2025-12-26 19:49:03 - worldinsights.app.services.plot_service - INFO - plot_service.py:145 - Fetched 7 indicators from Open-Meteo
+2025-12-26 19:49:03 - worldinsights.app.services.plot_service - INFO - plot_service.py:160 - Fetched 7 indicators from NASA
+2025-12-26 19:49:03 - worldinsights.app.services.plot_service - INFO - plot_service.py:173 - Cached 214 indicators for 7 days
+2025-12-26 19:49:03 - worldinsights.app.services.plot_service - INFO - plot_service.py:175 - Successfully aggregated 214 indicators from 5 sources
+2025-12-26 19:49:03 - worldinsights.app.blueprints.api.routes - INFO - routes.py:58 - Successfully fetched 214 indicators
+2025-12-26 19:49:20 - worldinsights.app.blueprints.api.routes - INFO - routes.py:136 - Fetching plot data
+2025-12-26 19:49:20 - worldinsights.app.blueprints.api.routes - INFO - routes.py:163 - Fetching data for 1 indicators, 1 countries
+2025-12-26 19:49:20 - worldinsights.app.services.plot_service - INFO - plot_service.py:314 - Fetching plot data for 1 indicators, 1 countries
+2025-12-26 19:49:20 - worldinsights.app.services.plot_service - WARNING - plot_service.py:346 - Failed to fetch data: Invalid response format from World Bank API
+2025-12-26 19:49:20 - worldinsights.app.services.plot_service - ERROR - plot_service.py:373 - No data available. Failed combinations: ALB/T2M_MAX
+2025-12-26 19:49:20 - worldinsights.app.blueprints.api.routes - ERROR - routes.py:175 - Failed to fetch plot data: No data available. Failed combinations: ALB/T2M_MAX
