@@ -1385,3 +1385,17 @@ WHERE user.email = ?
 2025-12-26 17:47:36 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
 2025-12-26 17:47:36 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
 2025-12-26 18:16:53 - worldinsights.auth_service - INFO - auth_service.py:226 - User authenticated: admin
+2025-12-26 18:24:51 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-26 18:24:51 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-26 18:24:51 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-26 18:24:51 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-26 18:24:51 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-26 18:24:52 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-26 18:24:52 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-26 18:24:52 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-26 18:24:52 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-26 18:24:52 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-26 18:24:52 - worldinsights.app.services.plot_service - INFO - plot_service.py:60 - PlotService initialized with all API clients
+2025-12-26 18:24:52 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-26 18:26:30 - worldinsights.auth_service - INFO - auth_service.py:226 - User authenticated: admin
+2025-12-26 18:30:36 - worldinsights.auth_service - INFO - auth_service.py:226 - User authenticated: admin

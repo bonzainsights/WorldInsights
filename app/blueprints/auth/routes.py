@@ -32,7 +32,8 @@ def register():
         limiter.limit("3 per minute")(lambda: None)()
     
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        flash(f'You are already logged in as {current_user.username}!', 'info')
+        return redirect(url_for('auth.profile'))
     
     if request.method == 'POST':
         username = request.form.get('username', '').strip()
