@@ -133,6 +133,15 @@ endblock %} {% block extra_css %}
     margin-top: 1rem;
   }
 
+  .warning-message {
+    background: #fff3cd;
+    color: #856404;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border-left: 4px solid #ffc107;
+  }
+
   .info-box {
     background: #e3f2fd;
     border-left: 4px solid #2196f3;
@@ -227,6 +236,7 @@ endblock %} {% block extra_css %}
       <p>Fetching data and generating plot...</p>
     </div>
     <div id="error" class="error-message" style="display: none"></div>
+    <div id="warning" class="warning-message" style="display: none"></div>
     <div id="plotly-chart"></div>
   </div>
 </div>
