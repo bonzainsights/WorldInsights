@@ -218,7 +218,7 @@ def validate_password_strength(
     password: str,
     username: Optional[str] = None,
     email: Optional[str] = None,
-    min_length: int = 12
+    min_length: int = 10
 ) -> Tuple[bool, Optional[str]]:
     """
     Validate password strength against security requirements.

@@ -142,7 +142,7 @@ class Config:
         self._RATE_LIMIT_STORAGE_URL = _get_env('RATE_LIMIT_STORAGE_URL', 'memory://')
         self._MAX_LOGIN_ATTEMPTS = _get_env('MAX_LOGIN_ATTEMPTS', 5, int)
         self._LOCKOUT_DURATION = _get_env('LOCKOUT_DURATION', 15, int)  # minutes
-        self._PASSWORD_MIN_LENGTH = _get_env('PASSWORD_MIN_LENGTH', 12, int)
+        self._PASSWORD_MIN_LENGTH = _get_env('PASSWORD_MIN_LENGTH', 8, int)
         self._REQUIRE_HTTPS = _get_env('REQUIRE_HTTPS', False, bool)  # Enable in production
     
     # Property accessors to make attributes read-only

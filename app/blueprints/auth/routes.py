@@ -24,12 +24,12 @@ def get_limiter():
 def register():
     """
     User registration page and handler.
-    Rate limited to 3 attempts per minute to prevent abuse.
+    Rate limited to 10 attempts per minute to prevent abuse.
     """
     # Apply rate limiting if available
     limiter = get_limiter()
     if limiter:
-        limiter.limit("3 per minute")(lambda: None)()
+        limiter.limit("5 per minute")(lambda: None)()
     
     if current_user.is_authenticated:
         flash(f'You are already logged in as {current_user.username}!', 'info')
@@ -327,12 +327,12 @@ def update_profile_route():
 def forgot_password():
     """
     Forgot password page and handler.
-    Rate limited to 3 attempts per hour to prevent abuse.
+    Rate limited to 5 attempts per hour to prevent abuse.
     """
     # Apply rate limiting if available
     limiter = get_limiter()
     if limiter:
-        limiter.limit("3 per hour")(lambda: None)()
+        limiter.limit("5 per hour")(lambda: None)()
     
     if current_user.is_authenticated:
         return redirect(url_for('index'))
