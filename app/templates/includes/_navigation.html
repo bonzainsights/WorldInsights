@@ -1,0 +1,84 @@
+<!-- Navigation -->
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-wrapper">
+      <a href="/" class="logo">
+        <span class="logo-icon">🌍</span>
+        <span class="logo-text">WorldInsights</span>
+      </a>
+
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="nav-links">
+        <a
+          href="/"
+          class="nav-link {% if request.endpoint == 'index' %}active{% endif %}"
+          >Home</a
+        >
+        <a
+          href="/explore"
+          class="nav-link {% if request.endpoint == 'explore' %}active{% endif %}"
+          >Explore Data</a
+        >
+        <a
+          href="/visualizations"
+          class="nav-link {% if request.endpoint == 'visualizations' %}active{% endif %}"
+          >Visualizations</a
+        >
+        <a
+          href="/insights"
+          class="nav-link {% if request.endpoint == 'insights' %}active{% endif %}"
+          >Insights</a
+        >
+        <a
+          href="/about"
+          class="nav-link {% if request.endpoint == 'about' %}active{% endif %}"
+          >About</a
+        >
+        <a
+          href="/api"
+          class="nav-link {% if request.endpoint == 'frontend.api_docs' %}active{% endif %}"
+          >API</a
+        >
+        <a
+          href="/pricing"
+          class="nav-link {% if request.endpoint == 'pricing' %}active{% endif %}"
+          >Pricing</a
+        >
+        {% if current_user.is_authenticated %}
+        <div class="user-dropdown">
+          <button
+            class="user-dropdown-toggle nav-link btn-login"
+            id="userDropdownBtn"
+          >
+            {{ current_user.username }} ▾
+          </button>
+          <div class="user-dropdown-menu" id="userDropdownMenu">
+            <a href="{{ url_for('auth.profile') }}" class="dropdown-item"
+              >Profile</a
+            >
+            {% if current_user.is_admin() %}
+            <a
+              href="{{ url_for('auth.admin_dashboard') }}"
+              class="dropdown-item"
+              >Admin Dashboard</a
+            >
+            {% endif %}
+            <a href="{{ url_for('auth.logout') }}" class="dropdown-item"
+              >Logout</a
+            >
+          </div>
+        </div>
+        {% else %}
+        <a href="{{ url_for('auth.login') }}" class="nav-link btn-login"
+          >Login</a
+        >
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
