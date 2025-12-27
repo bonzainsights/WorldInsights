@@ -1,0 +1,217 @@
+/* ============================================
+   FLASH MESSAGES / NOTIFICATIONS
+   ============================================ */
+
+.flash-messages-container {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9998;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 1rem;
+  pointer-events: none;
+}
+
+.flash-message {
+  position: relative;
+  padding: 1rem 1.5rem;
+  margin-bottom: 0.75rem;
+  border-radius: var(--radius-lg);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.5;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 4px 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: auto;
+  overflow: hidden;
+  animation: slideInDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s ease;
+}
+
+/* Animations */
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.flash-message.fade-out {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+/* Progress bar for auto-dismiss */
+
+.flash-message::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transform-origin: left;
+  animation: progressBar 5s linear forwards;
+}
+
+@keyframes progressBar {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.flash-message:hover::after {
+  animation-play-state: paused;
+}
+
+/* Message Types */
+
+.flash-success {
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.95) 0%,
+    rgba(5, 150, 105, 0.95) 100%
+  );
+  color: #ffffff;
+}
+
+.flash-success::before {
+  content: "✓";
+  display: inline-block;
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.2);
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1.75rem;
+  vertical-align: middle;
+}
+
+.flash-error {
+  background: linear-gradient(
+    135deg,
+    rgba(239, 68, 68, 0.95) 0%,
+    rgba(220, 38, 38, 0.95) 100%
+  );
+  color: #ffffff;
+}
+
+.flash-error::before {
+  content: "✕";
+  display: inline-block;
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.2);
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1.75rem;
+  vertical-align: middle;
+}
+
+.flash-warning {
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.95) 0%,
+    rgba(217, 119, 6, 0.95) 100%
+  );
+  color: #ffffff;
+}
+
+.flash-warning::before {
+  content: "⚠";
+  display: inline-block;
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.2);
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1.75rem;
+  vertical-align: middle;
+}
+
+.flash-info {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.95) 0%,
+    rgba(37, 99, 235, 0.95) 100%
+  );
+  color: #ffffff;
+}
+
+.flash-info::before {
+  content: "ℹ";
+  display: inline-block;
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.2);
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1.75rem;
+  vertical-align: middle;
+}
+
+/* Close button */
+
+.flash-message .close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: all 0.2s ease;
+  opacity: 0.7;
+}
+
+.flash-message .close-btn:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Hover effect */
+
+.flash-message:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 6px 12px rgba(0, 0, 0, 0.3);
+}

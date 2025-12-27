@@ -1727,3 +1727,4 @@ WHERE user.email = ?
 2025-12-27 09:42:04 - worldinsights.app.core.cache - INFO - cache.py:53 - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
 2025-12-27 09:42:04 - worldinsights.app.services.plot_service - INFO - plot_service.py:64 - PlotService initialized with all API clients and caching
 2025-12-27 09:42:04 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-27 09:52:38 - worldinsights.auth_service - INFO - auth_service.py:226 - User authenticated: admin
