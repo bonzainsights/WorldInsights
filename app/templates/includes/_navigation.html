@@ -1,23 +1,20 @@
 <!-- Navigation -->
 <nav class="navbar">
-  <div class="container">
-    <div class="nav-wrapper">
-      <a href="/" class="logo">
-        <span class="logo-icon">🌍</span>
-        <span class="logo-text">WorldInsights</span>
-      </a>
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="/" class="logo">
+                <span class="logo-icon">🌍</span>
+                <span class="logo-text">WorldInsights</span>
+            </a>
 
-      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
         <span></span>
         <span></span>
         <span></span>
       </button>
 
-      <div class="nav-links">
-        <a
-          href="/"
-          class="nav-link {% if request.endpoint == 'index' %}active{% endif %}"
-          >Home</a
+            <div class="nav-links">
+                <a href="/" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">Home</a
         >
         <a
           href="/explore"
@@ -28,6 +25,11 @@
           href="/visualizations"
           class="nav-link {% if request.endpoint == 'visualizations' %}active{% endif %}"
           >Visualizations</a
+        >
+        <a
+          href="{{ url_for('visualization.globe') }}"
+          class="nav-link {% if request.endpoint == 'visualization.globe' %}active{% endif %}"
+          >3D Globe</a
         >
         <a
           href="/insights"

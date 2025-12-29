@@ -1,0 +1,349 @@
+{% extends "base.html" %} {% block title %}3D Globe - WorldInsights{% endblock %} {% block extra_css %}
+<style>
+    /* Premium Dark Mode / Glassmorphism for the Globe View */
+    
+    body {
+        background: #0f172a;
+        /* Deep space blue */
+        color: #e2e8f0;
+        overflow: hidden;
+        /* Hide scrollbars for immersive view */
+    }
+    /* Override Navbar to be semi-transparent on this page */
+    
+    nav {
+        background: rgba(15, 23, 42, 0.8) !important;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .globe-wrapper {
+        position: relative;
+        width: 100vw;
+        height: calc(100vh - 70px);
+        /* Adjust for navbar */
+        overflow: hidden;
+    }
+    /* Floating Control Panel */
+    
+    .controls-panel {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        width: 320px;
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        z-index: 100;
+        transition: transform 0.3s ease;
+    }
+    
+    .controls-panel:hover {
+        background: rgba(30, 41, 59, 0.85);
+    }
+    
+    .panel-header {
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 1rem;
+    }
+    
+    .panel-header h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        background: linear-gradient(to right, #60a5fa, #c084fc);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0;
+    }
+    
+    .control-group {
+        margin-bottom: 1.25rem;
+    }
+    
+    .control-group label {
+        display: block;
+        font-size: 0.875rem;
+        color: #94a3b8;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+    
+    .control-group select,
+    .control-group input {
+        width: 100%;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        color: white;
+        padding: 0.75rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .control-group select:hover {
+        border-color: #60a5fa;
+    }
+    
+    .control-group select:focus {
+        outline: none;
+        border-color: #60a5fa;
+        box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+    }
+    
+    .btn-visualize {
+        width: 100%;
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        color: white;
+        border: none;
+        padding: 0.875rem;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    .btn-visualize:hover {
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        transform: translateY(-1px);
+    }
+    
+    .btn-visualize:active {
+        transform: translateY(0);
+    }
+    
+    .btn-visualize:disabled {
+        opacity: 0.7;
+        cursor: wait;
+    }
+    /* Plotly Container */
+    
+    #globe-plot {
+        width: 100%;
+        height: 100%;
+    }
+    /* Loading Overlay */
+    
+    .loader-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(4px);
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.3s;
+        pointer-events: none;
+        opacity: 0;
+    }
+    
+    .loader-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+    
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-left-color: #60a5fa;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+    }
+    
+    @keyframes spin {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+{% endblock %} {% block content %}
+<div class="globe-wrapper">
+    <!-- Controls -->
+    <div class="controls-panel">
+        <div class="panel-header">
+            <h2>Global Intelligence</h2>
+            <p style="font-size: 0.8rem; color: #64748b; margin-top: 5px">
+                3D Interactive Data Visualization
+            </p>
+        </div>
+
+        <div class="control-group">
+            <label>Data Source</label>
+            <select id="source-select">
+        <option value="worldbank">World Bank (Economy)</option>
+        <option value="weather">Open Meteo (Climate)</option>
+        <option value="who">WHO (Health)</option>
+        <option value="nasa">NASA (Solar)</option>
+      </select>
+        </div>
+
+        <div class="control-group">
+            <label>Indicator</label>
+            <!-- Populated dynamically or hardcoded for MVP stability -->
+            <select id="indicator-select">
+        <option value="NY.GDP.MKTP.CD">GDP (Current US$)</option>
+        <option value="SP.POP.TOTL">Population</option>
+        <option value="temperature_2m_mean">Temperature (2m)</option>
+        <option value="WHOSIS_000001">Life Expectancy</option>
+      </select>
+        </div>
+
+        <div class="control-group">
+            <label>Year</label>
+            <input type="number" id="year-input" value="2024" min="1990" max="2025" />
+        </div>
+
+        <button class="btn-visualize" id="update-btn" onclick="updateGlobe()">
+      Render Globe
+    </button>
+
+        <div id="status-msg" style="
+        margin-top: 1rem;
+        font-size: 0.8rem;
+        color: #ef4444;
+        min-height: 1.2em;
+      "></div>
+    </div>
+
+    <!-- Loader -->
+    <div id="loader" class="loader-overlay">
+        <div class="spinner"></div>
+        <p>Analyzing Global Data...</p>
+    </div>
+
+    <!-- 3D Plot -->
+    <div id="globe-plot"></div>
+</div>
+{% endblock %} {% block extra_js %}
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<script>
+    // Initial Render
+    document.addEventListener("DOMContentLoaded", () => {
+        updateGlobe();
+    });
+
+    async function updateGlobe() {
+        const source = document.getElementById("source-select").value;
+        const indicator = document.getElementById("indicator-select").value;
+        const year = document.getElementById("year-input").value;
+        const btn = document.getElementById("update-btn");
+        const loader = document.getElementById("loader");
+        const status = document.getElementById("status-msg");
+
+        // UI State
+        btn.disabled = true;
+        loader.classList.add("active");
+        status.innerText = "";
+
+        try {
+            // 1. Fetch Data
+            const url = `/api/data/globe?source=${source}&indicator=${indicator}&year=${year}`;
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.error || "Failed to fetch data");
+            }
+
+            const geojson = await response.json();
+
+            if (!geojson.features || geojson.features.length === 0) {
+                throw new Error("No data available for this selection.");
+            }
+
+            // 2. Prepare Plotly Data
+            // We use Choropleth Mapbox or Scattergeo.
+            // Scaled values for coloring
+            const zValues = geojson.features.map((f) => f.properties.value);
+            const textValues = geojson.features.map(
+                (f) =>
+                `${f.properties.name}<br>${indicator}: ${f.properties.formatted_value}`
+            );
+            // For Choropleth, we need locations (ISO-3) and z
+            const locations = geojson.features.map((f) => f.properties.iso_code);
+
+            const data = [{
+                type: "choropleth",
+                locationmode: "ISO-3",
+                locations: locations,
+                z: zValues,
+                text: textValues,
+                colorscale: "Plasma",
+                marker: {
+                    line: {
+                        color: "rgba(255,255,255,0.2)",
+                        width: 0.5,
+                    },
+                },
+                colorbar: {
+                    title: "Value",
+                    thickness: 10,
+                    len: 0.3,
+                    x: 0.9,
+                    y: 0.2,
+                    tickfont: {
+                        color: "#cbd5e1",
+                    },
+                    titlefont: {
+                        color: "#cbd5e1",
+                    },
+                },
+            }, ];
+
+            const layout = {
+                paper_bgcolor: "rgba(0,0,0,0)",
+                plot_bgcolor: "rgba(0,0,0,0)",
+                geo: {
+                    showframe: false,
+                    showcoastlines: false,
+                    projection: {
+                        type: "orthographic",
+                    },
+                    bgcolor: "rgba(0,0,0,0)",
+                    lakecolor: "#1e293b",
+                    oceancolor: "#1e293b", // Match background for seamless look
+                    landcolor: "#334155",
+                    showocean: true,
+                    showlakes: true,
+                    showland: true,
+                    showcountries: true,
+                    countrycolor: "#475569",
+                },
+                margin: {
+                    r: 0,
+                    t: 0,
+                    l: 0,
+                    b: 0,
+                },
+                showlegend: false,
+            };
+
+            const config = {
+                responsive: true,
+                displayModeBar: false,
+            };
+
+            Plotly.newPlot("globe-plot", data, layout, config);
+        } catch (e) {
+            console.error(e);
+            status.innerText = `Error: ${e.message}`;
+        } finally {
+            btn.disabled = false;
+            loader.classList.remove("active");
+        }
+    }
+</script>
+{% endblock %}
