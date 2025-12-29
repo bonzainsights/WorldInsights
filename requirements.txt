@@ -24,3 +24,4 @@ zxcvbn==4.4.28
 # Testing
 pytest==9.0.2
 pytest-cov==7.0.0
+pyyaml

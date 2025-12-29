@@ -8,7 +8,7 @@ from app.infrastructure.api_clients.openmeteo import OpenMeteoClient
 logger = logging.getLogger(__name__)
 
 class WeatherIngestor(BaseIngestor):
-    """Ingestor for OpenMeteo Weather Data."""
+    """Ingestor for OpenMeteo Weather Data, driven by indicators.yaml."""
     
     @property
     def name(self) -> str:
@@ -23,28 +23,35 @@ class WeatherIngestor(BaseIngestor):
         
         client = OpenMeteoClient()
         countries, _ = client.get_countries()
-        
-        # Target year 2024 for stability
         target_year = 2024
         
+        config_indicators = self.configured_indicators
+        # Weather API is tricky, 'temperature_2m_mean' is usually the standard one we support
+        # But let's try to support whatever is in config if client supports it
+        if config_indicators:
+             indicators = [i['code'] for i in config_indicators]
+        else:
+             indicators = ['temperature_2m_mean']
+
         all_data = []
         errors = []
         
-        for country in countries:
-            code = country['code']
-            try:
-                data, err = client.get_data(
-                    code, 
-                    'temperature_2m_mean', 
-                    start_year=target_year, 
-                    end_year=target_year
-                )
-                if data:
-                    all_data.extend(data)
-                if err:
-                    errors.append(f"{code}: {err}")
-            except Exception as e:
-                errors.append(f"{code}: {str(e)}")
+        for indicator in indicators:
+            for country in countries:
+                code = country['code']
+                try:
+                    data, err = client.get_data(
+                        code, 
+                        indicator, 
+                        start_year=target_year, 
+                        end_year=target_year
+                    )
+                    if data:
+                        all_data.extend(data)
+                    if err:
+                        errors.append(f"{code}: {err}")
+                except Exception as e:
+                    errors.append(f"{code}: {str(e)}")
                 
         if all_data:
             filename = f"weather_{target_year}.parquet"

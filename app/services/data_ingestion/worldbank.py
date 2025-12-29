@@ -8,7 +8,7 @@ from app.infrastructure.api_clients.worldbank import WorldBankClient
 logger = logging.getLogger(__name__)
 
 class WorldBankIngestor(BaseIngestor):
-    """Ingestor for World Bank Data."""
+    """Ingestor for World Bank Data, driven by indicators.yaml."""
     
     @property
     def name(self) -> str:
@@ -22,11 +22,15 @@ class WorldBankIngestor(BaseIngestor):
         logger.info(f"Starting {self.name} ingestion...")
         
         client = WorldBankClient()
-        # Key Economic Indicators
-        indicators = [
-            'NY.GDP.MKTP.CD', # GDP
-            'SP.POP.TOTL'     # Population
-        ]
+        
+        # Load from config instead of hardcoding
+        config_indicators = self.configured_indicators
+        if not config_indicators:
+            logger.warning(f"No indicators configured for {self.name} in indicators.yaml")
+            return {"status": "skipped", "reason": "no_config"}
+            
+        indicators = [i['code'] for i in config_indicators]
+        
         countries = ['USA', 'CHN', 'GBR', 'DEU', 'JPN', 'IND']
         
         all_data = []
@@ -37,6 +41,7 @@ class WorldBankIngestor(BaseIngestor):
                 try:
                     data, err = client.get_data(country, indicator, start_year=2000, end_year=2024)
                     if data:
+                        # Enrich with name if possible (optional)
                         all_data.extend(data)
                     if err:
                         errors.append(f"{country}-{indicator}: {err}")
@@ -46,7 +51,7 @@ class WorldBankIngestor(BaseIngestor):
         if all_data:
             filename = "worldbank_indicators.parquet"
             self.service.save_to_lake(all_data, filename)
-            logger.info(f"Saved {len(all_data)} WB records.")
+            logger.info(f"Saved {len(all_data)} WB records ({len(indicators)} indicators).")
             
         return {
             "status": "success" if all_data else "partial_failure",

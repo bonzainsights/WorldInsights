@@ -14,6 +14,7 @@ from app.services.data_ingestion.fao import FaoIngestor
 from app.services.data_ingestion.nasa import NasaIngestor
 from app.services.data_ingestion.news import NewsIngestor
 from app.services.data_ingestion.stocks import StocksIngestor
+from app.services.data_ingestion.geo import GeoIngestor
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -31,7 +32,8 @@ class DataManager:
             WorldBankIngestor(self.service),
             WhoIngestor(self.service),
             FaoIngestor(self.service),
-            NasaIngestor(self.service)
+            NasaIngestor(self.service),
+            GeoIngestor(self.service)
         ]
         
     def check_status(self) -> bool:

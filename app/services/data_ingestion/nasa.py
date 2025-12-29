@@ -7,7 +7,7 @@ from app.infrastructure.api_clients.nasa import NASAClient
 logger = logging.getLogger(__name__)
 
 class NasaIngestor(BaseIngestor):
-    """Ingestor for NASA POWER Data."""
+    """Ingestor for NASA POWER Data, driven by indicators.yaml."""
     
     @property
     def name(self) -> str:
@@ -21,23 +21,30 @@ class NasaIngestor(BaseIngestor):
         logger.info("Starting NASA ingestion...")
         
         client = NASAClient()
-        # Solar Irradiance for a few locations
-        indicator = "ALLSKY_SFC_SW_DWN"
+        
+        config_indicators = self.configured_indicators
+        if not config_indicators:
+             # Fallback if config failed or empty
+             indicators = ["ALLSKY_SFC_SW_DWN"]
+        else:
+             indicators = [i['code'] for i in config_indicators]
+
         countries = ['USA', 'CHN']
-        target_year = 2023 # NASA Power usually has lag
+        target_year = 2023 
         
         all_data = []
         errors = []
         
-        for country in countries:
-            try:
-                data, err = client.get_data(country, indicator, start_year=target_year, end_year=target_year)
-                if data:
-                    all_data.extend(data)
-                if err:
-                    errors.append(f"{country}: {err}")
-            except Exception as e:
-                errors.append(f"{country}: {str(e)}")
+        for indicator in indicators:
+            for country in countries:
+                try:
+                    data, err = client.get_data(country, indicator, start_year=target_year, end_year=target_year)
+                    if data:
+                        all_data.extend(data)
+                    if err:
+                        errors.append(f"{country}-{indicator}: {err}")
+                except Exception as e:
+                    errors.append(f"{country}-{indicator}: {str(e)}")
                 
         if all_data:
             filename = f"nasa_solar_{target_year}.parquet"

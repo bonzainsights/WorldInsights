@@ -7,7 +7,7 @@ from app.infrastructure.api_clients.who import WHOClient
 logger = logging.getLogger(__name__)
 
 class WhoIngestor(BaseIngestor):
-    """Ingestor for WHO Data."""
+    """Ingestor for WHO Data, driven by indicators.yaml."""
     
     @property
     def name(self) -> str:
@@ -21,22 +21,28 @@ class WhoIngestor(BaseIngestor):
         logger.info(f"Starting {self.name} ingestion...")
         
         client = WHOClient()
-        # Life Expectancy at birth
-        indicator = "WHOSIS_000001" 
-        countries = ['USA', 'GBR', 'IND'] # Simplified for demo
+        
+        config_indicators = self.configured_indicators
+        if not config_indicators:
+             logger.warning(f"No indicators configured for {self.name}")
+             return {"status": "skipped", "reason": "no_config"}
+             
+        indicators = [i['code'] for i in config_indicators]
+        countries = ['USA', 'GBR', 'IND'] 
         
         all_data = []
         errors = []
         
-        for country in countries:
-             try:
-                 data, err = client.get_data(country, indicator)
-                 if data:
-                     all_data.extend(data)
-                 if err:
-                     errors.append(f"{country}: {err}")
-             except Exception as e:
-                 errors.append(f"{country}: {str(e)}")
+        for indicator in indicators:
+            for country in countries:
+                 try:
+                     data, err = client.get_data(country, indicator)
+                     if data:
+                         all_data.extend(data)
+                     if err:
+                         errors.append(f"{country}-{indicator}: {err}")
+                 except Exception as e:
+                     errors.append(f"{country}-{indicator}: {str(e)}")
                  
         if all_data:
             filename = "who_health.parquet"

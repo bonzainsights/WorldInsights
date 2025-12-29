@@ -1741,3 +1741,81 @@ WHERE user.email = ?
 2025-12-28 22:25:59 - worldinsights.app.core.cache - INFO - cache.py:53 - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
 2025-12-28 22:25:59 - worldinsights.app.services.plot_service - INFO - plot_service.py:64 - PlotService initialized with all API clients and caching
 2025-12-28 22:25:59 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-29 12:38:58 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-29 12:38:58 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-29 12:38:58 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-29 12:38:58 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-29 12:38:58 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-29 12:38:59 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-29 12:38:59 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-29 12:38:59 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-29 12:38:59 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-29 12:38:59 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-29 12:38:59 - worldinsights.app.core.cache - INFO - cache.py:53 - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2025-12-29 12:38:59 - worldinsights.app.services.plot_service - INFO - plot_service.py:64 - PlotService initialized with all API clients and caching
+2025-12-29 12:38:59 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-29 12:39:15 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-29 12:39:15 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-29 12:39:15 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-29 12:39:15 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-29 12:39:15 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-29 12:39:15 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-29 12:39:15 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-29 12:39:15 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-29 12:39:15 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-29 12:39:15 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-29 12:39:15 - worldinsights.app.core.cache - INFO - cache.py:53 - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2025-12-29 12:39:15 - worldinsights.app.services.plot_service - INFO - plot_service.py:64 - PlotService initialized with all API clients and caching
+2025-12-29 12:39:15 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-29 12:39:21 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-29 12:39:21 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-29 12:39:21 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-29 12:39:21 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-29 12:39:21 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-29 12:39:21 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-29 12:39:21 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-29 12:39:21 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-29 12:39:21 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-29 12:39:21 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-29 12:39:21 - worldinsights.app.core.cache - INFO - cache.py:53 - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2025-12-29 12:39:21 - worldinsights.app.services.plot_service - INFO - plot_service.py:64 - PlotService initialized with all API clients and caching
+2025-12-29 12:39:21 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-29 12:39:25 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-29 12:39:25 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-29 12:39:25 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-29 12:39:25 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-29 12:39:25 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-29 12:39:26 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-29 12:39:26 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-29 12:39:26 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-29 12:39:26 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-29 12:39:26 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-29 12:39:26 - worldinsights.app.core.cache - INFO - cache.py:53 - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2025-12-29 12:39:26 - worldinsights.app.services.plot_service - INFO - plot_service.py:64 - PlotService initialized with all API clients and caching
+2025-12-29 12:39:26 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-29 12:39:28 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-29 12:39:28 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-29 12:39:28 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-29 12:39:28 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-29 12:39:28 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-29 12:39:29 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-29 12:39:29 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-29 12:39:29 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-29 12:39:29 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-29 12:39:29 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-29 12:39:29 - worldinsights.app.core.cache - INFO - cache.py:53 - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2025-12-29 12:39:29 - worldinsights.app.services.plot_service - INFO - plot_service.py:64 - PlotService initialized with all API clients and caching
+2025-12-29 12:39:29 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
+2025-12-29 12:41:07 - worldinsights - INFO - create_app.py:83 - WorldInsights application starting in development mode
+2025-12-29 12:41:07 - worldinsights.database - INFO - database.py:25 - Database tables created successfully
+2025-12-29 12:41:07 - worldinsights.database - INFO - database.py:64 - Admin user already exists
+2025-12-29 12:41:07 - worldinsights - INFO - create_app.py:122 - Rate limiting enabled
+2025-12-29 12:41:07 - worldinsights - WARNING - create_app.py:158 - HTTPS enforcement is DISABLED (development mode)
+2025-12-29 12:41:08 - worldinsights.WorldBankClient - INFO - worldbank.py:52 - World Bank API client initialized
+2025-12-29 12:41:08 - worldinsights.WHOClient - INFO - who.py:50 - WHO API client initialized
+2025-12-29 12:41:08 - worldinsights.FAOClient - INFO - fao.py:65 - FAO API client initialized
+2025-12-29 12:41:08 - worldinsights.OpenMeteoClient - INFO - openmeteo.py:70 - Open-Meteo API client initialized
+2025-12-29 12:41:08 - worldinsights.NASAClient - INFO - nasa.py:76 - NASA POWER API client initialized
+2025-12-29 12:41:08 - worldinsights.app.core.cache - INFO - cache.py:53 - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2025-12-29 12:41:08 - worldinsights.app.services.plot_service - INFO - plot_service.py:64 - PlotService initialized with all API clients and caching
+2025-12-29 12:41:08 - worldinsights - INFO - create_app.py:319 - WorldInsights application initialized successfully
