@@ -12,6 +12,7 @@ Following Clean Architecture:
 from flask import Blueprint, request, jsonify
 from typing import Dict, Any
 from app.services.plot_service import PlotService
+from app.services.data_retrieval_service import DataRetrievalService
 from app.core.logging import get_logger
 
 
@@ -22,7 +23,98 @@ api_bp = Blueprint('api', __name__, url_prefix='/api')
 
 # Initialize service
 plot_service = PlotService()
+data_service = DataRetrievalService()
 
+
+@api_bp.route('/data/indicator/<source>/<indicator_code>', methods=['GET'])
+def get_lake_data(source: str, indicator_code: str):
+    """
+    Get generic data from the Data Retrieval Service (Lake -> API Hybrid).
+    
+    Query Params:
+        country (str): ISO-3 code (optional)
+        year (int): Year (optional)
+        
+    Example:
+        GET /api/data/indicator/weather/temperature_2m_mean?country=USA&year=2024
+    """
+    country = request.args.get('country')
+    year = request.args.get('year', type=int)
+    
+    try:
+        data = data_service.get_data(source, indicator_code, country, year)
+        if not data:
+            return jsonify({'error': 'No data found'}), 404
+            
+        return jsonify({'data': data, 'count': len(data)}), 200
+    except Exception as e:
+        logger.error(f"Error getting data: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@api_bp.route('/data/globe', methods=['GET'])
+def get_globe_data():
+    """
+    Get GeoJSON data for 3D Globe visualization.
+    Joins indicator data with Country Polygons.
+    
+    Query Params:
+        source (str): e.g. 'worldbank'
+        indicator (str): e.g. 'NY.GDP.MKTP.CD'
+        year (int): e.g. 2022
+    
+    Example:
+        GET /api/data/globe?source=worldbank&indicator=NY.GDP.MKTP.CD&year=2022
+    """
+    source = request.args.get('source')
+    indicator = request.args.get('indicator')
+    year = request.args.get('year', type=int)
+    
+    if not all([source, indicator, year]):
+        return jsonify({'error': 'Missing source, indicator, or year params'}), 400
+        
+    try:
+        data = data_service.get_globe_data(source, indicator, year)
+        if not data:
+            return jsonify({'error': 'No globe data found (check if geo_countries.parquet exists)'}), 404
+            
+        # DuckDB generic query returns list of dicts. 
+        # For Globe, we might want a specific GeoJSON structure "FeatureCollection"
+        # The service returns List[Dict] with 'geometry' string.
+        # We should parse that locally here or in the service. 
+        # For performance, let's assume the service does the heavy lifting or we construct it here.
+        # Existing Service implementation returns raw List[Dict] from DuckDB.
+        
+        # Construct FeatureCollection
+        features = []
+        import json
+        for row in data:
+            try:
+                geom = json.loads(row['geometry'])
+            except:
+                continue
+                
+            features.append({
+                "type": "Feature",
+                "properties": {
+                    "name": row['name'],
+                    "iso_code": row['iso_code'],
+                    "value": row['value'],
+                    "year": row['year'],
+                    "formatted_value": f"{row['value']:,.2f}" if row['value'] else "N/A"
+                },
+                "geometry": geom
+            })
+            
+        geojson = {
+            "type": "FeatureCollection",
+            "features": features
+        }
+        
+        return jsonify(geojson), 200
+        
+    except Exception as e:
+        logger.error(f"Globe Error: {e}")
+        return jsonify({'error': str(e)}), 500
 
 @api_bp.route('/plot/indicators', methods=['GET'])
 def get_indicators() -> tuple[Dict[str, Any], int]:
