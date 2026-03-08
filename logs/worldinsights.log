@@ -3692,3 +3692,83 @@ WHERE user.email = ?
 [32m[INFO][0m 2026-03-08 17:21:34 - 2026-03-08 17:21:34,707 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:21:34] "[36mGET /dashboard/builder?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
 [32m[INFO][0m 2026-03-08 17:21:34 - 2026-03-08 17:21:34,724 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:21:34] "GET /dashboard/builder?__debugger__=yes&cmd=resource&f=console.png&s=jbE5WYja9lIbE7Ilydnl HTTP/1.1" 200 -
 [32m[INFO][0m 2026-03-08 17:21:41 - 2026-03-08 17:21:41,448 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:21:41] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,102 - app.create_app - INFO - WorldInsights application starting in development mode
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,114 - database - INFO - Database tables created successfully
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,118 - database - INFO - Admin user already exists
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,119 - app.create_app - INFO - Rate limiting enabled
+[33m[WARNING][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,119 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,666 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,666 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,666 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,666 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,666 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,667 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,675 - app.create_app - INFO - WorldInsights application initialized successfully
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,725 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://10.2.0.2:5050
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,725 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,726 - werkzeug - INFO -  * Restarting with stat
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,963 - app.create_app - INFO - WorldInsights application starting in development mode
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,970 - database - INFO - Database tables created successfully
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,975 - database - INFO - Admin user already exists
+[32m[INFO][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,975 - app.create_app - INFO - Rate limiting enabled
+[33m[WARNING][0m 2026-03-08 17:41:13 - 2026-03-08 17:41:13,975 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,271 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,271 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,271 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,271 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,271 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,271 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,272 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,275 - app.create_app - INFO - WorldInsights application initialized successfully
+[33m[WARNING][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,296 - werkzeug - WARNING -  * Debugger is active!
+[32m[INFO][0m 2026-03-08 17:41:14 - 2026-03-08 17:41:14,308 - werkzeug - INFO -  * Debugger PIN: 543-472-917
+[32m[INFO][0m 2026-03-08 17:41:19 - 2026-03-08 17:41:19,351 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:19] "GET / HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 17:41:19 - 2026-03-08 17:41:19,379 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:19] "GET /static/css/styles.css HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 17:41:19 - 2026-03-08 17:41:19,379 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:19] "GET /static/js/api.js HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 17:41:19 - 2026-03-08 17:41:19,379 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:19] "GET /static/js/main.js HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 17:41:19 - 2026-03-08 17:41:19,683 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:19] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 17:41:30 - 2026-03-08 17:41:30,090 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:30] "GET / HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 17:41:30 - 2026-03-08 17:41:30,111 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:30] "[36mGET /static/js/api.js HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 17:41:30 - 2026-03-08 17:41:30,113 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:30] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 17:41:30 - 2026-03-08 17:41:30,115 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:30] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 17:41:30 - 2026-03-08 17:41:30,259 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:30] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 17:41:30 - 2026-03-08 17:41:30,757 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:30] "GET / HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 17:41:30 - 2026-03-08 17:41:30,772 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:30] "[36mGET /static/js/api.js HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 17:41:30 - 2026-03-08 17:41:30,773 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:30] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 17:41:30 - 2026-03-08 17:41:30,774 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:30] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 17:41:30 - 2026-03-08 17:41:30,902 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:30] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 17:41:32 - 2026-03-08 17:41:32,501 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:32] "[35m[1mGET /visualization/globe HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 17:41:32 - 2026-03-08 17:41:32,525 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:32] "[36mGET /visualization/globe?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 17:41:32 - 2026-03-08 17:41:32,526 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:32] "[36mGET /visualization/globe?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 17:41:32 - 2026-03-08 17:41:32,546 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:32] "GET /visualization/globe?__debugger__=yes&cmd=resource&f=console.png&s=cr8DO09rBCSEKUfCQvyI HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 17:41:34 - 2026-03-08 17:41:34,447 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 17:41:34] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
