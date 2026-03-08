@@ -1,934 +1,687 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Builder - WorldInsights</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- HTMX -->
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.3/dist/htmx.min.js"></script>
+  
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+  
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+  
+  <!-- Interact.js for drag-drop -->
+  <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.27/dist/interact.min.js"></script>
 
-{% block title %}Dashboard Builder - WorldInsights{% endblock %}
+  <style>
+    /* Canvas styles */
+    .dashboard-canvas {
+      background-image: 
+        linear-gradient(#e5e7eb 1px, transparent 1px),
+        linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+      background-size: 20px 20px;
+      background-position: center center;
+    }
+    
+    .dark .dashboard-canvas {
+      background-image: 
+        linear-gradient(#374151 1px, transparent 1px),
+        linear-gradient(90deg, #374151 1px, transparent 1px);
+    }
+    
+    /* Panel styles */
+    .dashboard-panel {
+      touch-action: none;
+      user-select: none;
+    }
+    
+    .panel-resize-handle {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 20px;
+      height: 20px;
+      cursor: nwse-resize;
+    }
+    
+    /* Canvas controls */
+    .canvas-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+    
+    /* Loading states */
+    .loading-skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
+</head>
 
-{% block meta_description %}Build custom dashboards with WorldInsights. Select countries, indicators, and chart types to create interactive visualizations.{% endblock %}
-
-{% block extra_css %}
-<style>
-  /* Dashboard-specific styles */
-  .select-item {
-    @apply px-3 py-2 hover:bg-primary-50 cursor-pointer rounded transition-colors;
-  }
-  .select-item.selected {
-    @apply bg-primary-100 text-primary-700;
-  }
-  .tab-active {
-    @apply border-primary-500 text-primary-600;
-  }
-  .tab-inactive {
-    @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300;
-  }
-</style>
-{% endblock %}
-
-{% block content %}
-<!-- Dashboard Builder -->
-<div class="min-h-screen bg-gray-50" 
-     x-data="dashboardBuilder()"
-     x-init="init()">
-
-  <!-- Header -->
-  <div class="bg-white border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-      <div class="flex items-center justify-between">
-        <div>
-          <h1 class="text-2xl font-display font-bold text-gray-900">Dashboard Builder</h1>
-          <p class="text-sm text-gray-500 mt-1">Create custom visualizations with global data</p>
-        </div>
-        <div class="flex items-center space-x-3">
-          <!-- Save Dashboard -->
-          <button @click="saveDashboard()" 
-                  class="inline-flex items-center px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
-            </svg>
-            Save
-          </button>
-          <!-- Load Dashboard -->
-          <button @click="showLoadModal = true" 
-                  class="inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
-            </svg>
-            Load
-          </button>
-          <!-- Export Data -->
-          <button @click="exportData()" 
-                  class="inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-            </svg>
-            Export
-          </button>
-        </div>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+      x-data="dashboardBuilder()"
+      x-init="initDashboard()">
+  
+  <!-- Navigation (simplified for builder) -->
+  <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 fixed top-0 left-0 right-0 z-50 h-14">
+    <div class="h-full px-4 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <h1 class="text-lg font-bold">Dashboard Builder</h1>
+        <span class="text-sm text-gray-500" x-show="currentDashboard.title" x-text="currentDashboard.title"></span>
+      </div>
+      
+      <div class="flex items-center space-x-2">
+        <button @click="saveDashboard()" class="px-3 py-1.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm">
+          💾 Save
+        </button>
+        <button @click="loadDashboard()" class="px-3 py-1.5 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm">
+          📂 Open
+        </button>
+        <button @click="exportDashboard('png')" class="px-3 py-1.5 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm">
+          📤 Export
+        </button>
       </div>
     </div>
-  </div>
+  </nav>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-      
-      <!-- Left Sidebar: Controls -->
-      <div class="lg:col-span-1 space-y-6">
+  <!-- Main Layout -->
+  <div class="flex h-screen pt-14">
+    
+    <!-- Left Panel: Data Selection -->
+    <div class="w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+      <div class="p-4 space-y-4">
         
-        <!-- Data Source Selector -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
-            <h3 class="text-sm font-semibold text-gray-700">Data Source</h3>
+        <!-- Provider Selection -->
+        <div>
+          <label class="block text-sm font-medium mb-2">Data Provider</label>
+          <select 
+            x-model="filters.provider"
+            @change="onProviderChange()"
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary-500">
+            <option value="">Select Provider...</option>
+            <option value="world_bank">World Bank</option>
+            <option value="who">WHO</option>
+            <option value="fao">FAO</option>
+            <option value="nasa">NASA</option>
+            <option value="open_meteo">Open-Meteo</option>
+          </select>
+        </div>
+
+        <!-- Indicator Selection -->
+        <div x-show="filters.provider">
+          <label class="block text-sm font-medium mb-2">
+            Indicators
+            <span class="text-xs text-gray-500" x-text="`(${availability.counts.filtered_indicators || 0} available)`"></span>
+          </label>
+          
+          <div class="relative mb-2">
+            <input
+              type="text"
+              x-model="searches.indicator"
+              placeholder="Search indicators..."
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+            />
           </div>
-          <div class="p-4">
-            <div class="flex flex-wrap gap-2">
-              <template x-for="source in dataSources" :key="source.id">
-                <button @click="selectSource(source.id)"
-                        :class="selectedSource === source.id ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
-                        class="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors"
-                        x-text="source.name">
-                </button>
-              </template>
-            </div>
+          
+          <div class="max-h-48 overflow-y-auto border border-gray-300 dark:border-gray-600 rounded-lg">
+            <template x-for="indicator in filteredIndicators" :key="indicator.code">
+              <label class="flex items-center px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                <input
+                  type="checkbox"
+                  :value="indicator.code"
+                  x-model="filters.indicators"
+                  @change="onSelectionChange()"
+                  class="mr-2"
+                />
+                <span class="text-sm" x-text="indicator.name"></span>
+              </label>
+            </template>
           </div>
         </div>
 
-        <!-- Country Selector -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
-            <h3 class="text-sm font-semibold text-gray-700">Countries</h3>
-            <p class="text-xs text-gray-500 mt-1" x-text="selectedCountries.length + ' selected'"></p>
+        <!-- Country Selection -->
+        <div x-show="filters.provider && filters.indicators.length > 0">
+          <label class="block text-sm font-medium mb-2">
+            Countries
+            <span class="text-xs text-gray-500" x-text="`(${availability.counts.filtered_countries || 0} available)`"></span>
+          </label>
+          
+          <div class="relative mb-2">
+            <input
+              type="text"
+              x-model="searches.country"
+              placeholder="Search countries..."
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+            />
           </div>
-          <div class="p-4 space-y-3">
-            <!-- Search -->
-            <div class="relative">
-              <input type="text" 
-                     x-model="countrySearch"
-                     @input="searchCountries()"
-                     placeholder="Search countries..."
-                     class="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-              <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-7 7 7 7 0 017-7z"></path>
-              </svg>
-            </div>
-            
-            <!-- Select All -->
-            <button @click="toggleSelectAllCountries()" 
-                    class="w-full text-xs text-primary-600 hover:text-primary-700 font-medium">
-              <span x-text="allCountriesSelected ? 'Deselect All' : 'Select All Visible'"></span>
-            </button>
-            
-            <!-- Country List -->
-            <div class="max-h-48 overflow-y-auto space-y-1">
-              <template x-for="country in filteredCountries" :key="country.code">
-                <label class="flex items-center select-item text-sm">
-                  <input type="checkbox" 
-                         :value="country.code"
-                         x-model="selectedCountries"
-                         class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
-                  <span class="ml-2" x-text="country.name"></span>
-                </label>
-              </template>
-            </div>
-          </div>
-        </div>
-
-        <!-- Indicator Selector -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
-            <h3 class="text-sm font-semibold text-gray-700">Indicators</h3>
-            <p class="text-xs text-gray-500 mt-1" x-text="selectedIndicators.length + ' selected'"></p>
-          </div>
-          <div class="p-4 space-y-3">
-            <!-- Search -->
-            <div class="relative">
-              <input type="text" 
-                     x-model="indicatorSearch"
-                     @input="searchIndicators()"
-                     placeholder="Search indicators..."
-                     class="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-              <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-7 7 7 7 0 017-7z"></path>
-              </svg>
-            </div>
-            
-            <!-- Indicator List -->
-            <div class="max-h-64 overflow-y-auto space-y-1">
-              <template x-for="indicator in filteredIndicators" :key="indicator.code">
-                <label class="flex items-start select-item text-sm">
-                  <input type="checkbox" 
-                         :value="indicator.code"
-                         x-model="selectedIndicators"
-                         class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500 mt-0.5">
-                  <div class="ml-2 flex-1">
-                    <div class="text-gray-900" x-text="indicator.name"></div>
-                    <div class="text-xs text-gray-500" x-text="indicator.code"></div>
-                  </div>
-                </label>
-              </template>
-            </div>
+          
+          <div class="max-h-48 overflow-y-auto border border-gray-300 dark:border-gray-600 rounded-lg">
+            <template x-for="country in filteredCountries" :key="country.code">
+              <label class="flex items-center px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                <input
+                  type="checkbox"
+                  :value="country.code"
+                  x-model="filters.countries"
+                  @change="onSelectionChange()"
+                  class="mr-2"
+                />
+                <span class="text-sm" x-text="country.name"></span>
+              </label>
+            </template>
           </div>
         </div>
 
         <!-- Year Range -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
-            <h3 class="text-sm font-semibold text-gray-700">Year Range</h3>
-          </div>
-          <div class="p-4 space-y-3">
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-medium text-gray-700 mb-1">Start Year</label>
-                <input type="number" 
-                       x-model="startYear"
-                       min="1960" 
-                       max="2025"
-                       class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-gray-700 mb-1">End Year</label>
-                <input type="number" 
-                       x-model="endYear"
-                       min="1960" 
-                       max="2025"
-                       class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-              </div>
-            </div>
+        <div x-show="filters.countries.length > 0">
+          <label class="block text-sm font-medium mb-2">Year Range</label>
+          <div class="grid grid-cols-2 gap-2">
+            <input
+              type="number"
+              x-model="filters.start_year"
+              :min="availability.years.min_year"
+              :max="availability.years.max_year"
+              placeholder="From"
+              class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+            />
+            <input
+              type="number"
+              x-model="filters.end_year"
+              :min="availability.years.min_year"
+              :max="availability.years.max_year"
+              placeholder="To"
+              class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+            />
           </div>
         </div>
 
         <!-- Chart Type -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
-            <h3 class="text-sm font-semibold text-gray-700">Chart Type</h3>
-          </div>
-          <div class="p-4">
-            <select x-model="chartType"
-                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-              <option value="line">Line Chart</option>
-              <option value="bar">Bar Chart</option>
-              <option value="scatter">Scatter Plot</option>
-              <option value="scatter3d">3D Scatter</option>
-              <option value="surface">3D Surface</option>
-              <option value="globe">3D Globe</option>
-            </select>
-          </div>
+        <div x-show="filters.countries.length > 0 && filters.indicators.length > 0">
+          <label class="block text-sm font-medium mb-2">Chart Type</label>
+          <select
+            x-model="filters.chart_type"
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary-500">
+            <option value="line">Line Chart</option>
+            <option value="bar">Bar Chart</option>
+            <option value="scatter">Scatter Plot</option>
+            <option value="area">Area Chart</option>
+          </select>
         </div>
 
-        <!-- Generate Button -->
-        <button @click="generateChart()"
-                :disabled="isLoading || selectedCountries.length === 0 || selectedIndicators.length === 0"
-                class="w-full py-3 px-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl shadow-md hover:from-primary-700 hover:to-primary-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
-          <svg x-show="isLoading" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          <span x-text="isLoading ? 'Generating...' : 'Generate Chart'"></span>
+        <!-- Add to Dashboard Button -->
+        <button
+          x-show="filters.countries.length > 0 && filters.indicators.length > 0"
+          @click="addChartPanel()"
+          class="w-full px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-medium">
+          ➕ Add Chart to Dashboard
         </button>
 
       </div>
-
-      <!-- Right Area: Chart -->
-      <div class="lg:col-span-3">
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <!-- Chart Header -->
-          <div class="px-4 py-3 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
-            <div>
-              <h3 class="text-sm font-semibold text-gray-700">Visualization</h3>
-              <p class="text-xs text-gray-500 mt-1" x-text="getChartDescription()"></p>
-            </div>
-            <div class="flex items-center space-x-2">
-              <button @click="fullscreenChart()" 
-                      class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
-                      title="Fullscreen">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
-                </svg>
-              </button>
-              <button @click="downloadChart()" 
-                      class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
-                      title="Download">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-          
-          <!-- Chart Container -->
-          <div class="p-4">
-            <div id="chart-container" class="plotly-container min-h-[500px] flex items-center justify-center">
-              <!-- Empty State -->
-              <div x-show="!chartGenerated && !isLoading" class="text-center py-16">
-                <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                </svg>
-                <p class="text-gray-500 text-sm">Select countries and indicators, then click "Generate Chart"</p>
-              </div>
-              
-              <!-- Loading State -->
-              <div x-show="isLoading" class="text-center py-16">
-                <svg class="animate-spin w-12 h-12 text-primary-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <p class="text-gray-500 text-sm">Loading data and generating visualization...</p>
-              </div>
-              
-              <!-- Chart will be rendered here by Plotly -->
-              <div id="plotly-chart" class="w-full h-full"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Data Summary -->
-        <div class="mt-6 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden" x-show="chartGenerated">
-          <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
-            <h3 class="text-sm font-semibold text-gray-700">Data Summary</h3>
-          </div>
-          <div class="p-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div class="text-center p-4 bg-gray-50 rounded-lg">
-                <div class="text-2xl font-bold text-primary-600" x-text="selectedCountries.length"></div>
-                <div class="text-xs text-gray-500 mt-1">Countries</div>
-              </div>
-              <div class="text-center p-4 bg-gray-50 rounded-lg">
-                <div class="text-2xl font-bold text-primary-600" x-text="selectedIndicators.length"></div>
-                <div class="text-xs text-gray-500 mt-1">Indicators</div>
-              </div>
-              <div class="text-center p-4 bg-gray-50 rounded-lg">
-                <div class="text-2xl font-bold text-primary-600" x-text="endYear - startYear + 1"></div>
-                <div class="text-xs text-gray-500 mt-1">Years</div>
-              </div>
-              <div class="text-center p-4 bg-gray-50 rounded-lg">
-                <div class="text-2xl font-bold text-primary-600" x-text="dataPoints"></div>
-                <div class="text-xs text-gray-500 mt-1">Data Points</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Load Dashboard Modal -->
-  <div x-show="showLoadModal" 
-       x-cloak
-       class="fixed inset-0 z-50 overflow-y-auto"
-       aria-labelledby="modal-title" 
-       role="dialog" 
-       aria-modal="true">
-    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
-      <div x-show="showLoadModal"
-           x-transition:enter="ease-out duration-300"
-           x-transition:enter-start="opacity-0"
-           x-transition:enter-end="opacity-100"
-           x-transition:leave="ease-in duration-200"
-           x-transition:leave-start="opacity-100"
-           x-transition:leave-end="opacity-0"
-           class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
-           @click="showLoadModal = false"></div>
-
-      <div x-show="showLoadModal"
-           x-transition:enter="ease-out duration-300"
-           x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-           x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-           x-transition:leave="ease-in duration-200"
-           x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-           x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-           class="relative inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+    <!-- Center: Canvas Area -->
+    <div class="flex-1 relative overflow-hidden">
+      
+      <!-- Canvas -->
+      <div 
+        id="dashboard-canvas"
+        class="dashboard-canvas w-full h-full relative"
+        @wheel="handleZoom">
         
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-lg font-semibold text-gray-900" id="modal-title">Load Dashboard</h3>
-          <button @click="showLoadModal = false" class="text-gray-400 hover:text-gray-500">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
-        </div>
+        <!-- Panels -->
+        <template x-for="panel in panels" :key="panel.id">
+          <div
+            :id="panel.id"
+            class="dashboard-panel absolute bg-white dark:bg-gray-800 border-2 rounded-lg shadow-lg"
+            :class="selectedPanel === panel.id ? 'border-primary-500' : 'border-gray-300 dark:border-gray-600'"
+            :style="{
+              left: panel.x + 'px',
+              top: panel.y + 'px',
+              width: panel.width + 'px',
+              height: panel.height + 'px',
+              zIndex: panel.zIndex
+            }"
+            @mousedown="selectPanel(panel.id)"
+            @click.stop>
+            
+            <!-- Panel Header -->
+            <div class="panel-header h-10 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-3 bg-gray-50 dark:bg-gray-700 cursor-move">
+              <span class="text-sm font-medium" x-text="panel.title"></span>
+              <div class="flex items-center space-x-1">
+                <button @click="bringToFront(panel.id)" class="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded" title="Bring to front">⬆️</button>
+                <button @click="editPanel(panel.id)" class="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded" title="Edit">✏️</button>
+                <button @click="removePanel(panel.id)" class="p-1 hover:bg-red-200 dark:hover:bg-red-900 rounded text-red-600" title="Remove">❌</button>
+              </div>
+            </div>
+            
+            <!-- Panel Content -->
+            <div class="panel-content h-[calc(100%-2.5rem)] p-3 overflow-auto">
+              <template x-if="panel.type === 'chart'">
+                <div :id="`chart-${panel.id}`" class="w-full h-full" x-init="renderChart(panel)"></div>
+              </template>
+              <template x-if="panel.type === 'text'">
+                <div class="prose dark:prose-invert" x-html="panel.content"></div>
+              </template>
+            </div>
+            
+            <!-- Resize Handle -->
+            <div class="panel-resize-handle" :data-panel-id="panel.id"></div>
+          </div>
+        </template>
+        
+      </div>
+      
+      <!-- Canvas Controls -->
+      <div class="canvas-controls bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-2 flex items-center space-x-2">
+        <button @click="zoomIn()" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded" title="Zoom In">🔍+</button>
+        <button @click="zoomOut()" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded" title="Zoom Out">🔍-</button>
+        <button @click="resetZoom()" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded" title="Reset Zoom">1:1</button>
+        <div class="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
+        <button @click="toggleGrid()" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded" :class="canvas.showGrid ? 'bg-primary-100 dark:bg-primary-900' : ''" title="Toggle Grid">⊞</button>
+        <button @click="fitToScreen()" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded" title="Fit to Screen">⛶</button>
+      </div>
+      
+    </div>
 
-        <div class="space-y-2 max-h-64 overflow-y-auto">
-          <template x-if="savedDashboards.length === 0">
-            <p class="text-sm text-gray-500 text-center py-4">No saved dashboards</p>
-          </template>
-          <template x-for="dashboard in savedDashboards" :key="dashboard.id">
-            <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+    <!-- Right Panel: Properties -->
+    <div class="w-72 bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 overflow-y-auto">
+      <div class="p-4">
+        <h3 class="text-sm font-bold mb-4">Properties</h3>
+        
+        <template x-if="selectedPanel && getPanel(selectedPanel)">
+          <div class="space-y-4">
+            <template x-if="getPanel(selectedPanel).type === 'chart'">
               <div>
-                <div class="text-sm font-medium text-gray-900" x-text="dashboard.name"></div>
-                <div class="text-xs text-gray-500" x-text="new Date(dashboard.createdAt).toLocaleDateString()"></div>
+                <label class="block text-sm font-medium mb-2">Chart Title</label>
+                <input
+                  type="text"
+                  x-model="getPanel(selectedPanel).title"
+                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+                />
               </div>
-              <div class="flex items-center space-x-2">
-                <button @click="loadDashboard(dashboard.id)" 
-                        class="text-sm text-primary-600 hover:text-primary-700 font-medium">
-                  Load
-                </button>
-                <button @click="deleteDashboard(dashboard.id)" 
-                        class="text-sm text-red-600 hover:text-red-700">
-                  Delete
-                </button>
+            </template>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Position</label>
+              <div class="grid grid-cols-2 gap-2">
+                <input type="number" x-model="getPanel(selectedPanel).x" placeholder="X" class="px-2 py-1 border rounded text-sm" />
+                <input type="number" x-model="getPanel(selectedPanel).y" placeholder="Y" class="px-2 py-1 border rounded text-sm" />
               </div>
             </div>
-          </template>
-        </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Size</label>
+              <div class="grid grid-cols-2 gap-2">
+                <input type="number" x-model="getPanel(selectedPanel).width" placeholder="W" class="px-2 py-1 border rounded text-sm" />
+                <input type="number" x-model="getPanel(selectedPanel).height" placeholder="H" class="px-2 py-1 border rounded text-sm" />
+              </div>
+            </div>
+          </div>
+        </template>
+        
+        <template x-if="!selectedPanel">
+          <p class="text-sm text-gray-500">Select a panel to edit its properties</p>
+        </template>
       </div>
     </div>
+    
   </div>
 
-</div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-/**
- * Dashboard Builder Alpine.js Component
- */
-function dashboardBuilder() {
-  return {
-    // State
-    dataSources: [
-      { id: 'worldbank', name: 'World Bank' },
-      { id: 'who', name: 'WHO' },
-      { id: 'fao', name: 'FAO' },
-      { id: 'nasa', name: 'NASA' },
-      { id: 'openmeteo', name: 'Open-Meteo' }
-    ],
-    selectedSource: 'worldbank',
-    allCountries: [],
-    filteredCountries: [],
-    selectedCountries: [],
-    countrySearch: '',
-    allIndicators: [],
-    filteredIndicators: [],
-    selectedIndicators: [],
-    indicatorSearch: '',
-    startYear: 2015,
-    endYear: 2023,
-    chartType: 'line',
-    isLoading: false,
-    chartGenerated: false,
-    dataPoints: 0,
-    showLoadModal: false,
-    savedDashboards: [],
-    currentData: null,
-
-    /**
-     * Initialize the dashboard builder
-     */
-    async init() {
-      console.log('[Dashboard Builder] Initializing...');
-      
-      // Load countries and indicators
-      await Promise.all([
-        this.loadCountries(),
-        this.loadIndicators()
-      ]);
-
-      // Load saved dashboards
-      this.savedDashboards = WorldInsightsAPI.getSavedDashboards();
-
-      // Set default selections
-      this.filteredCountries = this.allCountries.slice(0, 50);
-      this.filteredIndicators = this.allIndicators.slice(0, 50);
-    },
-
-    /**
-     * Load all countries from API
-     */
-    async loadCountries() {
-      try {
-        this.allCountries = await WorldInsightsAPI.getCountries();
-        console.log(`[Dashboard Builder] Loaded ${this.allCountries.length} countries`);
-      } catch (error) {
-        console.error('[Dashboard Builder] Error loading countries:', error);
-      }
-    },
-
-    /**
-     * Load indicators from API
-     */
-    async loadIndicators() {
-      try {
-        this.allIndicators = await WorldInsightsAPI.getIndicators(this.selectedSource);
-        console.log(`[Dashboard Builder] Loaded ${this.allIndicators.length} indicators`);
-      } catch (error) {
-        console.error('[Dashboard Builder] Error loading indicators:', error);
-      }
-    },
-
-    /**
-     * Select a data source
-     */
-    async selectSource(sourceId) {
-      this.selectedSource = sourceId;
-      this.selectedIndicators = [];
-      this.isLoading = true;
-      
-      try {
-        await this.loadIndicators();
-        this.filteredIndicators = this.allIndicators.slice(0, 50);
-      } finally {
-        this.isLoading = false;
-      }
-    },
-
-    /**
-     * Search countries
-     */
-    searchCountries: debounce(function() {
-      const query = this.countrySearch.toLowerCase();
-      if (!query) {
-        this.filteredCountries = this.allCountries.slice(0, 100);
-      } else {
-        this.filteredCountries = this.allCountries.filter(c => 
-          c.name.toLowerCase().includes(query) || 
-          c.code.toLowerCase().includes(query)
-        ).slice(0, 100);
-      }
-    }, 300),
-
-    /**
-     * Search indicators
-     */
-    searchIndicators: debounce(function() {
-      const query = this.indicatorSearch.toLowerCase();
-      if (!query) {
-        this.filteredIndicators = this.allIndicators.slice(0, 100);
-      } else {
-        this.filteredIndicators = this.allIndicators.filter(i => 
-          i.name.toLowerCase().includes(query) || 
-          i.code.toLowerCase().includes(query)
-        ).slice(0, 100);
-      }
-    }, 300),
-
-    /**
-     * Toggle select all countries
-     */
-    toggleSelectAllCountries() {
-      if (this.allCountriesSelected) {
-        // Deselect all visible
-        const visibleCodes = this.filteredCountries.map(c => c.code);
-        this.selectedCountries = this.selectedCountries.filter(c => !visibleCodes.includes(c));
-      } else {
-        // Select all visible
-        const visibleCodes = this.filteredCountries.map(c => c.code);
-        const newSelection = [...new Set([...this.selectedCountries, ...visibleCodes])];
-        this.selectedCountries = newSelection;
-      }
-    },
-
-    /**
-     * Check if all visible countries are selected
-     */
-    get allCountriesSelected() {
-      const visibleCodes = this.filteredCountries.map(c => c.code);
-      return visibleCodes.every(code => this.selectedCountries.includes(code));
-    },
-
-    /**
-     * Generate the chart
-     */
-    async generateChart() {
-      if (this.selectedCountries.length === 0 || this.selectedIndicators.length === 0) {
-        WorldInsightsToast.show('Please select at least one country and one indicator', 'warning');
-        return;
-      }
-
-      this.isLoading = true;
-      this.chartGenerated = false;
-
-      try {
-        // Fetch data from API
-        const response = await WorldInsightsAPI.getData(
-          this.selectedCountries,
-          this.selectedIndicators,
-          [this.startYear, this.endYear],
-          this.chartType
-        );
-
-        this.currentData = response;
-        this.dataPoints = response.count || 0;
-
-        // Render chart based on type
-        await this.renderChart(response.data, this.chartType);
+  <!-- JavaScript -->
+  <script>
+    function dashboardBuilder() {
+      return {
+        // State
+        filters: {
+          provider: '',
+          indicators: [],
+          countries: [],
+          start_year: null,
+          end_year: null,
+          chart_type: 'line'
+        },
         
-        this.chartGenerated = true;
-        WorldInsightsToast.show('Chart generated successfully', 'success');
-      } catch (error) {
-        console.error('[Dashboard Builder] Error generating chart:', error);
-        WorldInsightsToast.show('Failed to generate chart: ' + error.message, 'error');
-      } finally {
-        this.isLoading = false;
-      }
-    },
-
-    /**
-     * Render chart using Plotly
-     */
-    async renderChart(data, chartType) {
-      const container = document.getElementById('plotly-chart');
-      if (!container) return;
-
-      // Transform data for Plotly
-      const { traces, layout } = await this.preparePlotlyData(data, chartType);
-
-      const config = {
-        responsive: true,
-        displayModeBar: true,
-        displaylogo: false,
-        modeBarButtonsToRemove: ['lasso2d', 'select2d'],
-        toImageButtonOptions: {
-          format: 'png',
-          filename: 'worldinsights_chart',
-          height: 800,
-          width: 1200,
-          scale: 2
-        }
-      };
-
-      Plotly.newPlot(container, traces, layout, config);
-    },
-
-    /**
-     * Prepare data for Plotly
-     */
-    async preparePlotlyData(data, chartType) {
-      const traces = [];
-      const layout = {
-        font: { family: 'Inter, sans-serif' },
-        margin: { t: 50, r: 50, l: 50, b: 50 },
-        hovermode: 'closest',
-        showlegend: true,
-        legend: { orientation: 'h', y: -0.2 }
-      };
-
-      // Group data by country and indicator
-      const grouped = {};
-      for (const record of data) {
-        const key = `${record.country}-${record.indicator}`;
-        if (!grouped[key]) {
-          grouped[key] = {
-            country: record.country,
-            indicator: record.indicator,
-            points: []
-          };
-        }
-        grouped[key].points.push({
-          year: record.year,
-          value: record.value
-        });
-      }
-
-      // Sort points by year
-      for (const key in grouped) {
-        grouped[key].points.sort((a, b) => a.year - b.year);
-      }
-
-      if (chartType === 'line' || chartType === 'bar') {
-        // Create trace for each country-indicator combination
-        const colors = ['#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
-        let colorIndex = 0;
-
-        for (const key in grouped) {
-          const item = grouped[key];
-          const years = item.points.map(p => p.year);
-          const values = item.points.map(p => p.value);
-
-          traces.push({
-            type: chartType === 'line' ? 'scatter' : 'bar',
-            mode: chartType === 'line' ? 'lines+markers' : undefined,
-            name: `${item.country} - ${item.indicator}`,
-            x: years,
-            y: values,
-            line: { color: colors[colorIndex % colors.length], width: 2 },
-            marker: { color: colors[colorIndex % colors.length] }
-          });
-          colorIndex++;
-        }
-
-        layout.xaxis = { title: 'Year' };
-        layout.yaxis = { title: 'Value' };
-
-      } else if (chartType === 'scatter') {
-        // Scatter plot requires 2 indicators
-        // Group by country, pair indicators
-        const countryData = {};
-        for (const record of data) {
-          if (!countryData[record.country]) {
-            countryData[record.country] = {};
-          }
-          if (!countryData[record.country][record.indicator]) {
-            countryData[record.country][record.indicator] = [];
-          }
-          countryData[record.country][record.indicator].push({
-            year: record.year,
-            value: record.value
-          });
-        }
-
-        const indicators = Object.keys(grouped).map(k => grouped[k].indicator).filter((v, i, a) => a.indexOf(v) === i);
-        if (indicators.length >= 2) {
-          const xInd = indicators[0];
-          const yInd = indicators[1];
-
-          const xValues = [];
-          const yValues = [];
-          const labels = [];
-
-          for (const country in countryData) {
-            const xData = countryData[country][xInd];
-            const yData = countryData[country][yInd];
-            if (xData && yData && xData.length > 0 && yData.length > 0) {
-              // Use latest year for both
-              const xVal = xData[xData.length - 1].value;
-              const yVal = yData[yData.length - 1].value;
-              xValues.push(xVal);
-              yValues.push(yVal);
-              labels.push(country);
-            }
-          }
-
-          traces.push({
-            type: 'scatter',
-            mode: 'markers',
-            x: xValues,
-            y: yValues,
-            text: labels,
-            marker: { size: 10, color: '#3b82f6', opacity: 0.7 },
-            name: 'Countries'
-          });
-
-          layout.xaxis = { title: this.getIndicatorName(xInd) };
-          layout.yaxis = { title: this.getIndicatorName(yInd) };
-        }
-
-      } else if (chartType === 'scatter3d') {
-        // 3D Scatter
-        const xValues = [], yValues = [], zValues = [], labels = [];
+        searches: {
+          indicator: '',
+          country: ''
+        },
         
-        for (const key in grouped) {
-          const item = grouped[key];
-          const latestPoint = item.points[item.points.length - 1];
-          if (latestPoint && latestPoint.value !== null) {
-            xValues.push(latestPoint.year);
-            yValues.push(parseFloat(latestPoint.value) || 0);
-            zValues.push(item.points.length);
-            labels.push(`${item.country} (${item.indicator})`);
+        availability: {
+          providers: [],
+          indicators: [],
+          countries: [],
+          years: { min_year: null, max_year: null },
+          counts: {
+            total_providers: 0,
+            total_indicators: 0,
+            total_countries: 0,
+            filtered_indicators: 0,
+            filtered_countries: 0
           }
-        }
-
-        traces.push({
-          type: 'scatter3d',
-          mode: 'markers',
-          x: xValues,
-          y: yValues,
-          z: zValues,
-          text: labels,
-          marker: { size: 5, color: yValues, colorscale: 'Viridis', opacity: 0.8 }
-        });
-
-        layout.scene = {
-          xaxis: { title: 'Year' },
-          yaxis: { title: 'Value' },
-          zaxis: { title: 'Data Points' }
-        };
-
-      } else if (chartType === 'surface') {
-        // 3D Surface - create a matrix
-        const countries = [...new Set(Object.values(grouped).map(g => g.country))];
-        const indicators = [...new Set(Object.values(grouped).map(g => g.indicator))];
-        const years = [...new Set(data.map(d => d.year))].sort();
-
-        // Create z-values matrix (simplified)
-        const zData = [];
-        for (let i = 0; i < countries.length && i < 20; i++) {
-          const row = [];
-          for (let j = 0; j < years.length && j < 20; j++) {
-            const key = `${countries[i]}-${indicators[0]}`;
-            const item = grouped[key];
-            const point = item?.points.find(p => p.year === years[j]);
-            row.push(point ? (point.value || 0) : 0);
-          }
-          if (row.length > 0) zData.push(row);
-        }
-
-        traces.push({
-          type: 'surface',
-          z: zData,
-          x: years.slice(0, 20),
-          y: countries.slice(0, 20)
-        });
-
-        layout.scene = {
-          xaxis: { title: 'Year' },
-          yaxis: { title: 'Country' },
-          zaxis: { title: 'Value' }
-        };
-
-      } else if (chartType === 'globe') {
-        // For globe, we need GeoJSON - use the globe endpoint
-        if (this.selectedIndicators.length > 0) {
+        },
+        
+        panels: [],
+        selectedPanel: null,
+        canvas: {
+          zoom: 1,
+          panX: 0,
+          panY: 0,
+          showGrid: true
+        },
+        
+        currentDashboard: {
+          id: null,
+          title: '',
+          description: ''
+        },
+        
+        // Initialization
+        initDashboard() {
+          this.loadAvailability();
+          this.initDragDrop();
+          this.initResize();
+          this.autoSave();
+        },
+        
+        // Data Loading
+        async loadAvailability() {
+          if (!this.filters.provider) return;
+          
           try {
-            const globeData = await WorldInsightsAPI.getGlobeData(
-              this.selectedSource,
-              this.selectedIndicators[0],
-              this.endYear
-            );
-
-            traces.push({
-              type: 'choroplethmapbox',
-              geojson: globeData,
-              locations: globeData.features.map(f => f.properties.iso_code),
-              z: globeData.features.map(f => f.properties.value || 0),
-              colorscale: 'Viridis',
-              marker: { line: { width: 0.5, color: 'white' } },
-              hovertemplate: '<b>%{customdata}</b><br>Value: %{z:,.2f}<extra></extra>',
-              customdata: globeData.features.map(f => f.properties.name)
+            const params = new URLSearchParams({
+              provider: this.filters.provider,
+              countries: this.filters.countries.join(','),
+              indicators: this.filters.indicators.join(',')
             });
-
-            layout.mapbox = {
-              style: 'light',
-              center: { lat: 20, lon: 0 },
-              zoom: 1.5
-            };
-            layout.margin = { t: 20, r: 20, l: 20, b: 20 };
+            
+            const response = await fetch(`/dashboard/api/availability/summary?${params}`);
+            this.availability = await response.json();
           } catch (error) {
-            console.error('[Dashboard Builder] Globe data error:', error);
-            WorldInsightsToast.show('Globe visualization requires GeoJSON data', 'warning');
+            console.error('Error loading availability:', error);
           }
+        },
+        
+        // Event Handlers
+        async onProviderChange() {
+          this.filters.indicators = [];
+          this.filters.countries = [];
+          await this.loadAvailability();
+        },
+        
+        async onSelectionChange() {
+          await this.loadAvailability();
+        },
+        
+        // Computed Properties (manual)
+        get filteredIndicators() {
+          if (!this.searches.indicator) return this.availability.indicators || [];
+          const search = this.searches.indicator.toLowerCase();
+          return (this.availability.indicators || []).filter(ind => 
+            ind.name.toLowerCase().includes(search) ||
+            ind.code.toLowerCase().includes(search)
+          );
+        },
+        
+        get filteredCountries() {
+          if (!this.searches.country) return this.availability.countries || [];
+          const search = this.searches.country.toLowerCase();
+          return (this.availability.countries || []).filter(country =>
+            country.name.toLowerCase().includes(search) ||
+            country.code.toLowerCase().includes(search)
+          );
+        },
+        
+        // Panel Management
+        addChartPanel() {
+          const panel = {
+            id: `panel-${Date.now()}`,
+            type: 'chart',
+            title: `${this.filters.indicators.length} indicators across ${this.filters.countries.length} countries`,
+            x: 100 + (this.panels.length * 20),
+            y: 100 + (this.panels.length * 20),
+            width: 500,
+            height: 350,
+            zIndex: this.panels.length + 1,
+            config: {
+              provider: this.filters.provider,
+              indicators: [...this.filters.indicators],
+              countries: [...this.filters.countries],
+              start_year: this.filters.start_year,
+              end_year: this.filters.end_year,
+              chart_type: this.filters.chart_type
+            },
+            data: null
+          };
+          
+          this.panels.push(panel);
+          this.fetchPanelData(panel);
+          this.$nextTick(() => {
+            this.initDragDrop();
+            this.initResize();
+          });
+        },
+        
+        async fetchPanelData(panel) {
+          try {
+            const response = await fetch('/dashboard/api/data', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(panel.config)
+            });
+            
+            const result = await response.json();
+            panel.data = result;
+            
+            if (result.plot_config) {
+              this.renderChart(panel);
+            }
+          } catch (error) {
+            console.error('Error fetching panel data:', error);
+          }
+        },
+        
+        renderChart(panel) {
+          if (!panel.data || !panel.data.plot_config) return;
+          
+          const chartId = `chart-${panel.id}`;
+          const config = panel.data.plot_config;
+          
+          Plotly.newPlot(chartId, config.data, config.layout, {
+            responsive: true,
+            displayModeBar: true,
+            modeBarButtonsToRemove: ['lasso2d', 'select2d']
+          });
+        },
+        
+        selectPanel(panelId) {
+          this.selectedPanel = panelId;
+          this.bringToFront(panelId);
+        },
+        
+        removePanel(panelId) {
+          this.panels = this.panels.filter(p => p.id !== panelId);
+          this.selectedPanel = null;
+        },
+        
+        bringToFront(panelId) {
+          const maxZ = Math.max(...this.panels.map(p => p.zIndex), 0);
+          const panel = this.panels.find(p => p.id === panelId);
+          if (panel) {
+            panel.zIndex = maxZ + 1;
+          }
+        },
+        
+        getPanel(panelId) {
+          return this.panels.find(p => p.id === panelId);
+        },
+        
+        editPanel(panelId) {
+          // Open edit modal (future implementation)
+          console.log('Edit panel:', panelId);
+        },
+        
+        // Canvas Controls
+        handleZoom(e) {
+          e.preventDefault();
+          const delta = e.deltaY > 0 ? -0.1 : 0.1;
+          this.canvas.zoom = Math.max(0.5, Math.min(2, this.canvas.zoom + delta));
+        },
+        
+        zoomIn() {
+          this.canvas.zoom = Math.min(2, this.canvas.zoom + 0.1);
+        },
+        
+        zoomOut() {
+          this.canvas.zoom = Math.max(0.5, this.canvas.zoom - 0.1);
+        },
+        
+        resetZoom() {
+          this.canvas.zoom = 1;
+        },
+        
+        toggleGrid() {
+          this.canvas.showGrid = !this.canvas.showGrid;
+        },
+        
+        fitToScreen() {
+          this.resetZoom();
+          // Center all panels (future implementation)
+        },
+        
+        // Drag & Drop (Interact.js)
+        initDragDrop() {
+          interact('.dashboard-panel').draggable({
+            listeners: {
+              move: (event) => {
+                const panelId = event.target.id;
+                const panel = this.getPanel(panelId);
+                if (panel) {
+                  panel.x = (panel.x || 0) + event.dx;
+                  panel.y = (panel.y || 0) + event.dy;
+                }
+              }
+            },
+            modifiers: [
+              interact.modifiers.restrictRect({
+                restriction: 'parent',
+                endOnly: true
+              })
+            ]
+          });
+        },
+        
+        // Resize (Interact.js)
+        initResize() {
+          interact('.panel-resize-handle').forEachTarget((target) => {
+            interact(target).resizable({
+              listeners: {
+                move: (event) => {
+                  const panelId = event.target.dataset.panelId;
+                  const panel = this.getPanel(panelId);
+                  if (panel) {
+                    panel.width = parseFloat(event.rect.width);
+                    panel.height = parseFloat(event.rect.height);
+                  }
+                }
+              },
+              modifiers: [
+                interact.modifiers.restrictSize({
+                  min: { width: 300, height: 200 }
+                })
+              ]
+            });
+          });
+        },
+        
+        // Save/Load
+        async saveDashboard() {
+          const title = prompt('Enter dashboard title:', 'My Dashboard');
+          if (!title) return;
+          
+          this.currentDashboard.title = title;
+          
+          const dashboard = {
+            title: title,
+            layout: {
+              zoom: this.canvas.zoom,
+              showGrid: this.canvas.showGrid
+            },
+            panels: this.panels.map(p => ({
+              id: p.id,
+              type: p.type,
+              title: p.title,
+              x: p.x,
+              y: p.y,
+              width: p.width,
+              height: p.height,
+              zIndex: p.zIndex,
+              config: p.config
+            }))
+          };
+          
+          try {
+            const response = await fetch('/dashboard/api/save', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(dashboard)
+            });
+            
+            const result = await response.json();
+            alert('Dashboard saved! ID: ' + result.id);
+          } catch (error) {
+            console.error('Error saving dashboard:', error);
+            alert('Error saving dashboard');
+          }
+        },
+        
+        async loadDashboard() {
+          const dashboardId = prompt('Enter dashboard ID:');
+          if (!dashboardId) return;
+          
+          try {
+            const response = await fetch(`/dashboard/api/load/${dashboardId}`);
+            const dashboard = await response.json();
+            
+            if (dashboard.panels) {
+              this.panels = dashboard.panels;
+              this.canvas.zoom = dashboard.layout?.zoom || 1;
+              this.canvas.showGrid = dashboard.layout?.showGrid ?? true;
+            }
+          } catch (error) {
+            console.error('Error loading dashboard:', error);
+            alert('Error loading dashboard');
+          }
+        },
+        
+        async exportDashboard(format) {
+          alert(`${format.toUpperCase()} export will be available in future update`);
+        },
+        
+        // Auto-save
+        autoSave() {
+          setInterval(() => {
+            if (this.panels.length > 0) {
+              console.log('Auto-saving dashboard...');
+              // Silent auto-save (future implementation)
+            }
+          }, 30000); // Every 30 seconds
         }
-      }
-
-      return { traces, layout };
-    },
-
-    /**
-     * Get indicator name from code
-     */
-    getIndicatorName(code) {
-      const indicator = this.allIndicators.find(i => i.code === code);
-      return indicator ? indicator.name : code;
-    },
-
-    /**
-     * Get chart description
-     */
-    getChartDescription() {
-      if (!this.chartGenerated) return 'Configure your visualization';
-      return `${this.selectedCountries.length} countries • ${this.selectedIndicators.length} indicators • ${this.startYear}-${this.endYear}`;
-    },
-
-    /**
-     * Save dashboard
-     */
-    saveDashboard() {
-      if (!this.chartGenerated) {
-        WorldInsightsToast.show('Generate a chart first', 'warning');
-        return;
-      }
-
-      const name = prompt('Enter dashboard name:', 'My Dashboard');
-      if (!name) return;
-
-      const config = {
-        source: this.selectedSource,
-        countries: this.selectedCountries,
-        indicators: this.selectedIndicators,
-        startYear: this.startYear,
-        endYear: this.endYear,
-        chartType: this.chartType
-      };
-
-      WorldInsightsAPI.saveDashboard({ name, config });
-      this.savedDashboards = WorldInsightsAPI.getSavedDashboards();
-    },
-
-    /**
-     * Load dashboard
-     */
-    loadDashboard(id) {
-      const dashboard = WorldInsightsAPI.loadDashboard(id);
-      if (!dashboard) return;
-
-      const config = dashboard.config;
-      this.selectedSource = config.source;
-      this.selectedCountries = config.countries;
-      this.selectedIndicators = config.indicators;
-      this.startYear = config.startYear;
-      this.endYear = config.endYear;
-      this.chartType = config.chartType;
-
-      this.showLoadModal = false;
-      this.generateChart();
-      WorldInsightsToast.show('Dashboard loaded', 'success');
-    },
-
-    /**
-     * Delete dashboard
-     */
-    deleteDashboard(id) {
-      if (confirm('Are you sure you want to delete this dashboard?')) {
-        WorldInsightsAPI.deleteDashboard(id);
-        this.savedDashboards = WorldInsightsAPI.getSavedDashboards();
-      }
-    },
-
-    /**
-     * Export data
-     */
-    exportData() {
-      if (!this.currentData || !this.currentData.data) {
-        WorldInsightsToast.show('No data to export', 'warning');
-        return;
-      }
-
-      const format = prompt('Export format: (1) JSON, (2) CSV', '1');
-      if (format === '1') {
-        WorldInsightsUtils.downloadJSON(this.currentData.data, 'worldinsights_data.json');
-      } else if (format === '2') {
-        WorldInsightsUtils.downloadCSV(this.currentData.data, 'worldinsights_data.csv');
-      }
-    },
-
-    /**
-     * Fullscreen chart
-     */
-    fullscreenChart() {
-      const container = document.getElementById('chart-container');
-      if (!document.fullscreenElement) {
-        container.requestFullscreen().catch(err => {
-          console.error('Fullscreen error:', err);
-        });
-      } else {
-        document.exitFullscreen();
-      }
-    },
-
-    /**
-     * Download chart
-     */
-    downloadChart() {
-      const container = document.getElementById('plotly-chart');
-      if (container) {
-        Plotly.downloadImage(container, {
-          format: 'png',
-          width: 1200,
-          height: 800,
-          filename: 'worldinsights_chart'
-        });
       }
     }
-  };
-}
-
-// Debounce utility (in case not available from api.js)
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
-</script>
-{% endblock %}
+  </script>
+</body>
+</html>

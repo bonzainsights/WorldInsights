@@ -570,7 +570,7 @@ class AvailabilityService:
     def invalidate_cache(self, source_id: Optional[str] = None) -> None:
         """
         Invalidate availability cache.
-        
+
         Args:
             source_id: Optional source ID to invalidate (None = all)
         """
@@ -581,5 +581,257 @@ class AvailabilityService:
             else:
                 self._cache.matrices.clear()
                 self._source_matrices.clear()
-        
+
         self.logger.info(f"Invalidated availability cache for {source_id or 'all sources'}")
+
+    # =========================================================================
+    # Cascade Filtering Methods (NEW - for Dashboard Builder)
+    # =========================================================================
+
+    def get_indicators_for_provider(self, provider: str) -> List[Dict[str, Any]]:
+        """
+        Get all indicators available from a specific provider.
+
+        Args:
+            provider: Provider ID (e.g., 'who', 'world_bank', 'fao')
+
+        Returns:
+            List of indicator dictionaries with metadata
+        """
+        client = self.ingestion.get(provider)
+        if not client:
+            return []
+
+        indicators, error = client.get_indicators()
+        if error or not indicators:
+            return []
+
+        return indicators
+
+    def get_countries_for_indicators(
+        self,
+        provider: str,
+        indicator_codes: List[str]
+    ) -> List[Dict[str, Any]]:
+        """
+        Get countries that have ALL specified indicators from a provider.
+
+        This implements the cascade filter:
+        Provider → Select Indicators → Filter Countries
+
+        Args:
+            provider: Provider ID
+            indicator_codes: List of indicator codes
+
+        Returns:
+            List of country dictionaries that have ALL indicators
+        """
+        if not indicator_codes:
+            # Return all countries for provider
+            return self.get_countries_for_provider(provider)
+
+        # Get availability matrix
+        matrix = self.get_availability_matrix(provider)
+        if not matrix:
+            return []
+
+        # Get intersection of countries for all indicators
+        available_countries = matrix.get_available_countries(indicator_codes)
+
+        # Get full country metadata
+        countries = []
+        country_data, _ = self.ingestion.get(provider).get_countries()
+        if country_data:
+            country_map = {c.get('code', '').upper(): c for c in country_data}
+            for country_code in available_countries:
+                if country_code in country_map:
+                    countries.append(country_map[country_code])
+
+        return countries
+
+    def get_indicators_for_countries(
+        self,
+        provider: str,
+        country_codes: List[str]
+    ) -> List[Dict[str, Any]]:
+        """
+        Get indicators available for ALL specified countries from a provider.
+
+        This implements the reverse cascade filter:
+        Provider → Select Countries → Filter Indicators
+
+        Args:
+            provider: Provider ID
+            country_codes: List of country codes
+
+        Returns:
+            List of indicator dictionaries available for ALL countries
+        """
+        if not country_codes:
+            # Return all indicators for provider
+            return self.get_indicators_for_provider(provider)
+
+        # Get availability matrix
+        matrix = self.get_availability_matrix(provider)
+        if not matrix:
+            return []
+
+        # Get intersection of indicators for all countries
+        available_indicators = matrix.get_available_indicators(country_codes)
+
+        # Get full indicator metadata
+        indicators = []
+        indicator_data, _ = self.ingestion.get(provider).get_indicators()
+        if indicator_data:
+            indicator_map = {i.get('code', ''): i for i in indicator_data}
+            for ind_code in available_indicators:
+                if ind_code in indicator_map:
+                    indicators.append(indicator_map[ind_code])
+
+        return indicators
+
+    def get_years_for_selection(
+        self,
+        provider: str,
+        country_codes: List[str],
+        indicator_codes: List[str]
+    ) -> Dict[str, Any]:
+        """
+        Get available year range for a specific selection.
+
+        Args:
+            provider: Provider ID
+            country_codes: List of country codes
+            indicator_codes: List of indicator codes
+
+        Returns:
+            Dictionary with min_year, max_year, and available_years
+        """
+        if not country_codes or not indicator_codes:
+            return {'min_year': None, 'max_year': None, 'available_years': []}
+
+        # Fetch sample data to determine year range
+        client = self.ingestion.get(provider)
+        if not client:
+            return {'min_year': None, 'max_year': None, 'available_years': []}
+
+        # Get data for first country-indicator pair
+        data, error = client.get_data(
+            country_codes[0],
+            indicator_codes[0],
+            start_year=None,
+            end_year=None
+        )
+
+        if error or not data:
+            return {'min_year': None, 'max_year': None, 'available_years': []}
+
+        # Extract years from data
+        years = set()
+        for record in data:
+            if 'year' in record and record['year']:
+                years.add(record['year'])
+
+        if not years:
+            return {'min_year': None, 'max_year': None, 'available_years': []}
+
+        return {
+            'min_year': min(years),
+            'max_year': max(years),
+            'available_years': sorted(list(years))
+        }
+
+    def get_countries_for_provider(self, provider: str) -> List[Dict[str, Any]]:
+        """
+        Get all countries available from a provider.
+
+        Args:
+            provider: Provider ID
+
+        Returns:
+            List of country dictionaries
+        """
+        client = self.ingestion.get(provider)
+        if not client:
+            return []
+
+        countries, error = client.get_countries()
+        if error or not countries:
+            return []
+
+        return countries
+
+    def get_availability_summary(
+        self,
+        provider: str,
+        country_codes: Optional[List[str]] = None,
+        indicator_codes: Optional[List[str]] = None
+    ) -> Dict[str, Any]:
+        """
+        Get comprehensive availability summary for dashboard builder.
+
+        This is the main endpoint used by the dashboard builder UI.
+
+        Args:
+            provider: Provider ID
+            country_codes: Optional list of selected country codes
+            indicator_codes: Optional list of selected indicator codes
+
+        Returns:
+            Dictionary with:
+            - providers: List of all providers
+            - indicators: Filtered indicators (or all if none selected)
+            - countries: Filtered countries (or all if none selected)
+            - years: Available year range
+            - counts: Various counts for UI badges
+        """
+        result = {
+            'providers': [],
+            'indicators': [],
+            'countries': [],
+            'years': {'min_year': None, 'max_year': None, 'available_years': []},
+            'counts': {
+                'total_providers': 0,
+                'total_indicators': 0,
+                'total_countries': 0,
+                'filtered_indicators': 0,
+                'filtered_countries': 0
+            }
+        }
+
+        # Get all providers
+        result['providers'] = list(self.ingestion.registry.get_enabled().keys())
+        result['counts']['total_providers'] = len(result['providers'])
+
+        if not provider:
+            return result
+
+        # Get indicators based on selection
+        if country_codes and len(country_codes) > 0:
+            # Filter by countries
+            result['indicators'] = self.get_indicators_for_countries(provider, country_codes)
+        else:
+            # All indicators for provider
+            result['indicators'] = self.get_indicators_for_provider(provider)
+
+        result['counts']['filtered_indicators'] = len(result['indicators'])
+        result['counts']['total_indicators'] = len(result['indicators'])
+
+        # Get countries based on selection
+        if indicator_codes and len(indicator_codes) > 0:
+            # Filter by indicators
+            result['countries'] = self.get_countries_for_indicators(provider, indicator_codes)
+        else:
+            # All countries for provider
+            result['countries'] = self.get_countries_for_provider(provider)
+
+        result['counts']['filtered_countries'] = len(result['countries'])
+        result['counts']['total_countries'] = len(result['countries'])
+
+        # Get year range
+        if country_codes and indicator_codes:
+            result['years'] = self.get_years_for_selection(
+                provider, country_codes, indicator_codes
+            )
+
+        return result

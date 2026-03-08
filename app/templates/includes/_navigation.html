@@ -28,8 +28,11 @@
           <a href="/data-sources" class="nav-link {% if request.endpoint == 'data_sources.index' %}active{% endif %}">
             Explore Data
           </a>
-          <a href="/dashboard/builder" class="nav-link {% if 'dashboard' in request.endpoint|default('') %}active{% endif %}">
-            Dashboard
+          <a href="/dashboard/builder" class="nav-link {% if 'builder' in request.endpoint|default('') %}active{% endif %}">
+            Dashboard Builder
+          </a>
+          <a href="/dashboard/saved" class="nav-link {% if 'saved' in request.endpoint|default('') %}active{% endif %}">
+            Saved Dashboards
           </a>
           <a href="/visualization/globe" class="nav-link {% if 'visualization' in request.endpoint|default('') %}active{% endif %}">
             Visualizations
@@ -127,8 +130,11 @@
       <a href="/data-sources" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 hover:text-primary-700 dark:hover:text-primary-400 rounded-lg transition-colors {% if request.endpoint == 'data_sources.index' %}bg-primary-50 text-primary-700{% endif %}">
         Explore Data
       </a>
-      <a href="/dashboard/builder" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 hover:text-primary-700 dark:hover:text-primary-400 rounded-lg transition-colors {% if 'dashboard' in request.endpoint|default('') %}bg-primary-50 text-primary-700{% endif %}">
-        Dashboard
+      <a href="/dashboard/builder" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 hover:text-primary-700 dark:hover:text-primary-400 rounded-lg transition-colors {% if 'builder' in request.endpoint|default('') %}bg-primary-50 text-primary-700{% endif %}">
+        Dashboard Builder
+      </a>
+      <a href="/dashboard/saved" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 hover:text-primary-700 dark:hover:text-primary-400 rounded-lg transition-colors {% if 'saved' in request.endpoint|default('') %}bg-primary-50 text-primary-700{% endif %}">
+        Saved Dashboards
       </a>
       <a href="/visualization/globe" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 hover:text-primary-700 dark:hover:text-primary-400 rounded-lg transition-colors {% if 'visualization' in request.endpoint|default('') %}bg-primary-50 text-primary-700{% endif %}">
         Visualizations

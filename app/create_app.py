@@ -352,6 +352,10 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     from app.blueprints.data_sources import data_sources_bp
     app.register_blueprint(data_sources_bp)
 
+    # NEW: Dashboard Builder (Advanced)
+    from app.blueprints.dashboard_builder import dashboard_builder_bp
+    app.register_blueprint(dashboard_builder_bp)
+
     logger.info("WorldInsights application initialized successfully")
     
     return app
