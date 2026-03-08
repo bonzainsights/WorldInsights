@@ -598,7 +598,7 @@ class AvailabilityService:
         Returns:
             List of indicator dictionaries with metadata
         """
-        client = self.ingestion.get(provider)
+        client = self.ingestion.registry.get(provider)
         if not client:
             return []
 
@@ -640,12 +640,14 @@ class AvailabilityService:
 
         # Get full country metadata
         countries = []
-        country_data, _ = self.ingestion.get(provider).get_countries()
-        if country_data:
-            country_map = {c.get('code', '').upper(): c for c in country_data}
-            for country_code in available_countries:
-                if country_code in country_map:
-                    countries.append(country_map[country_code])
+        client = self.ingestion.registry.get(provider)
+        if client:
+            country_data, _ = client.get_countries()
+            if country_data:
+                country_map = {c.get('code', '').upper(): c for c in country_data}
+                for country_code in available_countries:
+                    if country_code in country_map:
+                        countries.append(country_map[country_code])
 
         return countries
 
@@ -681,12 +683,14 @@ class AvailabilityService:
 
         # Get full indicator metadata
         indicators = []
-        indicator_data, _ = self.ingestion.get(provider).get_indicators()
-        if indicator_data:
-            indicator_map = {i.get('code', ''): i for i in indicator_data}
-            for ind_code in available_indicators:
-                if ind_code in indicator_map:
-                    indicators.append(indicator_map[ind_code])
+        client = self.ingestion.registry.get(provider)
+        if client:
+            indicator_data, _ = client.get_indicators()
+            if indicator_data:
+                indicator_map = {i.get('code', ''): i for i in indicator_data}
+                for ind_code in available_indicators:
+                    if ind_code in indicator_map:
+                        indicators.append(indicator_map[ind_code])
 
         return indicators
 
@@ -711,7 +715,7 @@ class AvailabilityService:
             return {'min_year': None, 'max_year': None, 'available_years': []}
 
         # Fetch sample data to determine year range
-        client = self.ingestion.get(provider)
+        client = self.ingestion.registry.get(provider)
         if not client:
             return {'min_year': None, 'max_year': None, 'available_years': []}
 
@@ -751,7 +755,7 @@ class AvailabilityService:
         Returns:
             List of country dictionaries
         """
-        client = self.ingestion.get(provider)
+        client = self.ingestion.registry.get(provider)
         if not client:
             return []
 

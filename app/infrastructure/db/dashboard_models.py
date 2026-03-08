@@ -30,7 +30,7 @@ class Dashboard(db.Model):
     __tablename__ = 'dashboards'
     
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    user_id = db.Column(db.Integer, nullable=True)  # Foreign key to users.id (constraint removed for now)
     title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=True)
     layout = db.Column(db.JSON, nullable=False, default=dict)
@@ -40,8 +40,8 @@ class Dashboard(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     version = db.Column(db.Integer, default=1)
     
-    # Relationship to user
-    user = db.relationship('User', backref=db.backref('dashboards', lazy='dynamic', cascade='all, delete-orphan'))
+    # User relationship removed temporarily (will be re-added with proper FK constraint later)
+    # user = db.relationship('User', backref=db.backref('dashboards', lazy='dynamic', cascade='all, delete-orphan'))
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert dashboard to dictionary."""
@@ -55,8 +55,8 @@ class Dashboard(db.Model):
             'is_public': self.is_public,
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat(),
-            'version': self.version,
-            'owner_username': self.user.username if self.user else 'Anonymous'
+            'version': self.version
+            # 'owner_username': self.user.username if self.user else 'Anonymous'  # Removed temporarily
         }
     
     def from_dict(self, data: Dict[str, Any]) -> 'Dashboard':
@@ -117,15 +117,15 @@ class DashboardShare(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     dashboard_id = db.Column(db.String(36), db.ForeignKey('dashboards.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    user_id = db.Column(db.Integer, nullable=True)  # Foreign key to users.id (constraint removed for now)
     share_token = db.Column(db.String(64), unique=True, nullable=True)
     can_edit = db.Column(db.Boolean, default=False)
     expires_at = db.Column(db.DateTime, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    # Relationships
-    dashboard = db.relationship('Dashboard', backref=db.backref('shares', lazy='dynamic', cascade='all, delete-orphan'))
-    user = db.relationship('User', backref=db.backref('shared_dashboards', lazy='dynamic'))
+    # Relationships removed temporarily (will be re-added with proper FK constraints later)
+    # dashboard = db.relationship('Dashboard', backref=db.backref('shares', lazy='dynamic', cascade='all, delete-orphan'))
+    # user = db.relationship('User', backref=db.backref('shared_dashboards', lazy='dynamic'))
     
     def __repr__(self) -> str:
         return f'<DashboardShare {self.dashboard_id} -> User {self.user_id}>'

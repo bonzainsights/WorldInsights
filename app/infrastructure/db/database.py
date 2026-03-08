@@ -4,7 +4,7 @@ Database initialization module for WorldInsights.
 Handles database setup, initialization, and default data creation.
 """
 from app.infrastructure.db.models import db, User
-from app.infrastructure.db.dashboard_models import Dashboard, DashboardTag, DashboardShare
+# Import dashboard models AFTER User to ensure proper table creation order
 from app.core.security import hash_password
 from app.core.logging import get_logger
 
@@ -21,6 +21,9 @@ def init_db(app):
     db.init_app(app)
 
     with app.app_context():
+        # Import dashboard models here (after db.init_app but before create_all)
+        from app.infrastructure.db.dashboard_models import Dashboard, DashboardTag, DashboardShare
+        
         # Create all tables
         db.create_all()
         logger.info("Database tables created successfully")

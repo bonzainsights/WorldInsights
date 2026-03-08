@@ -3822,3 +3822,1624 @@ WHERE user.email = ?
 [32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - OpenMeteoClient - INFO - Open-Meteo API client initialized
 [32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - NASAClient - INFO - NASA/NOAA API client initialized
 [32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:40:07,838 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:40:42,581 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:43:37,500 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:45:29,505 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:46:00,747 - app.create_app - INFO - WorldInsights application starting in development mode
+[32m[INFO][0m 2026-03-08 18:46:07 - 2026-03-08 18:46:07,100 - app.create_app - INFO - WorldInsights application starting in development mode
+[32m[INFO][0m 2026-03-08 18:46:10 - 2026-03-08 18:46:10,893 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:47:16,096 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:47:16,120 - database - INFO - Database tables created successfully
+2026-03-08 18:47:16,123 - database - ERROR - Error creating default admin user: Could not determine join condition between parent/child tables on relationship Dashboard.user - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2026-03-08 18:47:16,123 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 18:47:16,123 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 18:47:16,508 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 18:47:16,986 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:47:16,986 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:47:16,986 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:47:16,986 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:47:16,986 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:47:16,986 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:47:16,986 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:47:16,986 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:47:16,986 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:47:16,986 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:47:16,986 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 18:47:16,986 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:47:16,986 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:47:16,986 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:47:16,986 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:47:16,986 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:47:16,986 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:47:16,986 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:47:16,986 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:47:16,987 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:49:38,043 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:49:38,065 - database - INFO - Database tables created successfully
+2026-03-08 18:49:38,068 - database - ERROR - Error creating default admin user: Could not determine join condition between parent/child tables on relationship Dashboard.user - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2026-03-08 18:49:38,068 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 18:49:38,069 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 18:49:38,404 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 18:49:38,859 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:38,859 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:38,859 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:38,859 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:38,859 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:38,859 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:38,859 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:38,859 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:38,859 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:49:38,859 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:49:38,860 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 18:49:38,860 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:49:38,860 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:38,860 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:38,860 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:38,860 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:38,860 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:38,860 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:38,860 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:49:38,860 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:49:38,880 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:38,880 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:38,880 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:49:38,880 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:38,880 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:38,880 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:49:38,880 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:38,880 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:38,880 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:49:38,880 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:49:38,880 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:49:38,880 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:49:38,881 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:49:38,881 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:49:38,881 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:49:38,881 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:49:38,881 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:49:38,881 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:49:38,881 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:49:38,881 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:49:38,881 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:49:38,881 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:49:38,881 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:49:38,881 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:49:38,881 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:49:38,881 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:49:38,881 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:49:38,881 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:49:38,881 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:49:38,881 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:49:38,881 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:49:38,881 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:38,881 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:38,881 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:49:38,881 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:38,881 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:38,881 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:49:38,881 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:38,881 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:38,881 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:49:38,881 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:49:38,881 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:49:38,881 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:49:38,881 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:49:38,882 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:49:38,882 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:49:38,882 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:49:38,882 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:49:38,882 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:49:38,882 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:49:38,882 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:49:38,882 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:49:38,882 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:49:38,882 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:49:38,882 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:49:38,882 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:49:38,882 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:49:38,882 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:49:38,882 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:49:38,882 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:49:38,882 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:49:38,882 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:49:38,882 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:38,882 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:38,882 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:38,882 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:38,882 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:38,882 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:38,882 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:38,882 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:38,882 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:49:38,882 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:49:38,882 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:49:38,889 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 18:49:38,942 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://10.2.0.2:5050
+2026-03-08 18:49:38,942 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-08 18:49:38,943 - werkzeug - INFO -  * Restarting with stat
+2026-03-08 18:49:39,214 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:49:39,228 - database - INFO - Database tables created successfully
+2026-03-08 18:49:39,230 - database - ERROR - Error creating default admin user: Could not determine join condition between parent/child tables on relationship Dashboard.user - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2026-03-08 18:49:39,231 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 18:49:39,231 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 18:49:39,400 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 18:49:39,613 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:39,613 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:39,613 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:39,613 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:39,613 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:39,613 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:39,613 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:39,613 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:39,613 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:49:39,613 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:49:39,613 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 18:49:39,613 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:49:39,613 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:39,613 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:39,613 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:39,613 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:39,613 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:39,613 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:39,613 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:49:39,613 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:49:39,621 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:39,621 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:39,621 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:49:39,621 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:39,621 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:39,621 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:49:39,621 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:39,621 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:39,621 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:49:39,621 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:49:39,621 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:49:39,622 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:49:39,622 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:49:39,622 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:49:39,622 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:49:39,622 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:49:39,622 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:49:39,622 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:49:39,622 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:49:39,622 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:49:39,622 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:49:39,622 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:49:39,622 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:49:39,622 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:49:39,622 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:39,622 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:49:39,622 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:39,622 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:49:39,622 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:39,622 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:49:39,622 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:49:39,622 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:49:39,622 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:49:39,622 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:49:39,622 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:49:39,623 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:49:39,623 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:49:39,623 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:49:39,623 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:49:39,623 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:49:39,623 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:49:39,623 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:49:39,623 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:49:39,623 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:49:39,623 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:49:39,623 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:49:39,623 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:49:39,623 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:49:39,623 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:49:39,623 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:49:39,623 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:49:39,623 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:39,623 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:49:39,623 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:39,623 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:49:39,623 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:39,623 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:49:39,623 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:39,623 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:49:39,623 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:49:39,623 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:49:39,623 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:49:39,627 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 18:49:39,652 - werkzeug - WARNING -  * Debugger is active!
+2026-03-08 18:49:39,666 - werkzeug - INFO -  * Debugger PIN: 137-185-723
+2026-03-08 18:49:54,480 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:49:54] "GET /health HTTP/1.1" 200 -
+2026-03-08 18:50:05,027 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:50:05] "GET / HTTP/1.1" 200 -
+2026-03-08 18:50:10,814 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:50:10] "GET /dashboard/builder HTTP/1.1" 200 -
+2026-03-08 18:50:17,629 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:50:17] "[35m[1mPOST /api/dashboards HTTP/1.1[0m" 500 -
+2026-03-08 18:50:25,175 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:50:25] "[35m[1mPOST /api/dashboards HTTP/1.1[0m" 500 -
+2026-03-08 18:51:25,979 - werkzeug - INFO -  * Detected change in '/Users/achbj/Code/bonzainsights/WorldInsights/app/infrastructure/db/dashboard_models.py', reloading
+2026-03-08 18:51:26,171 - werkzeug - INFO -  * Restarting with stat
+2026-03-08 18:51:26,555 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:51:26,572 - database - INFO - Database tables created successfully
+2026-03-08 18:51:26,576 - database - ERROR - Error creating default admin user: Could not determine join condition between parent/child tables on relationship DashboardShare.user - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2026-03-08 18:51:26,576 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 18:51:26,577 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 18:51:26,782 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 18:51:27,082 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:27,082 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:27,082 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:27,082 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:27,082 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:27,082 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:27,082 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:27,082 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:27,082 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:51:27,082 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:51:27,082 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 18:51:27,082 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:51:27,082 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:27,082 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:27,082 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:27,082 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:27,082 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:27,082 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:27,082 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:51:27,082 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:51:27,089 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:27,089 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:27,089 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:51:27,089 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:27,089 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:27,089 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:51:27,089 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:27,089 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:27,089 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:51:27,089 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:51:27,089 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:51:27,089 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:51:27,089 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:51:27,089 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:51:27,089 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:51:27,089 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:51:27,089 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:51:27,089 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:51:27,089 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:51:27,089 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:51:27,089 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:51:27,090 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:51:27,090 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:51:27,090 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:51:27,090 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:51:27,090 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:51:27,090 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:51:27,090 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:51:27,090 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:27,090 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:51:27,090 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:27,090 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:51:27,090 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:27,090 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:51:27,090 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:51:27,090 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:51:27,090 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:51:27,090 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:51:27,090 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:51:27,090 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:51:27,090 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:51:27,090 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:51:27,090 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:51:27,090 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:51:27,090 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:51:27,090 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:51:27,090 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:51:27,090 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:51:27,090 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:51:27,091 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:51:27,091 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:51:27,091 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:27,091 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:27,091 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:27,091 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:27,091 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:27,091 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:27,091 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:27,091 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:27,091 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:51:27,091 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:51:27,091 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:51:27,095 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 18:51:27,122 - werkzeug - WARNING -  * Debugger is active!
+2026-03-08 18:51:27,133 - werkzeug - INFO -  * Debugger PIN: 137-185-723
+2026-03-08 18:51:36,413 - werkzeug - INFO -  * Detected change in '/Users/achbj/Code/bonzainsights/WorldInsights/app/infrastructure/db/dashboard_models.py', reloading
+2026-03-08 18:51:36,586 - werkzeug - INFO -  * Restarting with stat
+2026-03-08 18:51:36,911 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:51:36,926 - database - INFO - Database tables created successfully
+2026-03-08 18:51:36,930 - database - ERROR - Error creating default admin user: Could not determine join condition between parent/child tables on relationship DashboardShare.user - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2026-03-08 18:51:36,930 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 18:51:36,930 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 18:51:37,115 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 18:51:37,404 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:37,405 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:37,405 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:37,405 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:37,405 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:37,405 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:37,405 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:37,405 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:37,405 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:51:37,405 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:51:37,405 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 18:51:37,405 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:51:37,405 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:37,405 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:37,405 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:37,405 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:37,405 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:37,405 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:37,405 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:51:37,405 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:51:37,413 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:37,413 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:37,413 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:51:37,413 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:37,413 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:37,413 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:51:37,413 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:37,413 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:37,413 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:51:37,413 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:51:37,413 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:51:37,413 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:51:37,414 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:51:37,414 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:51:37,414 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:51:37,414 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:51:37,414 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:51:37,414 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:51:37,414 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:51:37,414 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:51:37,414 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:51:37,414 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:51:37,414 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:51:37,414 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:51:37,414 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:51:37,414 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:37,414 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:51:37,414 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:37,414 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:51:37,414 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:37,414 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:51:37,414 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:51:37,414 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:51:37,414 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:51:37,414 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:51:37,414 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:51:37,414 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:51:37,414 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:51:37,414 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:51:37,415 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:51:37,415 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:51:37,415 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:51:37,415 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:51:37,415 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:51:37,415 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:51:37,415 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:51:37,415 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:51:37,415 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:51:37,415 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:51:37,415 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:51:37,415 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:51:37,415 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:37,415 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:51:37,415 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:37,415 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:51:37,415 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:37,415 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:51:37,415 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:37,415 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:51:37,415 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:51:37,415 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:51:37,415 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:51:37,419 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 18:51:37,447 - werkzeug - WARNING -  * Debugger is active!
+2026-03-08 18:51:37,455 - werkzeug - INFO -  * Debugger PIN: 137-185-723
+2026-03-08 18:54:10,042 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:54:10,059 - database - INFO - Database tables created successfully
+2026-03-08 18:54:10,063 - database - ERROR - Error creating default admin user: Could not determine join condition between parent/child tables on relationship DashboardShare.user - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2026-03-08 18:54:10,063 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 18:54:10,063 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 18:54:10,269 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 18:54:10,580 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:10,580 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:10,580 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:10,580 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:10,580 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:10,581 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:10,581 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:10,581 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:10,581 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:10,581 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:10,581 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 18:54:10,581 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:54:10,581 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:10,581 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:10,581 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:10,581 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:10,581 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:10,581 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:10,581 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:10,581 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:10,590 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:10,590 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:10,590 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:54:10,590 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:10,590 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:10,590 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:54:10,590 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:10,590 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:10,590 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:54:10,590 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:10,590 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:10,590 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:54:10,590 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:10,590 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:10,591 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:54:10,591 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:10,591 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:10,591 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:54:10,591 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:10,591 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:10,591 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:54:10,591 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:10,591 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:10,591 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:54:10,591 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:10,591 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:10,591 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:54:10,591 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:10,591 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:10,591 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:54:10,591 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:54:10,591 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:10,591 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:10,591 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:54:10,591 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:10,591 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:10,591 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:54:10,591 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:10,591 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:10,591 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:54:10,591 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:10,591 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:10,591 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:54:10,591 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:10,591 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:10,591 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:54:10,592 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:10,592 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:10,592 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:54:10,592 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:10,592 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:10,592 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:54:10,592 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:10,592 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:10,592 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:54:10,592 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:10,592 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:10,592 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:54:10,592 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:10,592 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:10,592 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:54:10,592 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:54:10,592 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:10,592 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:10,592 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:10,592 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:10,592 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:10,592 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:10,592 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:10,592 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:10,592 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:10,592 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:10,592 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:54:10,597 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 18:54:10,645 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://10.2.0.2:5050
+2026-03-08 18:54:10,645 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-08 18:54:10,646 - werkzeug - INFO -  * Restarting with stat
+2026-03-08 18:54:10,893 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:54:10,906 - database - INFO - Database tables created successfully
+2026-03-08 18:54:10,910 - database - ERROR - Error creating default admin user: Could not determine join condition between parent/child tables on relationship DashboardShare.user - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2026-03-08 18:54:10,910 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 18:54:10,910 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 18:54:11,063 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 18:54:11,268 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:11,268 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:11,268 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:11,268 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:11,268 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:11,268 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:11,268 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:11,268 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:11,268 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:11,268 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:11,268 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 18:54:11,268 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:54:11,268 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:11,269 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:11,269 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:11,269 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:11,269 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:11,269 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:11,269 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:11,269 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:11,274 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:11,274 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:11,274 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:54:11,274 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:11,274 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:11,274 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:54:11,274 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:11,274 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:11,274 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:54:11,274 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:11,274 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:11,274 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:54:11,275 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:11,275 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:11,275 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:54:11,275 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:11,275 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:11,275 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:54:11,275 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:11,275 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:11,275 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:54:11,275 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:11,275 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:11,275 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:54:11,275 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:11,275 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:11,275 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:54:11,275 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:11,275 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:11,275 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:54:11,275 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:54:11,275 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:11,275 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:11,275 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:54:11,275 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:11,275 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:11,275 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:54:11,275 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:11,275 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:11,275 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:54:11,275 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:11,275 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:11,275 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:54:11,275 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:11,275 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:11,275 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:54:11,275 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:11,275 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:11,276 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:54:11,276 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:11,276 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:11,276 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:54:11,276 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:11,276 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:11,276 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:54:11,276 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:11,276 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:11,276 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:54:11,276 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:11,276 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:11,276 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:54:11,276 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:54:11,276 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:11,276 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:11,276 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:11,276 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:11,276 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:11,276 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:11,276 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:11,276 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:11,276 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:11,276 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:11,276 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:54:11,280 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 18:54:11,303 - werkzeug - WARNING -  * Debugger is active!
+2026-03-08 18:54:11,311 - werkzeug - INFO -  * Debugger PIN: 137-185-723
+[32m[INFO][0m 2026-03-08 18:54:14 - 2026-03-08 18:54:14,923 - app.create_app - INFO - WorldInsights application starting in development mode
+[32m[INFO][0m 2026-03-08 18:54:14 - 2026-03-08 18:54:14,939 - database - INFO - Database tables created successfully
+[31m[ERROR][0m 2026-03-08 18:54:14 - 2026-03-08 18:54:14,943 - database - ERROR - Error creating default admin user: Could not determine join condition between parent/child tables on relationship DashboardShare.user - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+[32m[INFO][0m 2026-03-08 18:54:14 - 2026-03-08 18:54:14,943 - app.create_app - INFO - Rate limiting enabled
+[33m[WARNING][0m 2026-03-08 18:54:14 - 2026-03-08 18:54:14,943 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,460 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,460 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,460 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,460 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,460 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,461 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,472 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,472 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - DataSourceRegistry - INFO - Registered data source: world_bank
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - DataSourceRegistry - INFO - Registered data source: who
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - DataSourceRegistry - INFO - Registered data source: fao
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - DataSourceRegistry - INFO - Registered data source: nasa
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - DataSourceRegistry - INFO - Registered data source: un_data
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - DataSourceRegistry - INFO - Registered data source: owid
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - DataSourceRegistry - INFO - Registered data source: imf
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - DataSourceRegistry - INFO - Registered data source: unesco
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,473 - DataSourceRegistry - INFO - Registered data source: ilo
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - DataSourceRegistry - INFO - Registered data source: itu
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - DataIngestionService - INFO - Registered all default API clients
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - DataSourceRegistry - INFO - Registered data source: world_bank
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - DataSourceRegistry - INFO - Registered data source: who
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - DataSourceRegistry - INFO - Registered data source: fao
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - DataSourceRegistry - INFO - Registered data source: nasa
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - DataSourceRegistry - INFO - Registered data source: un_data
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - DataSourceRegistry - INFO - Registered data source: owid
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,474 - DataSourceRegistry - INFO - Registered data source: imf
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - DataSourceRegistry - INFO - Registered data source: unesco
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - DataSourceRegistry - INFO - Registered data source: ilo
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - DataSourceRegistry - INFO - Registered data source: itu
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - DataIngestionService - INFO - Registered all default API clients
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,475 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+[32m[INFO][0m 2026-03-08 18:54:15 - 2026-03-08 18:54:15,480 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 18:54:28,834 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:54:28] "[35m[1mPOST /api/dashboards HTTP/1.1[0m" 500 -
+2026-03-08 18:54:35,930 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:54:35] "[35m[1mPOST /api/dashboards HTTP/1.1[0m" 500 -
+2026-03-08 18:54:44,879 - werkzeug - INFO -  * Detected change in '/Users/achbj/Code/bonzainsights/WorldInsights/app/infrastructure/db/dashboard_models.py', reloading
+2026-03-08 18:54:45,031 - werkzeug - INFO -  * Restarting with stat
+2026-03-08 18:54:45,369 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:54:45,384 - database - INFO - Database tables created successfully
+2026-03-08 18:54:45,390 - database - INFO - Admin user already exists
+2026-03-08 18:54:45,390 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 18:54:45,390 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 18:54:45,573 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 18:54:45,846 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:45,847 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:45,847 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:45,847 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:45,847 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:45,847 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:45,847 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:45,847 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:45,847 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:45,847 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:45,847 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 18:54:45,847 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:54:45,847 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:45,847 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:45,847 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:45,847 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:45,847 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:45,847 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:45,847 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:45,847 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:45,854 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:45,855 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:45,855 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:54:45,855 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:45,855 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:45,855 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:54:45,855 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:45,855 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:45,855 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:54:45,855 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:45,855 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:45,855 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:54:45,855 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:45,855 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:45,855 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:54:45,855 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:45,855 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:45,855 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:54:45,855 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:45,855 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:45,855 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:54:45,855 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:45,855 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:45,855 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:54:45,855 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:45,855 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:45,855 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:54:45,855 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:45,855 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:45,855 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:54:45,855 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:54:45,855 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:45,855 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:45,855 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:54:45,855 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:45,856 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:45,856 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:54:45,856 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:45,856 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:45,856 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:54:45,856 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:45,856 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:45,856 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:54:45,856 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:45,856 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:45,856 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:54:45,856 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:45,856 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:45,856 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:54:45,856 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:45,856 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:45,856 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:54:45,856 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:45,856 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:45,856 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:54:45,856 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:45,856 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:45,856 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:54:45,856 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:45,856 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:45,856 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:54:45,856 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:54:45,856 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:45,856 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:45,856 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:45,856 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:45,856 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:45,856 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:45,856 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:45,856 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:45,856 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:45,856 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:45,856 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:54:45,860 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 18:54:45,885 - werkzeug - WARNING -  * Debugger is active!
+2026-03-08 18:54:45,893 - werkzeug - INFO -  * Debugger PIN: 137-185-723
+2026-03-08 18:54:53,137 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:54:53,154 - database - INFO - Database tables created successfully
+2026-03-08 18:54:53,160 - database - INFO - Admin user already exists
+2026-03-08 18:54:53,161 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 18:54:53,161 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 18:54:53,368 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 18:54:53,650 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:53,650 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:53,650 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:53,650 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:53,650 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:53,650 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:53,650 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:53,650 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:53,650 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:53,650 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:53,650 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 18:54:53,650 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:54:53,650 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:53,650 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:53,651 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:53,651 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:53,651 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:53,651 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:53,651 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:53,651 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:53,658 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:53,658 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:53,658 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:54:53,658 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:53,658 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:53,658 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:54:53,658 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:53,658 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:53,658 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:54:53,658 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:53,658 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:53,658 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:54:53,658 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:53,658 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:53,658 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:54:53,658 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:53,658 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:53,658 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:54:53,658 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:53,658 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:53,658 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:54:53,658 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:53,659 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:54:53,659 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:53,659 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:54:53,659 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:53,659 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:54:53,659 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:54:53,659 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:53,659 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:54:53,659 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:53,659 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:54:53,659 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:53,659 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:54:53,659 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:53,659 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:54:53,659 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:53,659 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:54:53,659 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:53,659 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:54:53,659 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:53,659 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:54:53,659 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:53,659 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:54:53,659 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:53,659 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:54:53,659 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:53,659 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:53,659 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:54:53,659 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:54:53,660 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:53,660 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:53,660 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:53,660 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:53,660 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:53,660 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:53,660 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:53,660 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:53,660 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:53,660 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:53,660 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:54:53,664 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 18:54:53,710 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://10.2.0.2:5050
+2026-03-08 18:54:53,710 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-08 18:54:53,711 - werkzeug - INFO -  * Restarting with stat
+2026-03-08 18:54:53,987 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 18:54:54,002 - database - INFO - Database tables created successfully
+2026-03-08 18:54:54,009 - database - INFO - Admin user already exists
+2026-03-08 18:54:54,010 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 18:54:54,010 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 18:54:54,182 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 18:54:54,396 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:54,396 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:54,396 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:54,396 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:54,396 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:54,396 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:54,396 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:54,396 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:54,396 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:54,396 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:54,396 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 18:54:54,397 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:54:54,397 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:54,397 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:54,397 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:54,397 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:54,397 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:54,397 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:54,397 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:54,397 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:54,403 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:54,403 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:54,403 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:54:54,403 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:54,403 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:54,403 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:54:54,403 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:54,403 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:54,403 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:54:54,403 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:54,403 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:54,403 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:54:54,403 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:54,403 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:54,403 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:54:54,403 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:54,403 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:54,403 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:54:54,403 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:54,403 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:54,403 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:54:54,403 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:54,404 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:54:54,404 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:54,404 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:54:54,404 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:54,404 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:54:54,404 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:54:54,404 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:54,404 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 18:54:54,404 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:54,404 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 18:54:54,404 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:54,404 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 18:54:54,404 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:54,404 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 18:54:54,404 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:54,404 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 18:54:54,404 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:54,404 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 18:54:54,404 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:54,404 - IMFClient - INFO - IMF API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 18:54:54,404 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:54,404 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 18:54:54,404 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:54,404 - ILOClient - INFO - ILO API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 18:54:54,404 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:54,404 - ITUClient - INFO - ITU API client initialized
+2026-03-08 18:54:54,404 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 18:54:54,404 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 18:54:54,404 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:54,405 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 18:54:54,405 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:54,405 - WHOClient - INFO - WHO API client initialized
+2026-03-08 18:54:54,405 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:54,405 - FAOClient - INFO - FAO API client initialized
+2026-03-08 18:54:54,405 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:54,405 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 18:54:54,405 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 18:54:54,405 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 18:54:54,405 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 18:54:54,409 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 18:54:54,435 - werkzeug - WARNING -  * Debugger is active!
+2026-03-08 18:54:54,446 - werkzeug - INFO -  * Debugger PIN: 137-185-723
+2026-03-08 18:55:07,111 - app.blueprints.dashboard_api - INFO - Dashboard created: aa97f3b4-0284-4f64-a545-78d5042ab7dc by user None
+2026-03-08 18:55:07,112 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:55:07] "[35m[1mPOST /api/dashboards HTTP/1.1[0m" 201 -
+2026-03-08 18:55:22,396 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:55:22] "GET /api/dashboards HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,084 - app.create_app - INFO - WorldInsights application starting in development mode
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,100 - database - INFO - Database tables created successfully
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,106 - database - INFO - Admin user already exists
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,106 - app.create_app - INFO - Rate limiting enabled
+[33m[WARNING][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,107 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,588 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,588 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,588 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,588 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,588 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,588 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,588 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,588 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,588 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,588 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,588 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,589 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,589 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,589 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,589 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,589 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,589 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,589 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,589 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,589 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,596 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,596 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,596 - DataSourceRegistry - INFO - Registered data source: world_bank
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,596 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,596 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,596 - DataSourceRegistry - INFO - Registered data source: who
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,596 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,596 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,596 - DataSourceRegistry - INFO - Registered data source: fao
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,596 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - DataSourceRegistry - INFO - Registered data source: nasa
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - DataSourceRegistry - INFO - Registered data source: un_data
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - DataSourceRegistry - INFO - Registered data source: owid
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - DataSourceRegistry - INFO - Registered data source: imf
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - DataSourceRegistry - INFO - Registered data source: unesco
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - DataSourceRegistry - INFO - Registered data source: ilo
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - DataSourceRegistry - INFO - Registered data source: itu
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - DataIngestionService - INFO - Registered all default API clients
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - DataSourceRegistry - INFO - Registered data source: world_bank
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,597 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - DataSourceRegistry - INFO - Registered data source: who
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - DataSourceRegistry - INFO - Registered data source: fao
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - DataSourceRegistry - INFO - Registered data source: nasa
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - DataSourceRegistry - INFO - Registered data source: un_data
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - DataSourceRegistry - INFO - Registered data source: owid
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - DataSourceRegistry - INFO - Registered data source: imf
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - DataSourceRegistry - INFO - Registered data source: unesco
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - DataSourceRegistry - INFO - Registered data source: ilo
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - DataSourceRegistry - INFO - Registered data source: itu
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,598 - DataIngestionService - INFO - Registered all default API clients
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,599 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,599 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,599 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,599 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,599 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,599 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,599 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,599 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,599 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,599 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,599 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+[32m[INFO][0m 2026-03-08 18:55:53 - 2026-03-08 18:55:53,602 - app.create_app - INFO - WorldInsights application initialized successfully
+[32m[INFO][0m 2026-03-08 18:57:01 - 2026-03-08 18:57:01,673 - app.create_app - INFO - WorldInsights application starting in development mode
+[32m[INFO][0m 2026-03-08 18:57:01 - 2026-03-08 18:57:01,690 - database - INFO - Database tables created successfully
+[32m[INFO][0m 2026-03-08 18:57:01 - 2026-03-08 18:57:01,697 - database - INFO - Admin user already exists
+[32m[INFO][0m 2026-03-08 18:57:01 - 2026-03-08 18:57:01,697 - app.create_app - INFO - Rate limiting enabled
+[33m[WARNING][0m 2026-03-08 18:57:01 - 2026-03-08 18:57:01,697 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,262 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,262 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,262 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,262 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,262 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,262 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,262 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,262 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,262 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,262 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,263 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,263 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,263 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,263 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,263 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,263 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,263 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,263 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,263 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,263 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,270 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,270 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,270 - DataSourceRegistry - INFO - Registered data source: world_bank
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,270 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,270 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,270 - DataSourceRegistry - INFO - Registered data source: who
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - DataSourceRegistry - INFO - Registered data source: fao
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - DataSourceRegistry - INFO - Registered data source: nasa
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - DataSourceRegistry - INFO - Registered data source: un_data
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - DataSourceRegistry - INFO - Registered data source: owid
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - DataSourceRegistry - INFO - Registered data source: imf
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,271 - DataSourceRegistry - INFO - Registered data source: unesco
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - DataSourceRegistry - INFO - Registered data source: ilo
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - DataSourceRegistry - INFO - Registered data source: itu
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - DataIngestionService - INFO - Registered all default API clients
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - DataSourceRegistry - INFO - Registered data source: world_bank
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - DataSourceRegistry - INFO - Registered data source: who
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - DataSourceRegistry - INFO - Registered data source: fao
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,272 - DataSourceRegistry - INFO - Registered data source: nasa
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - DataSourceRegistry - INFO - Registered data source: un_data
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - DataSourceRegistry - INFO - Registered data source: owid
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - DataSourceRegistry - INFO - Registered data source: imf
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - DataSourceRegistry - INFO - Registered data source: unesco
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - DataSourceRegistry - INFO - Registered data source: ilo
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - DataSourceRegistry - INFO - Registered data source: itu
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - DataIngestionService - INFO - Registered all default API clients
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,273 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,274 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,274 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,274 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,274 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,274 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,274 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,277 - app.create_app - INFO - WorldInsights application initialized successfully
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,323 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://10.2.0.2:5050
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,323 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,324 - werkzeug - INFO -  * Restarting with stat
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,573 - app.create_app - INFO - WorldInsights application starting in development mode
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,582 - database - INFO - Database tables created successfully
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,589 - database - INFO - Admin user already exists
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,589 - app.create_app - INFO - Rate limiting enabled
+[33m[WARNING][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,589 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,897 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,897 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,897 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,897 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,897 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,897 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,897 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,898 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,903 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,903 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,903 - DataSourceRegistry - INFO - Registered data source: world_bank
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,903 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,903 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,903 - DataSourceRegistry - INFO - Registered data source: who
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,903 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,903 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - DataSourceRegistry - INFO - Registered data source: fao
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - DataSourceRegistry - INFO - Registered data source: nasa
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - DataSourceRegistry - INFO - Registered data source: un_data
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - DataSourceRegistry - INFO - Registered data source: owid
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - DataSourceRegistry - INFO - Registered data source: imf
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - DataSourceRegistry - INFO - Registered data source: unesco
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - DataSourceRegistry - INFO - Registered data source: ilo
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,904 - DataSourceRegistry - INFO - Registered data source: itu
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - DataIngestionService - INFO - Registered all default API clients
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - DataSourceRegistry - INFO - Registered data source: world_bank
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - DataSourceRegistry - INFO - Registered data source: who
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - DataSourceRegistry - INFO - Registered data source: fao
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - DataSourceRegistry - INFO - Registered data source: nasa
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - UNDataClient - INFO - UN Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - DataSourceRegistry - INFO - Registered data source: un_data
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,905 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - OWIDClient - INFO - Our World in Data API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - DataSourceRegistry - INFO - Registered data source: owid
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - IMFClient - INFO - IMF API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - DataSourceRegistry - INFO - Registered data source: imf
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - UNESCOClient - INFO - UNESCO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - DataSourceRegistry - INFO - Registered data source: unesco
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - ILOClient - INFO - ILO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - DataSourceRegistry - INFO - Registered data source: ilo
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - ITUClient - INFO - ITU API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - DataSourceRegistry - INFO - Registered data source: itu
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - DataIngestionService - INFO - Registered all default API clients
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,906 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,907 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,907 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,907 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,907 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,907 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,907 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,907 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,907 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,907 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,907 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,910 - app.create_app - INFO - WorldInsights application initialized successfully
+[33m[WARNING][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,936 - werkzeug - WARNING -  * Debugger is active!
+[32m[INFO][0m 2026-03-08 18:57:02 - 2026-03-08 18:57:02,947 - werkzeug - INFO -  * Debugger PIN: 543-472-917
+[32m[INFO][0m 2026-03-08 18:57:13 - 2026-03-08 18:57:13,207 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:57:13] "GET / HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 18:57:13 - 2026-03-08 18:57:13,248 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:57:13] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 18:57:13 - 2026-03-08 18:57:13,249 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:57:13] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 18:57:13 - 2026-03-08 18:57:13,249 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:57:13] "[36mGET /static/js/api.js HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 18:57:13 - 2026-03-08 18:57:13,555 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:57:13] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 18:57:15 - 2026-03-08 18:57:15,439 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:57:15] "GET /dashboard/builder HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 18:57:15 - 2026-03-08 18:57:15,704 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:57:15] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[31m[ERROR][0m 2026-03-08 18:57:22 - 2026-03-08 18:57:22,460 - app.blueprints.dashboard_builder - ERROR - Error getting availability summary: 'DataIngestionService' object has no attribute 'get'
+[32m[INFO][0m 2026-03-08 18:57:22 - 2026-03-08 18:57:22,461 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:57:22] "[35m[1mGET /dashboard/api/availability/summary?provider=world_bank&countries=&indicators= HTTP/1.1[0m" 500 -
+[31m[ERROR][0m 2026-03-08 18:58:03 - 2026-03-08 18:58:03,499 - app.blueprints.dashboard_builder - ERROR - Error getting availability summary: 'DataIngestionService' object has no attribute 'get'
+[32m[INFO][0m 2026-03-08 18:58:03 - 2026-03-08 18:58:03,501 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:03] "[35m[1mGET /dashboard/api/availability/summary?provider=fao&countries=&indicators= HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 18:58:08 - 2026-03-08 18:58:08,303 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:08] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 18:58:09 - 2026-03-08 18:58:09,410 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:09] "[35m[1mGET /visualization/globe HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 18:58:09 - 2026-03-08 18:58:09,435 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:09] "[36mGET /visualization/globe?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 18:58:09 - 2026-03-08 18:58:09,435 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:09] "[36mGET /visualization/globe?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+[32m[INFO][0m 2026-03-08 18:58:09 - 2026-03-08 18:58:09,477 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:09] "GET /visualization/globe?__debugger__=yes&cmd=resource&f=console.png&s=yOoRrVzW3HKgRVrgWjKM HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 18:58:10 - 2026-03-08 18:58:10,831 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:10] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 18:58:13 - 2026-03-08 18:58:13,265 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:13] "GET /dashboard/builder HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 18:58:13 - 2026-03-08 18:58:13,456 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:13] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 18:58:15 - 2026-03-08 18:58:15,319 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:15] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 18:58:20 - 2026-03-08 18:58:20,003 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:20] "GET /dashboard/builder HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 18:58:20 - 2026-03-08 18:58:20,150 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:20] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[31m[ERROR][0m 2026-03-08 18:58:48 - 2026-03-08 18:58:48,241 - app.blueprints.dashboard_builder - ERROR - Error getting availability summary: 'DataIngestionService' object has no attribute 'get'
+[32m[INFO][0m 2026-03-08 18:58:48 - 2026-03-08 18:58:48,243 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:58:48] "[35m[1mGET /dashboard/api/availability/summary?provider=world_bank&countries=&indicators= HTTP/1.1[0m" 500 -
+[32m[INFO][0m 2026-03-08 18:59:02 - 2026-03-08 18:59:02,867 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:59:02] "GET /dashboard/builder HTTP/1.1" 200 -
+[32m[INFO][0m 2026-03-08 18:59:03 - 2026-03-08 18:59:03,058 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:59:03] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[31m[ERROR][0m 2026-03-08 18:59:04 - 2026-03-08 18:59:04,674 - app.blueprints.dashboard_builder - ERROR - Error getting availability summary: 'DataIngestionService' object has no attribute 'get'
+[32m[INFO][0m 2026-03-08 18:59:04 - 2026-03-08 18:59:04,675 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 18:59:04] "[35m[1mGET /dashboard/api/availability/summary?provider=world_bank&countries=&indicators= HTTP/1.1[0m" 500 -
+2026-03-08 19:03:02,289 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 19:03:02,310 - database - INFO - Database tables created successfully
+2026-03-08 19:03:02,315 - database - INFO - Admin user already exists
+2026-03-08 19:03:02,315 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 19:03:02,315 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 19:03:02,661 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 19:03:03,088 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,088 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,088 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,088 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,088 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,088 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,088 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,088 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,088 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 19:03:03,089 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 19:03:03,089 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 19:03:03,089 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 19:03:03,089 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,089 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,089 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,089 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,089 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,089 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,089 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 19:03:03,089 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 19:03:03,101 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,101 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,101 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 19:03:03,101 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,101 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,101 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 19:03:03,102 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,102 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,102 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 19:03:03,102 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 19:03:03,102 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 19:03:03,102 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 19:03:03,102 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 19:03:03,102 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 19:03:03,102 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 19:03:03,102 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 19:03:03,102 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 19:03:03,102 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 19:03:03,102 - IMFClient - INFO - IMF API client initialized
+2026-03-08 19:03:03,102 - IMFClient - INFO - IMF API client initialized
+2026-03-08 19:03:03,102 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 19:03:03,102 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 19:03:03,102 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 19:03:03,102 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 19:03:03,102 - ILOClient - INFO - ILO API client initialized
+2026-03-08 19:03:03,102 - ILOClient - INFO - ILO API client initialized
+2026-03-08 19:03:03,102 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 19:03:03,102 - ITUClient - INFO - ITU API client initialized
+2026-03-08 19:03:03,102 - ITUClient - INFO - ITU API client initialized
+2026-03-08 19:03:03,102 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 19:03:03,102 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 19:03:03,102 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,102 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,102 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 19:03:03,102 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,102 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,102 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 19:03:03,102 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,102 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,102 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 19:03:03,102 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 19:03:03,103 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 19:03:03,103 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 19:03:03,103 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 19:03:03,103 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 19:03:03,103 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 19:03:03,103 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 19:03:03,103 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 19:03:03,103 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 19:03:03,103 - IMFClient - INFO - IMF API client initialized
+2026-03-08 19:03:03,103 - IMFClient - INFO - IMF API client initialized
+2026-03-08 19:03:03,103 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 19:03:03,103 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 19:03:03,103 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 19:03:03,103 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 19:03:03,103 - ILOClient - INFO - ILO API client initialized
+2026-03-08 19:03:03,103 - ILOClient - INFO - ILO API client initialized
+2026-03-08 19:03:03,103 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 19:03:03,103 - ITUClient - INFO - ITU API client initialized
+2026-03-08 19:03:03,103 - ITUClient - INFO - ITU API client initialized
+2026-03-08 19:03:03,103 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 19:03:03,103 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 19:03:03,103 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,103 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,103 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,103 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,103 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,103 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,103 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,103 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,103 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 19:03:03,103 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 19:03:03,103 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 19:03:03,108 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 19:03:03,156 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://10.2.0.2:5050
+2026-03-08 19:03:03,156 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-08 19:03:03,157 - werkzeug - INFO -  * Restarting with stat
+2026-03-08 19:03:03,437 - app.create_app - INFO - WorldInsights application starting in development mode
+2026-03-08 19:03:03,450 - database - INFO - Database tables created successfully
+2026-03-08 19:03:03,456 - database - INFO - Admin user already exists
+2026-03-08 19:03:03,456 - app.create_app - INFO - Rate limiting enabled
+2026-03-08 19:03:03,456 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+2026-03-08 19:03:03,622 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+2026-03-08 19:03:03,843 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,843 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,843 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,843 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,843 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,843 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,843 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,843 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,843 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 19:03:03,843 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 19:03:03,843 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+2026-03-08 19:03:03,843 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 19:03:03,843 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,843 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,844 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,844 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,844 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,844 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,844 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 19:03:03,844 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 19:03:03,850 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,850 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,850 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 19:03:03,850 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,850 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,850 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 19:03:03,850 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,850 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,850 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 19:03:03,850 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 19:03:03,850 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 19:03:03,851 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 19:03:03,851 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 19:03:03,851 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 19:03:03,851 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 19:03:03,851 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 19:03:03,851 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 19:03:03,851 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 19:03:03,851 - IMFClient - INFO - IMF API client initialized
+2026-03-08 19:03:03,851 - IMFClient - INFO - IMF API client initialized
+2026-03-08 19:03:03,851 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 19:03:03,851 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 19:03:03,851 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 19:03:03,851 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 19:03:03,851 - ILOClient - INFO - ILO API client initialized
+2026-03-08 19:03:03,851 - ILOClient - INFO - ILO API client initialized
+2026-03-08 19:03:03,851 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 19:03:03,851 - ITUClient - INFO - ITU API client initialized
+2026-03-08 19:03:03,851 - ITUClient - INFO - ITU API client initialized
+2026-03-08 19:03:03,851 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 19:03:03,851 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 19:03:03,851 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,851 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,851 - DataSourceRegistry - INFO - Registered data source: world_bank
+2026-03-08 19:03:03,851 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,851 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,851 - DataSourceRegistry - INFO - Registered data source: who
+2026-03-08 19:03:03,851 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,851 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,851 - DataSourceRegistry - INFO - Registered data source: fao
+2026-03-08 19:03:03,851 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 19:03:03,851 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 19:03:03,851 - DataSourceRegistry - INFO - Registered data source: nasa
+2026-03-08 19:03:03,852 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 19:03:03,852 - UNDataClient - INFO - UN Data API client initialized
+2026-03-08 19:03:03,852 - DataSourceRegistry - INFO - Registered data source: un_data
+2026-03-08 19:03:03,852 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 19:03:03,852 - OWIDClient - INFO - Our World in Data API client initialized
+2026-03-08 19:03:03,852 - DataSourceRegistry - INFO - Registered data source: owid
+2026-03-08 19:03:03,852 - IMFClient - INFO - IMF API client initialized
+2026-03-08 19:03:03,852 - IMFClient - INFO - IMF API client initialized
+2026-03-08 19:03:03,852 - DataSourceRegistry - INFO - Registered data source: imf
+2026-03-08 19:03:03,852 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 19:03:03,852 - UNESCOClient - INFO - UNESCO API client initialized
+2026-03-08 19:03:03,852 - DataSourceRegistry - INFO - Registered data source: unesco
+2026-03-08 19:03:03,852 - ILOClient - INFO - ILO API client initialized
+2026-03-08 19:03:03,852 - ILOClient - INFO - ILO API client initialized
+2026-03-08 19:03:03,852 - DataSourceRegistry - INFO - Registered data source: ilo
+2026-03-08 19:03:03,852 - ITUClient - INFO - ITU API client initialized
+2026-03-08 19:03:03,852 - ITUClient - INFO - ITU API client initialized
+2026-03-08 19:03:03,852 - DataSourceRegistry - INFO - Registered data source: itu
+2026-03-08 19:03:03,852 - DataIngestionService - INFO - Registered all default API clients
+2026-03-08 19:03:03,852 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,852 - WorldBankClient - INFO - World Bank API client initialized
+2026-03-08 19:03:03,852 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,852 - WHOClient - INFO - WHO API client initialized
+2026-03-08 19:03:03,852 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,852 - FAOClient - INFO - FAO API client initialized
+2026-03-08 19:03:03,852 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,852 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+2026-03-08 19:03:03,852 - NASAClient - INFO - NASA/NOAA API client initialized
+2026-03-08 19:03:03,852 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+2026-03-08 19:03:03,852 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+2026-03-08 19:03:03,857 - app.create_app - INFO - WorldInsights application initialized successfully
+2026-03-08 19:03:03,880 - werkzeug - WARNING -  * Debugger is active!
+2026-03-08 19:03:03,890 - werkzeug - INFO -  * Debugger PIN: 137-185-723
+2026-03-08 19:03:21,518 - app.blueprints.dashboard_builder - ERROR - Error getting availability summary: 'dict' object is not callable
+2026-03-08 19:03:21,519 - werkzeug - INFO - 127.0.0.1 - - [08/Mar/2026 19:03:21] "[35m[1mGET /dashboard/api/availability/summary?provider=who HTTP/1.1[0m" 500 -
