@@ -236,6 +236,77 @@
             📝 Add Text Annotation
           </button>
         </div>
+        
+        <!-- Shape Tools (Always Visible) -->
+        <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+          <h4 class="text-sm font-bold mb-3">Shape Tools</h4>
+          
+          <div class="grid grid-cols-4 gap-2">
+            <!-- Arrow -->
+            <button
+              @click="addShape('arrow')"
+              class="p-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-xl"
+              title="Add Arrow">
+              ➡️
+            </button>
+            
+            <!-- Circle -->
+            <button
+              @click="addShape('circle')"
+              class="p-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-xl"
+              title="Add Circle">
+              ⭕
+            </button>
+            
+            <!-- Rectangle -->
+            <button
+              @click="addShape('rectangle')"
+              class="p-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-xl"
+              title="Add Rectangle">
+              ⬜
+            </button>
+            
+            <!-- Star -->
+            <button
+              @click="addShape('star')"
+              class="p-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-xl"
+              title="Add Star">
+              ⭐
+            </button>
+            
+            <!-- Check Mark -->
+            <button
+              @click="addShape('check')"
+              class="p-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-xl"
+              title="Add Check Mark">
+              ✅
+            </button>
+            
+            <!-- Warning -->
+            <button
+              @click="addShape('warning')"
+              class="p-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-xl"
+              title="Add Warning">
+              ⚠️
+            </button>
+            
+            <!-- Info -->
+            <button
+              @click="addShape('info')"
+              class="p-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-xl"
+              title="Add Info">
+              ℹ️
+            </button>
+            
+            <!-- Flag -->
+            <button
+              @click="addShape('flag')"
+              class="p-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-xl"
+              title="Add Flag">
+              🚩
+            </button>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -299,6 +370,75 @@
                   x-html="panel.content">
                 </div>
               </template>
+              <template x-if="panel.type === 'shape'">
+                <div class="w-full h-full flex items-center justify-center" :style="{
+                  backgroundColor: panel.config?.backgroundColor || 'transparent'
+                }">
+                  <!-- Arrow -->
+                  <svg x-show="panel.config?.shapeType === 'arrow'" class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <line :x1="panel.config?.x1 || 10" :y1="50" :x2="panel.config?.x2 || 90" :y2="50" 
+                          :stroke="panel.config?.color || '#3b82f6'" :stroke-width="panel.config?.strokeWidth || 3" 
+                          fill="none" marker-end="url(#arrowhead)"/>
+                    <defs>
+                      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" :fill="panel.config?.color || '#3b82f6'"/>
+                      </marker>
+                    </defs>
+                  </svg>
+                  
+                  <!-- Circle -->
+                  <svg x-show="panel.config?.shapeType === 'circle'" class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <circle cx="50" cy="50" :r="panel.config?.radius || 40" 
+                            :fill="panel.config?.fill || 'none'" 
+                            :stroke="panel.config?.color || '#3b82f6'" 
+                            :stroke-width="panel.config?.strokeWidth || 3"/>
+                  </svg>
+                  
+                  <!-- Rectangle -->
+                  <svg x-show="panel.config?.shapeType === 'rectangle'" class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <rect x="10" y="20" :width="panel.config?.width || 80" :height="panel.config?.height || 60" 
+                          :fill="panel.config?.fill || 'none'" 
+                          :stroke="panel.config?.color || '#3b82f6'" 
+                          :stroke-width="panel.config?.strokeWidth || 3"
+                          :rx="panel.config?.borderRadius || 0"/>
+                  </svg>
+                  
+                  <!-- Star -->
+                  <div x-show="panel.config?.shapeType === 'star'" 
+                       class="text-center"
+                       :style="{ fontSize: panel.config?.size || '80px', color: panel.config?.color || '#fbbf24' }">
+                    ⭐
+                  </div>
+                  
+                  <!-- Check Mark -->
+                  <div x-show="panel.config?.shapeType === 'check'" 
+                       class="text-center"
+                       :style="{ fontSize: panel.config?.size || '80px', color: panel.config?.color || '#22c55e' }">
+                    ✅
+                  </div>
+                  
+                  <!-- Warning -->
+                  <div x-show="panel.config?.shapeType === 'warning'" 
+                       class="text-center"
+                       :style="{ fontSize: panel.config?.size || '80px', color: panel.config?.color || '#f59e0b' }">
+                    ⚠️
+                  </div>
+                  
+                  <!-- Info -->
+                  <div x-show="panel.config?.shapeType === 'info'" 
+                       class="text-center"
+                       :style="{ fontSize: panel.config?.size || '80px', color: panel.config?.color || '#3b82f6' }">
+                    ℹ️
+                  </div>
+                  
+                  <!-- Flag -->
+                  <div x-show="panel.config?.shapeType === 'flag'" 
+                       class="text-center"
+                       :style="{ fontSize: panel.config?.size || '80px', color: panel.config?.color || '#ef4444' }">
+                    🚩
+                  </div>
+                </div>
+              </template>
             </div>
             
             <!-- Resize Handle -->
@@ -337,6 +477,109 @@
                 class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
+            
+            <!-- Shape Panel Properties -->
+            <template x-if="getPanel(selectedPanel).type === 'shape'">
+              <div class="space-y-3">
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-3">
+                  <h4 class="text-xs font-bold text-gray-500 uppercase mb-2">Shape Settings</h4>
+                  
+                  <!-- Shape Type (Read-only) -->
+                  <div class="mb-2">
+                    <label class="block text-xs font-medium mb-1">Type</label>
+                    <div class="px-2 py-1.5 bg-gray-100 dark:bg-gray-700 rounded text-sm" 
+                         x-text="getPanel(selectedPanel).config.shapeType"></div>
+                  </div>
+                  
+                  <!-- Color -->
+                  <div class="mb-2">
+                    <label class="block text-xs font-medium mb-1">Color</label>
+                    <input
+                      type="color"
+                      x-model="getPanel(selectedPanel).config.color"
+                      @change="updatePanelStyles(selectedPanel)"
+                      class="w-full h-8 border border-gray-300 dark:border-gray-600 rounded cursor-pointer"
+                    />
+                  </div>
+                  
+                  <!-- Stroke Width (for SVG shapes) -->
+                  <div class="mb-2" x-show="['arrow', 'circle', 'rectangle'].includes(getPanel(selectedPanel).config.shapeType)">
+                    <label class="block text-xs font-medium mb-1">Stroke Width</label>
+                    <input
+                      type="range"
+                      min="1"
+                      max="10"
+                      x-model="getPanel(selectedPanel).config.strokeWidth"
+                      @change="updatePanelStyles(selectedPanel)"
+                      class="w-full"
+                    />
+                    <div class="text-xs text-gray-500" x-text="getPanel(selectedPanel).config.strokeWidth + 'px'"></div>
+                  </div>
+                  
+                  <!-- Fill (for SVG shapes) -->
+                  <div class="mb-2" x-show="['circle', 'rectangle'].includes(getPanel(selectedPanel).config.shapeType)">
+                    <label class="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        x-model="getPanel(selectedPanel).config.filled"
+                        @change="updatePanelStyles(selectedPanel)"
+                        class="rounded"
+                      />
+                      <span class="text-sm">Fill Shape</span>
+                    </label>
+                  </div>
+                  
+                  <!-- Fill Color -->
+                  <div class="mb-2" x-show="getPanel(selectedPanel).config.filled">
+                    <label class="block text-xs font-medium mb-1">Fill Color</label>
+                    <input
+                      type="color"
+                      x-model="getPanel(selectedPanel).config.fillColor"
+                      @change="updatePanelStyles(selectedPanel)"
+                      class="w-full h-8 border border-gray-300 dark:border-gray-600 rounded cursor-pointer"
+                    />
+                  </div>
+                  
+                  <!-- Size (for emoji shapes) -->
+                  <div class="mb-2" x-show="['star', 'check', 'warning', 'info', 'flag'].includes(getPanel(selectedPanel).config.shapeType)">
+                    <label class="block text-xs font-medium mb-1">Size</label>
+                    <select
+                      x-model="getPanel(selectedPanel).config.size"
+                      @change="updatePanelStyles(selectedPanel)"
+                      class="w-full px-2 py-1.5 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-sm">
+                      <option value="40px">Small (40px)</option>
+                      <option value="60px">Medium (60px)</option>
+                      <option value="80px">Large (80px)</option>
+                      <option value="120px">Extra Large (120px)</option>
+                    </select>
+                  </div>
+                  
+                  <!-- Background Color -->
+                  <div class="mb-2">
+                    <label class="block text-xs font-medium mb-1">Background</label>
+                    <input
+                      type="color"
+                      x-model="getPanel(selectedPanel).config.backgroundColor"
+                      @change="updatePanelStyles(selectedPanel)"
+                      class="w-full h-8 border border-gray-300 dark:border-gray-600 rounded cursor-pointer"
+                    />
+                  </div>
+                  
+                  <!-- Usage Tips -->
+                  <div class="mt-3 p-2 bg-blue-50 dark:bg-blue-900 rounded text-xs text-blue-800 dark:text-blue-200">
+                    <p class="font-bold mb-1">💡 Shape Uses:</p>
+                    <ul class="list-disc list-inside space-y-0.5">
+                      <li>Arrow: Point to data</li>
+                      <li>Circle: Highlight areas</li>
+                      <li>Star: Mark important info</li>
+                      <li>Check: Show success</li>
+                      <li>Warning: Highlight issues</li>
+                      <li>Flag: Mark locations</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </template>
             
             <!-- Text Panel Properties -->
             <template x-if="getPanel(selectedPanel).type === 'text'">
@@ -687,6 +930,59 @@
             // Auto-select the new panel for editing
             this.selectPanel(panel.id);
           });
+        },
+        
+        addShape(shapeType) {
+          const panel = {
+            id: `panel-${Date.now()}`,
+            type: 'shape',
+            title: `${shapeType.charAt(0).toUpperCase() + shapeType.slice(1)}`,
+            x: 200 + (this.panels.length * 20),
+            y: 200 + (this.panels.length * 20),
+            width: 200,
+            height: 150,
+            zIndex: this.panels.length + 1,
+            config: {
+              shapeType: shapeType,
+              color: this.getDefaultShapeColor(shapeType),
+              fill: 'none',
+              strokeWidth: 3,
+              size: '80px',
+              backgroundColor: 'transparent',
+              // For arrow
+              x1: 10,
+              y1: 50,
+              x2: 90,
+              y2: 50,
+              // For circle
+              radius: 40,
+              // For rectangle
+              rectWidth: 80,
+              rectHeight: 60,
+              borderRadius: 0
+            }
+          };
+          
+          this.panels.push(panel);
+          this.$nextTick(() => {
+            this.initDragDrop();
+            this.initResize();
+            this.selectPanel(panel.id);
+          });
+        },
+        
+        getDefaultShapeColor(shapeType) {
+          const colors = {
+            'arrow': '#3b82f6',
+            'circle': '#3b82f6',
+            'rectangle': '#3b82f6',
+            'star': '#fbbf24',
+            'check': '#22c55e',
+            'warning': '#f59e0b',
+            'info': '#3b82f6',
+            'flag': '#ef4444'
+          };
+          return colors[shapeType] || '#3b82f6';
         },
         
         updateTextContent(panelId, content) {

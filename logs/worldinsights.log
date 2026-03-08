@@ -3797,3 +3797,28 @@ WHERE user.email = ?
 [32m[INFO][0m 2026-03-08 18:20:26 - 2026-03-08 18:20:26,716 - OpenMeteoClient - INFO - Open-Meteo API client initialized
 [32m[INFO][0m 2026-03-08 18:20:26 - 2026-03-08 18:20:26,716 - NASAClient - INFO - NASA/NOAA API client initialized
 [32m[INFO][0m 2026-03-08 18:20:26 - 2026-03-08 18:20:26,716 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:24:44 - 2026-03-08 18:24:44,789 - app.create_app - INFO - WorldInsights application starting in development mode
+[32m[INFO][0m 2026-03-08 18:24:44 - 2026-03-08 18:24:44,803 - database - INFO - Database tables created successfully
+[32m[INFO][0m 2026-03-08 18:24:44 - 2026-03-08 18:24:44,807 - database - INFO - Admin user already exists
+[32m[INFO][0m 2026-03-08 18:24:44 - 2026-03-08 18:24:44,808 - app.create_app - INFO - Rate limiting enabled
+[33m[WARNING][0m 2026-03-08 18:24:44 - 2026-03-08 18:24:44,808 - app.create_app - WARNING - HTTPS enforcement is DISABLED (development mode)
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,335 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,335 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - FAOClient - INFO - FAO API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - app.core.cache - INFO - FileCache initialized at /Users/achbj/Code/bonzainsights/WorldInsights/data/cache (max size: 500MB)
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - app.services.plot_service - INFO - PlotService initialized with all API clients and caching
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - WorldBankClient - INFO - World Bank API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - WHOClient - INFO - WHO API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - OpenMeteoClient - INFO - Open-Meteo API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - NASAClient - INFO - NASA/NOAA API client initialized
+[32m[INFO][0m 2026-03-08 18:24:45 - 2026-03-08 18:24:45,336 - NASAClient - INFO - NASA API client initialized (key: DEMO...)
