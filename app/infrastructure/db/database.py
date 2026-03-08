@@ -4,6 +4,7 @@ Database initialization module for WorldInsights.
 Handles database setup, initialization, and default data creation.
 """
 from app.infrastructure.db.models import db, User
+from app.infrastructure.db.dashboard_models import Dashboard, DashboardTag, DashboardShare
 from app.core.security import hash_password
 from app.core.logging import get_logger
 
@@ -13,17 +14,17 @@ logger = get_logger('database')
 def init_db(app):
     """
     Initialize database with Flask app.
-    
+
     Args:
         app: Flask application instance
     """
     db.init_app(app)
-    
+
     with app.app_context():
         # Create all tables
         db.create_all()
         logger.info("Database tables created successfully")
-        
+
         # Create default admin user if not exists
         create_default_admin()
 

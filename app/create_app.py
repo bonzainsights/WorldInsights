@@ -356,6 +356,10 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     from app.blueprints.dashboard_builder import dashboard_builder_bp
     app.register_blueprint(dashboard_builder_bp)
 
+    # NEW: Dashboard API (Database persistence)
+    from app.blueprints.dashboard_api import dashboard_api_bp
+    app.register_blueprint(dashboard_api_bp)
+
     logger.info("WorldInsights application initialized successfully")
     
     return app

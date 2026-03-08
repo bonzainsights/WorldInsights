@@ -1279,13 +1279,14 @@
         
         // Save/Load
         async saveDashboard() {
-          const title = prompt('Enter dashboard title:', 'My Dashboard');
+          const title = prompt('Enter dashboard title:', this.currentDashboard.title || 'My Dashboard');
           if (!title) return;
           
           this.currentDashboard.title = title;
           
           const dashboard = {
             title: title,
+            description: '',
             layout: {
               zoom: this.canvas.zoom,
               showGrid: this.canvas.showGrid
@@ -1299,22 +1300,35 @@
               width: p.width,
               height: p.height,
               zIndex: p.zIndex,
-              config: p.config
+              config: p.config,
+              content: p.content
             }))
           };
           
           try {
-            const response = await fetch('/dashboard/api/save', {
-              method: 'POST',
+            const url = this.currentDashboard.id 
+              ? `/api/dashboards/${this.currentDashboard.id}`
+              : '/api/dashboards';
+            
+            const method = this.currentDashboard.id ? 'PUT' : 'POST';
+            
+            const response = await fetch(url, {
+              method: method,
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(dashboard)
             });
             
             const result = await response.json();
-            alert('Dashboard saved! ID: ' + result.id);
+            
+            if (response.ok) {
+              this.currentDashboard.id = result.id;
+              alert('Dashboard saved to database! ID: ' + result.id);
+            } else {
+              throw new Error(result.error || 'Save failed');
+            }
           } catch (error) {
             console.error('Error saving dashboard:', error);
-            alert('Error saving dashboard');
+            alert('Error saving dashboard: ' + error.message);
           }
         },
         
@@ -1323,17 +1337,32 @@
           if (!dashboardId) return;
           
           try {
-            const response = await fetch(`/dashboard/api/load/${dashboardId}`);
+            const response = await fetch(`/api/dashboards/${dashboardId}`);
             const dashboard = await response.json();
             
-            if (dashboard.panels) {
-              this.panels = dashboard.panels;
-              this.canvas.zoom = dashboard.layout?.zoom || 1;
-              this.canvas.showGrid = dashboard.layout?.showGrid ?? true;
+            if (response.ok) {
+              this.currentDashboard = {
+                id: dashboard.id,
+                title: dashboard.title,
+                description: dashboard.description
+              };
+              
+              if (dashboard.panels) {
+                this.panels = dashboard.panels;
+              }
+              
+              if (dashboard.layout) {
+                this.canvas.zoom = dashboard.layout.zoom || 1;
+                this.canvas.showGrid = dashboard.layout.showGrid ?? true;
+              }
+              
+              alert('Dashboard loaded successfully!');
+            } else {
+              throw new Error(dashboard.error || 'Load failed');
             }
           } catch (error) {
             console.error('Error loading dashboard:', error);
-            alert('Error loading dashboard');
+            alert('Error loading dashboard: ' + error.message);
           }
         },
         
