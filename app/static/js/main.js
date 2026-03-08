@@ -1,214 +1,286 @@
 /**
- * WorldInsights - Main JavaScript
- * Handles navigation, mobile menu, and interactions
+ * WorldInsights Main JavaScript
+ * 
+ * Core utilities and initialization for the WorldInsights frontend.
  */
 
-// Mobile Menu Toggle
-document.addEventListener("DOMContentLoaded", function () {
-  const mobileToggle = document.querySelector(".mobile-menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
-  const body = document.body;
+(function() {
+  'use strict';
 
-  if (mobileToggle) {
-    mobileToggle.addEventListener("click", function () {
-      navLinks.classList.toggle("active");
-      body.classList.toggle("menu-open");
+  /**
+   * Initialize on DOM ready
+   */
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('[WorldInsights] Application initialized');
+    
+    // Initialize tooltips
+    initTooltips();
+    
+    // Initialize smooth scroll
+    initSmoothScroll();
+    
+    // Initialize lazy loading
+    initLazyLoading();
+    
+    // Initialize form enhancements
+    initFormEnhancements();
+  });
 
-      // Animate hamburger icon
-      const spans = mobileToggle.querySelectorAll("span");
-      if (navLinks.classList.contains("active")) {
-        spans[0].style.transform = "rotate(45deg) translateY(8px)";
-        spans[1].style.opacity = "0";
-        spans[2].style.transform = "rotate(-45deg) translateY(-8px)";
-      } else {
-        spans[0].style.transform = "";
-        spans[1].style.opacity = "";
-        spans[2].style.transform = "";
-      }
+  /**
+   * Initialize tooltips (using title attribute)
+   */
+  function initTooltips() {
+    // Simple tooltip implementation using Alpine.js or native
+    document.querySelectorAll('[data-tooltip]').forEach(el => {
+      el.addEventListener('mouseenter', showTooltip);
+      el.addEventListener('mouseleave', hideTooltip);
     });
+  }
 
-    // Close menu when clicking a link (but not the user dropdown toggle)
-    navLinks.querySelectorAll(".nav-link").forEach((link) => {
-      link.addEventListener("click", function (e) {
-        // Don't close menu if clicking the user dropdown toggle
-        if (!this.classList.contains("user-dropdown-toggle")) {
-          navLinks.classList.remove("active");
-          body.classList.remove("menu-open");
-          const spans = mobileToggle.querySelectorAll("span");
-          spans[0].style.transform = "";
-          spans[1].style.opacity = "";
-          spans[2].style.transform = "";
+  function showTooltip(e) {
+    const tooltip = e.target.getAttribute('data-tooltip');
+    if (!tooltip) return;
+
+    const tooltipEl = document.createElement('div');
+    tooltipEl.className = 'fixed z-50 px-3 py-2 text-sm text-white bg-gray-900 rounded-lg shadow-lg pointer-events-none';
+    tooltipEl.textContent = tooltip;
+    tooltipEl.id = 'active-tooltip';
+    
+    document.body.appendChild(tooltipEl);
+    
+    const rect = e.target.getBoundingClientRect();
+    tooltipEl.style.top = rect.top - tooltipEl.offsetHeight - 8 + 'px';
+    tooltipEl.style.left = rect.left + (rect.width - tooltipEl.offsetWidth) / 2 + 'px';
+  }
+
+  function hideTooltip() {
+    const tooltip = document.getElementById('active-tooltip');
+    if (tooltip) tooltip.remove();
+  }
+
+  /**
+   * Initialize smooth scroll for anchor links
+   */
+  function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      });
-    });
-
-    // Close mobile menu when clicking dropdown items (Profile/Logout)
-    navLinks.querySelectorAll(".dropdown-item").forEach((item) => {
-      item.addEventListener("click", function () {
-        navLinks.classList.remove("active");
-        body.classList.remove("menu-open");
-        const spans = mobileToggle.querySelectorAll("span");
-        spans[0].style.transform = "";
-        spans[1].style.opacity = "";
-        spans[2].style.transform = "";
       });
     });
   }
 
-  // Navbar scroll effect
-  const navbar = document.querySelector(".navbar");
-  let lastScroll = 0;
+  /**
+   * Initialize lazy loading for images
+   */
+  function initLazyLoading() {
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+            }
+            observer.unobserve(img);
+          }
+        });
+      });
 
-  window.addEventListener("scroll", function () {
-    const currentScroll = window.pageYOffset;
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+      });
+    }
+  }
 
-    if (currentScroll > 100) {
-      navbar.style.background = "rgba(15, 23, 42, 0.95)";
-      navbar.style.boxShadow = "0 4px 6px -1px rgba(0, 0, 0, 0.3)";
-    } else {
-      navbar.style.background = "rgba(15, 23, 42, 0.8)";
-      navbar.style.boxShadow = "";
+  /**
+   * Initialize form enhancements
+   */
+  function initFormEnhancements() {
+    // Auto-resize textareas
+    document.querySelectorAll('textarea[data-autoresize]').forEach(textarea => {
+      textarea.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+      });
+    });
+
+    // Confirm before destructive actions
+    document.querySelectorAll('[data-confirm]').forEach(el => {
+      el.addEventListener('click', function(e) {
+        const message = this.getAttribute('data-confirm');
+        if (!confirm(message)) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+    });
+  }
+
+  /**
+   * Format numbers with commas
+   * @param {number} num - Number to format
+   * @returns {string} Formatted number
+   */
+  function formatNumber(num) {
+    if (num === null || num === undefined) return 'N/A';
+    return new Intl.NumberFormat().format(num);
+  }
+
+  /**
+   * Format large numbers with K, M, B suffixes
+   * @param {number} num - Number to format
+   * @returns {string} Formatted number
+   */
+  function formatCompactNumber(num) {
+    if (num === null || num === undefined) return 'N/A';
+    return new Intl.NumberFormat('en-US', {
+      notation: 'compact',
+      maximumFractionDigits: 1
+    }).format(num);
+  }
+
+  /**
+   * Format year range
+   * @param {number} start - Start year
+   * @param {number} end - End year
+   * @returns {string} Formatted year range
+   */
+  function formatYearRange(start, end) {
+    if (!start && !end) return 'All years';
+    if (start && !end) return `${start} - Present`;
+    if (!start && end) return `Until ${end}`;
+    return `${start} - ${end}`;
+  }
+
+  /**
+   * Debounce function
+   * @param {Function} func - Function to debounce
+   * @param {number} wait - Wait time in ms
+   * @returns {Function} Debounced function
+   */
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  /**
+   * Throttle function
+   * @param {Function} func - Function to throttle
+   * @param {number} limit - Time limit in ms
+   * @returns {Function} Throttled function
+   */
+  function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+      if (!inThrottle) {
+        func.apply(this, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    };
+  }
+
+  /**
+   * Copy text to clipboard
+   * @param {string} text - Text to copy
+   * @returns {Promise<boolean>} Success
+   */
+  async function copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      if (window.WorldInsightsToast) {
+        window.WorldInsightsToast.show('Copied to clipboard', 'success');
+      }
+      return true;
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      if (window.WorldInsightsToast) {
+        window.WorldInsightsToast.show('Failed to copy', 'error');
+      }
+      return false;
+    }
+  }
+
+  /**
+   * Download data as JSON file
+   * @param {Object} data - Data to download
+   * @param {string} filename - Filename
+   */
+  function downloadJSON(data, filename = 'data.json') {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    if (window.WorldInsightsToast) {
+      window.WorldInsightsToast.show('Download started', 'success');
+    }
+  }
+
+  /**
+   * Download data as CSV file
+   * @param {Array} data - Array of objects
+   * @param {string} filename - Filename
+   */
+  function downloadCSV(data, filename = 'data.csv') {
+    if (!data || data.length === 0) {
+      if (window.WorldInsightsToast) {
+        window.WorldInsightsToast.show('No data to export', 'warning');
+      }
+      return;
     }
 
-    lastScroll = currentScroll;
-  });
+    const headers = Object.keys(data[0]);
+    const csv = [
+      headers.join(','),
+      ...data.map(row => headers.map(h => JSON.stringify(row[h])).join(','))
+    ].join('\n');
 
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) {
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    });
-  });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    if (window.WorldInsightsToast) {
+      window.WorldInsightsToast.show('Download started', 'success');
+    }
+  }
 
-  // Add animation on scroll
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px",
+  // Export utilities to global scope
+  window.WorldInsightsUtils = {
+    formatNumber,
+    formatCompactNumber,
+    formatYearRange,
+    debounce,
+    throttle,
+    copyToClipboard,
+    downloadJSON,
+    downloadCSV
   };
 
-  const observer = new IntersectionObserver(function (entries) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "translateY(0)";
-      }
-    });
-  }, observerOptions);
-
-  // Observe elements for animation
-  document
-    .querySelectorAll(".feature-card, .source-card, .use-case")
-    .forEach((el) => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(20px)";
-      el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-      observer.observe(el);
-    });
-
-  // User Dropdown Menu
-  const userDropdownBtn = document.getElementById("userDropdownBtn");
-  const userDropdownMenu = document.getElementById("userDropdownMenu");
-
-  if (userDropdownBtn && userDropdownMenu) {
-    // Toggle dropdown on button click
-    userDropdownBtn.addEventListener("click", function (e) {
-      e.stopPropagation();
-      userDropdownMenu.classList.toggle("show");
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener("click", function (e) {
-      if (
-        !userDropdownBtn.contains(e.target) &&
-        !userDropdownMenu.contains(e.target)
-      ) {
-        userDropdownMenu.classList.remove("show");
-      }
-    });
-
-    // Close dropdown on mobile menu close
-    const mobileToggle = document.querySelector(".mobile-menu-toggle");
-    if (mobileToggle) {
-      mobileToggle.addEventListener("click", function () {
-        userDropdownMenu.classList.remove("show");
-      });
-    }
-  }
-});
-
-// Prevent body scroll when mobile menu is open
-document.addEventListener("DOMContentLoaded", function () {
-  const style = document.createElement("style");
-  style.textContent = `
-        body.menu-open {
-            overflow: hidden;
-        }
-    `;
-  document.head.appendChild(style);
-});
-
-// Flash Message Auto-Dismiss
-document.addEventListener("DOMContentLoaded", function () {
-  const flashMessages = document.querySelectorAll(".flash-message");
-
-  flashMessages.forEach(function (message) {
-    let dismissTimer;
-    let isPaused = false;
-
-    // Function to dismiss message
-    function dismissMessage() {
-      message.classList.add("fade-out");
-      setTimeout(function () {
-        message.remove();
-        // Remove container if no more messages
-        const container = document.querySelector(".flash-messages-container");
-        if (
-          container &&
-          container.querySelectorAll(".flash-message").length === 0
-        ) {
-          container.remove();
-        }
-      }, 300); // Match fade-out animation duration
-    }
-
-    // Auto-dismiss after 5 seconds
-    function startDismissTimer() {
-      dismissTimer = setTimeout(dismissMessage, 5000);
-    }
-
-    // Pause timer on hover
-    message.addEventListener("mouseenter", function () {
-      if (dismissTimer) {
-        clearTimeout(dismissTimer);
-        isPaused = true;
-      }
-    });
-
-    // Resume timer on mouse leave
-    message.addEventListener("mouseleave", function () {
-      if (isPaused) {
-        startDismissTimer();
-        isPaused = false;
-      }
-    });
-
-    // Add close button functionality (if needed in future)
-    const closeBtn = message.querySelector(".close-btn");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", function () {
-        clearTimeout(dismissTimer);
-        dismissMessage();
-      });
-    }
-
-    // Start the auto-dismiss timer
-    startDismissTimer();
-  });
-});
+})();

@@ -13,6 +13,27 @@ The platform enables users to:
 - Interactively visualize data using **dynamic 2D charts** and a **3D globe**
 - Drill down from global trends to country-level and time-series insights
 - Experiment with data relationships
+- Build custom dashboards with the **Dashboard Builder**
+
+## 🆕 New Frontend Stack (March 2026)
+
+WorldInsights has been rebuilt with a modern, lightweight frontend stack:
+
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| **Interactivity** | HTMX 2.0+ | Dynamic content without JavaScript complexity |
+| **Reactivity** | Alpine.js 3.x | Lightweight client-side state management |
+| **Visualization** | Plotly.js | Interactive 2D/3D charts and globe |
+| **Styling** | Tailwind CSS 3.x | Modern, responsive design |
+
+**Key Benefits:**
+- ✅ No build step (no npm, webpack, or vite)
+- ✅ Everything via CDN for easy development
+- ✅ Lightweight (~30kb total vs 500kb+ for React apps)
+- ✅ Server-driven UI (business logic stays in Python)
+- ✅ Easy for contributors to understand and modify
+
+See [docs/frontend_rebuild/](docs/frontend_rebuild/) for complete documentation.
 
 ## 🏗️ Architecture
 
@@ -99,6 +120,42 @@ The application will be available at `http://localhost:5000`
 
 - **Health Check**: `GET /health`
 - **Root**: `GET /`
+- **Dashboard Builder**: `GET /dashboard/builder`
+- **3D Globe**: `GET /visualization/globe`
+- **Data Sources**: `GET /data-sources`
+- **API Docs**: `GET /api`
+
+### New Features
+
+#### Dashboard Builder (`/dashboard/builder`)
+
+Create custom visualizations with our interactive dashboard builder:
+
+1. **Select Data Source**: World Bank, WHO, FAO, NASA, Open-Meteo
+2. **Choose Indicators**: 18,000+ indicators available
+3. **Pick Countries**: 200+ countries and regions
+4. **Set Year Range**: Historical data from 1960 onwards
+5. **Select Chart Type**: Line, bar, scatter, 3D scatter, 3D surface, globe
+6. **Save & Load**: Save your dashboards for later use
+
+#### 3D Globe Visualization (`/visualization/globe`)
+
+Explore global data on an interactive 3D globe:
+
+- Orthographic projection for realistic 3D effect
+- Color-coded data overlay
+- Interactive zoom, pan, and rotate
+- Country selection and tooltips
+- Multiple data sources supported
+
+#### Data Sources Browser (`/data-sources`)
+
+Browse and explore available data sources:
+
+- Source descriptions and coverage
+- Indicator counts and update frequency
+- Direct links to source documentation
+- Indicator search and filtering
 
 ## 📁 Project Structure
 
@@ -109,10 +166,11 @@ WorldInsights/
 │   │   ├── analytics/
 │   │   ├── api/
 │   │   ├── auth/
-│   │   ├── data_sources/
-│   │   ├── templates/
+│   │   ├── dashboard/       # ✅ Dashboard builder (NEW)
+│   │   ├── data_sources/    # ✅ Data source management
+│   │   ├── frontend/
 │   │   ├── ml/
-│   │   └── visualization/
+│   │   └── visualization/   # ✅ 3D globe & visualizations
 │   ├── core/                # Framework-agnostic core logic
 │   │   ├── config.py       # ✅ Configuration management
 │   │   ├── logging.py      # ✅ Structured logging
@@ -125,18 +183,32 @@ WorldInsights/
 │   ├── services/           # Application services
 │   │   ├── analytics_engine.py
 │   │   ├── data_ingestion.py
+│   │   ├── plot_service.py # Data aggregation
+│   │   ├── visualization_service.py  # ✅ Chart generation (NEW)
 │   │   └── ml_pipeline.py
 │   ├── templates/          # Jinja2 templates
-│   ├── tests/              # Test suite
-│   │   ├── fixtures/       # Test fixtures
-│   │   ├── integration/    # Integration tests
-│   │   └── unit/          # ✅ Unit tests (42 passing)
-│   └── create_app.py      # ✅ Flask app factory
+│   │   ├── base.html       # ✅ HTMX+Alpine+Plotly+Tailwind
+│   │   ├── dashboard/      # ✅ Dashboard builder (NEW)
+│   │   ├── data_sources/   # ✅ Data source pages (NEW)
+│   │   └── visualization/
+│   ├── static/
+│   ├── tests/
+│   │   ├── fixtures/
+│   │   ├── integration/
+│   │   └── unit/
+│   └── create_app.py       # ✅ Flask app factory
 ├── docs/
-│   └── requirements.md     # Project requirements & rules
-├── .env.example           # ✅ Environment template
-├── requirements.txt       # Python dependencies
-└── README.md             # This file
+│   ├── frontend_rebuild/   # ✅ Frontend rebuild docs (NEW)
+│   │   ├── README.md
+│   │   ├── decisions.md
+│   │   ├── implementation_log.md
+│   │   ├── completed.md
+│   │   ├── issues.md
+│   │   └── future_work.md
+│   └── requirements.md
+├── .env.example
+├── requirements.txt
+└── README.md
 ```
 
 ## ✅ Current Implementation Status
@@ -149,13 +221,25 @@ WorldInsights/
 - ✅ **.env.example**: Environment configuration template
 - ✅ **All tests passing**: 42/42 tests, 96% code coverage
 
+### Phase 2: Frontend Rebuild (COMPLETED - March 2026)
+
+- ✅ **HTMX + Alpine.js + Plotly + Tailwind CSS**: Modern frontend stack
+- ✅ **Dashboard Builder**: Interactive chart creation
+- ✅ **3D Globe Visualization**: Enhanced globe with data overlay
+- ✅ **Data Sources Browser**: Browse and explore data sources
+- ✅ **Visualization Service**: Chart generation for multiple types
+- ✅ **Comprehensive Documentation**: 6 documentation files
+
 ### Next Steps
 
-1. Authentication blueprint (user registration, login, email verification)
-2. Data sources integration (World Bank, FAO, WHO, NASA/NOAA)
-3. Analytics engine
-4. Visualization blueprints
-5. 3D globe visualization
+See [docs/frontend_rebuild/future_work.md](docs/frontend_rebuild/future_work.md) for planned enhancements:
+
+1. Database persistence for dashboards
+2. Additional chart types (heatmap, treemap, sankey)
+3. Dashboard templates and sharing
+4. User authentication integration
+5. Performance optimization (Redis caching)
+6. Unit tests for new services
 6. ML pipeline (Phase 2)
 
 ## 🧪 Testing

@@ -1,17 +1,73 @@
 """
-Core configuration module for WorldInsights.
+Core configuration module for WorldInsights Backend v2.
 
-This module provides configuration management following Clean Architecture principles.
-It has NO Flask dependencies and loads settings from environment variables.
+This module provides comprehensive configuration management following Clean Architecture.
+It loads settings from environment variables and provides type-safe access to all configurations.
 
-The Config class is framework-agnostic and can be used across the application.
+Features:
+- Environment-based configuration (development, staging, production)
+- API source configurations
+- Cache configurations (Redis or in-memory)
+- Rate limiting configurations
+- Logging configurations
+- Performance tuning parameters
 """
 import os
-from typing import Any, Dict
+from typing import Any, Dict, List, Optional
+from dataclasses import dataclass, field
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
+
+
+@dataclass
+class APISourceConfig:
+    """Configuration for a single API source."""
+    id: str
+    name: str
+    base_url: str
+    enabled: bool = True
+    requires_auth: bool = False
+    api_key: Optional[str] = None
+    rate_limit: str = "5 per second"
+    cache_ttl: int = 3600
+    timeout: int = 30
+    retry_count: int = 3
+    documentation_url: Optional[str] = None
+
+
+@dataclass
+class CacheConfig:
+    """Cache configuration."""
+    cache_type: str = "simple"  # 'simple' or 'redis'
+    ttl: int = 3600
+    default_timeout: int = 300
+    redis_host: str = "localhost"
+    redis_port: int = 6379
+    redis_db: int = 0
+    redis_password: Optional[str] = None
+    redis_url: Optional[str] = None
+
+
+@dataclass
+class RateLimitConfig:
+    """Rate limiting configuration."""
+    enabled: bool = True
+    storage_url: str = "memory://"
+    default_limit: str = "100 per minute"
+    api_limit: str = "60 per minute"
+
+
+@dataclass
+class PerformanceConfig:
+    """Performance tuning configuration."""
+    max_concurrent_requests: int = 10
+    connection_pool_size: int = 20
+    enable_compression: bool = True
+    ingestion_batch_size: int = 100
+    ingestion_workers: int = 4
+    availability_cache_ttl: int = 3600
 
 
 def _get_env(key: str, default: Any = None, cast_type: type = str) -> Any:
@@ -21,7 +77,7 @@ def _get_env(key: str, default: Any = None, cast_type: type = str) -> Any:
     Args:
         key: Environment variable name
         default: Default value if not found
-        cast_type: Type to cast the value to (str, int, bool)
+        cast_type: Type to cast the value to (str, int, bool, float)
     
     Returns:
         Environment variable value cast to specified type
@@ -51,300 +107,340 @@ class Config:
     """
     Application configuration class.
     
-    Loads configuration from environment variables with sensible defaults.
-    Validates required settings and ensures type safety.
-    
-    This class is immutable after initialization to prevent accidental modifications.
+    Provides centralized, type-safe access to all application settings.
+    Organized by functional area for clarity.
     """
     
     def __init__(self):
         """Initialize configuration from environment variables."""
-        # Validate required settings
-        self._SECRET_KEY = _get_env('SECRET_KEY')
-        if not self._SECRET_KEY:
-            raise ValueError("SECRET_KEY environment variable is required for security")
-        
         # ============================================
         # Application Settings
         # ============================================
-        self._FLASK_ENV = _get_env('FLASK_ENV', 'production')
-        self._DEBUG = _get_env('FLASK_DEBUG', False, bool)
+        self.FLASK_ENV = _get_env('FLASK_ENV', 'production')
+        self.FLASK_DEBUG = _get_env('FLASK_DEBUG', False, bool)
+        self.FLASK_APP = _get_env('FLASK_APP', 'run.py')
+        self.SECRET_KEY = _get_env('SECRET_KEY')
+        self.HOST = _get_env('HOST', '0.0.0.0')
+        self.PORT = _get_env('PORT', 5000, int)
+        
+        # Validate required settings
+        if not self.SECRET_KEY and self.FLASK_ENV == 'production':
+            raise ValueError("SECRET_KEY environment variable is required for production")
         
         # ============================================
         # Database Configuration
         # ============================================
-        self._DUCKDB_PATH = _get_env('DUCKDB_PATH', './data/worldinsights.duckdb')
-        self._DATABASE_URL = _get_env(
-            'DATABASE_URL', 
-            f'duckdb:///{self._DUCKDB_PATH}'
-        )
-        # SQLAlchemy configuration - using SQLite for auth due to DuckDB/SQLAlchemy limitations
-        # DuckDB will be used directly for data analytics
-        import os
-        abs_db_path = os.path.abspath('./data/worldinsights.db')
-        self._SQLALCHEMY_DATABASE_URI = _get_env('SQLALCHEMY_DATABASE_URI', f'sqlite:///{abs_db_path}')
-        self._SQLALCHEMY_TRACK_MODIFICATIONS = False
+        self.DUCKDB_PATH = _get_env('DUCKDB_PATH', './data/worldinsights.duckdb')
+        self.DATABASE_URL = _get_env('DATABASE_URL', f'duckdb:///{self.DUCKDB_PATH}')
         
-        # ============================================
-        # Mail Configuration
-        # ============================================
-        self._MAIL_SERVER = _get_env('MAIL_SERVER', 'smtp.gmail.com')
-        self._MAIL_PORT = _get_env('MAIL_PORT', 587, int)
-        self._MAIL_USE_TLS = _get_env('MAIL_USE_TLS', True, bool)
-        self._MAIL_USE_SSL = _get_env('MAIL_USE_SSL', False, bool)
-        self._MAIL_USERNAME = _get_env('MAIL_USERNAME')
-        self._MAIL_PASSWORD = _get_env('MAIL_PASSWORD')
-        self._MAIL_DEFAULT_SENDER = _get_env('MAIL_DEFAULT_SENDER', 'noreply@worldinsights.bonzainsights.com')
-        
-        # ============================================
-        # API Configuration
-        # ============================================
-        self._API_RATE_LIMIT = _get_env('API_RATE_LIMIT', 100, int)
-        self._API_TIMEOUT = _get_env('API_TIMEOUT', 30, int)
-        self._API_RETRY_COUNT = _get_env('API_RETRY_COUNT', 3, int)
+        # SQLAlchemy configuration (for Flask-SQLAlchemy)
+        # Using SQLite for auth since DuckDB has limited SQLAlchemy support
+        import os as _os
+        _abs_db_path = _os.path.abspath('./data/worldinsights.db')
+        self.SQLALCHEMY_DATABASE_URI = _get_env('SQLALCHEMY_DATABASE_URI', f'sqlite:///{_abs_db_path}')
+        self.SQLALCHEMY_TRACK_MODIFICATIONS = False
         
         # ============================================
         # Cache Configuration
         # ============================================
-        self._CACHE_TYPE = _get_env('CACHE_TYPE', 'simple')
-        self._CACHE_TTL = _get_env('CACHE_TTL', 3600, int)
+        self.CACHE = CacheConfig(
+            cache_type=_get_env('CACHE_TYPE', 'simple'),
+            ttl=_get_env('CACHE_TTL', 3600, int),
+            default_timeout=_get_env('CACHE_DEFAULT_TIMEOUT', 300, int),
+            redis_host=_get_env('REDIS_HOST', 'localhost'),
+            redis_port=_get_env('REDIS_PORT', 6379, int),
+            redis_db=_get_env('REDIS_DB', 0, int),
+            redis_password=_get_env('REDIS_PASSWORD'),
+            redis_url=_get_env('REDIS_URL')
+        )
+        
+        # ============================================
+        # Rate Limiting Configuration
+        # ============================================
+        self.RATE_LIMIT = RateLimitConfig(
+            enabled=_get_env('RATE_LIMIT_ENABLED', True, bool),
+            storage_url=_get_env('RATE_LIMIT_STORAGE_URL', 'memory://'),
+            default_limit=_get_env('RATE_LIMIT_DEFAULT', '100 per minute'),
+            api_limit=_get_env('RATE_LIMIT_API', '60 per minute')
+        )
+        
+        # ============================================
+        # Global API Client Configuration
+        # ============================================
+        self.API_TIMEOUT = _get_env('API_TIMEOUT', 30, int)
+        self.API_RETRY_COUNT = _get_env('API_RETRY_COUNT', 3, int)
+        self.API_RETRY_BACKOFF = _get_env('API_RETRY_BACKOFF', 0.5, float)
+        self.API_USER_AGENT = _get_env('API_USER_AGENT', 'WorldInsights/2.0')
+        
+        # ============================================
+        # Performance Configuration
+        # ============================================
+        self.PERFORMANCE = PerformanceConfig(
+            max_concurrent_requests=_get_env('MAX_CONCURRENT_REQUESTS', 10, int),
+            connection_pool_size=_get_env('CONNECTION_POOL_SIZE', 20, int),
+            enable_compression=_get_env('ENABLE_COMPRESSION', True, bool),
+            ingestion_batch_size=_get_env('INGESTION_BATCH_SIZE', 100, int),
+            ingestion_workers=_get_env('INGESTION_WORKERS', 4, int),
+            availability_cache_ttl=_get_env('AVAILABILITY_CACHE_TTL', 3600, int)
+        )
         
         # ============================================
         # Logging Configuration
         # ============================================
-        self._LOG_LEVEL = _get_env('LOG_LEVEL', 'INFO')
-        self._LOG_FILE = _get_env('LOG_FILE', './logs/worldinsights.log')
-        self._LOG_MAX_BYTES = _get_env('LOG_MAX_BYTES', 10485760, int)
-        self._LOG_BACKUP_COUNT = _get_env('LOG_BACKUP_COUNT', 5, int)
+        self.LOG_LEVEL = _get_env('LOG_LEVEL', 'INFO')
+        self.LOG_FILE = _get_env('LOG_FILE', './logs/worldinsights.log')
+        self.LOG_MAX_BYTES = _get_env('LOG_MAX_BYTES', 10485760, int)
+        self.LOG_BACKUP_COUNT = _get_env('LOG_BACKUP_COUNT', 5, int)
+        self.LOG_FORMAT = _get_env('LOG_FORMAT', '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         
         # ============================================
         # Security Configuration
         # ============================================
-        self._SESSION_LIFETIME = _get_env('SESSION_LIFETIME', 60, int)
-        self._WTF_CSRF_ENABLED = _get_env('WTF_CSRF_ENABLED', True, bool)
+        self.SESSION_LIFETIME = _get_env('SESSION_LIFETIME', 60, int)
+        self.WTF_CSRF_ENABLED = _get_env('WTF_CSRF_ENABLED', True, bool)
+        self.REQUIRE_HTTPS = _get_env('REQUIRE_HTTPS', False, bool)
         
         # ============================================
-        # Subscription Configuration
+        # Mail Configuration
         # ============================================
-        self._DEVELOPER_MODE = _get_env('DEVELOPER_MODE', True, bool)
-        self._STRIPE_PUBLISHABLE_KEY = _get_env('STRIPE_PUBLISHABLE_KEY', 'pk_test_mock')
-        self._STRIPE_SECRET_KEY = _get_env('STRIPE_SECRET_KEY', 'sk_test_mock')
-        self._SUBSCRIPTION_TIERS = {
-            'free': {'price': 0.00, 'name': 'Free'},
-            'researcher': {'price': 29.00, 'name': 'Researcher'},
-            'admin': {'price': None, 'name': 'Admin'}
-        }
+        self.MAIL_SERVER = _get_env('MAIL_SERVER', 'smtp.gmail.com')
+        self.MAIL_PORT = _get_env('MAIL_PORT', 587, int)
+        self.MAIL_USE_TLS = _get_env('MAIL_USE_TLS', True, bool)
+        self.MAIL_USE_SSL = _get_env('MAIL_USE_SSL', False, bool)
+        self.MAIL_USERNAME = _get_env('MAIL_USERNAME')
+        self.MAIL_PASSWORD = _get_env('MAIL_PASSWORD')
+        self.MAIL_DEFAULT_SENDER = _get_env('MAIL_DEFAULT_SENDER', 'noreply@worldinsights.bonzainsights.com')
         
         # ============================================
-        # Security Hardening Configuration
+        # Monitoring Configuration
         # ============================================
-        self._RATE_LIMIT_ENABLED = _get_env('RATE_LIMIT_ENABLED', True, bool)
-        self._RATE_LIMIT_STORAGE_URL = _get_env('RATE_LIMIT_STORAGE_URL', 'memory://')
-        self._MAX_LOGIN_ATTEMPTS = _get_env('MAX_LOGIN_ATTEMPTS', 5, int)
-        self._LOCKOUT_DURATION = _get_env('LOCKOUT_DURATION', 15, int)  # minutes
-        self._PASSWORD_MIN_LENGTH = _get_env('PASSWORD_MIN_LENGTH', 8, int)
-        self._REQUIRE_HTTPS = _get_env('REQUIRE_HTTPS', False, bool)  # Enable in production
+        self.HEALTH_CHECK_INTERVAL = _get_env('HEALTH_CHECK_INTERVAL', 60, int)
+        self.ENABLE_METRICS = _get_env('ENABLE_METRICS', True, bool)
+        
+        # ============================================
+        # API Source Configurations
+        # ============================================
+        self.API_SOURCES = self._init_api_sources()
     
-    # Property accessors to make attributes read-only
-    @property
-    def SECRET_KEY(self) -> str:
-        return self._SECRET_KEY
+    def _init_api_sources(self) -> Dict[str, APISourceConfig]:
+        """Initialize API source configurations."""
+        sources = {}
+        
+        # World Bank
+        sources['world_bank'] = APISourceConfig(
+            id='world_bank',
+            name='World Bank Open Data',
+            base_url=_get_env('WORLD_BANK_BASE_URL', 'https://api.worldbank.org/v2'),
+            enabled=_get_env('WORLD_BANK_ENABLED', True, bool),
+            requires_auth=False,
+            rate_limit=_get_env('WORLD_BANK_RATE_LIMIT', '10 per second'),
+            cache_ttl=_get_env('WORLD_BANK_CACHE_TTL', 86400, int),
+            documentation_url='https://datahelpdesk.worldbank.org/knowledgebase/api'
+        )
+        
+        # WHO
+        sources['who'] = APISourceConfig(
+            id='who',
+            name='WHO Global Health Observatory',
+            base_url=_get_env('WHO_BASE_URL', 'https://ghoapi.azureedge.net/api'),
+            enabled=_get_env('WHO_ENABLED', True, bool),
+            requires_auth=False,
+            rate_limit=_get_env('WHO_RATE_LIMIT', '5 per second'),
+            cache_ttl=_get_env('WHO_CACHE_TTL', 86400, int)
+        )
+        
+        # FAO
+        sources['fao'] = APISourceConfig(
+            id='fao',
+            name='FAO FAOSTAT',
+            base_url=_get_env('FAO_BASE_URL', 'https://www.fao.org/faostat/api'),
+            enabled=_get_env('FAO_ENABLED', True, bool),
+            requires_auth=False,
+            rate_limit=_get_env('FAO_RATE_LIMIT', '5 per second'),
+            cache_ttl=_get_env('FAO_CACHE_TTL', 86400, int)
+        )
+        
+        # NASA
+        sources['nasa'] = APISourceConfig(
+            id='nasa',
+            name='NASA Open Data',
+            base_url=_get_env('NASA_BASE_URL', 'https://api.nasa.gov'),
+            enabled=_get_env('NASA_ENABLED', True, bool),
+            requires_auth=_get_env('NASA_API_KEY') is not None,
+            api_key=_get_env('NASA_API_KEY', 'DEMO_KEY'),
+            rate_limit=_get_env('NASA_RATE_LIMIT', '10 per hour'),
+            cache_ttl=_get_env('NASA_CACHE_TTL', 604800, int),
+            documentation_url='https://api.nasa.gov/'
+        )
+        
+        # UN Data
+        sources['un_data'] = APISourceConfig(
+            id='un_data',
+            name='UN Data',
+            base_url=_get_env('UN_DATA_BASE_URL', 'https://data.un.org/ws/rest'),
+            enabled=_get_env('UN_DATA_ENABLED', True, bool),
+            requires_auth=False,
+            rate_limit=_get_env('UN_DATA_RATE_LIMIT', '5 per second'),
+            cache_ttl=_get_env('UN_DATA_CACHE_TTL', 86400, int)
+        )
+        
+        # Our World in Data
+        sources['owid'] = APISourceConfig(
+            id='owid',
+            name='Our World in Data',
+            base_url=_get_env('OWID_BASE_URL', 'https://ourworldindata.org/api'),
+            enabled=_get_env('OWID_ENABLED', True, bool),
+            requires_auth=False,
+            rate_limit=_get_env('OWID_RATE_LIMIT', '5 per second'),
+            cache_ttl=_get_env('OWID_CACHE_TTL', 86400, int)
+        )
+        
+        # IMF
+        sources['imf'] = APISourceConfig(
+            id='imf',
+            name='IMF Data',
+            base_url=_get_env('IMF_BASE_URL', 'https://sdmxcentral.imf.org/ws/public/sdmxapi'),
+            enabled=_get_env('IMF_ENABLED', True, bool),
+            requires_auth=False,
+            rate_limit=_get_env('IMF_RATE_LIMIT', '5 per second'),
+            cache_ttl=_get_env('IMF_CACHE_TTL', 86400, int)
+        )
+        
+        # UNESCO
+        sources['unesco'] = APISourceConfig(
+            id='unesco',
+            name='UNESCO Institute for Statistics',
+            base_url=_get_env('UNESCO_BASE_URL', 'http://uis.unesco.org/api'),
+            enabled=_get_env('UNESCO_ENABLED', True, bool),
+            requires_auth=False,
+            rate_limit=_get_env('UNESCO_RATE_LIMIT', '5 per second'),
+            cache_ttl=_get_env('UNESCO_CACHE_TTL', 86400, int)
+        )
+        
+        # ILO
+        sources['ilo'] = APISourceConfig(
+            id='ilo',
+            name='International Labour Organization',
+            base_url=_get_env('ILO_BASE_URL', 'https://www.ilo.org/ilostat/sdmx/ws/rest'),
+            enabled=_get_env('ILO_ENABLED', True, bool),
+            requires_auth=False,
+            rate_limit=_get_env('ILO_RATE_LIMIT', '5 per second'),
+            cache_ttl=_get_env('ILO_CACHE_TTL', 86400, int)
+        )
+        
+        # ITU
+        sources['itu'] = APISourceConfig(
+            id='itu',
+            name='International Telecommunication Union',
+            base_url=_get_env('ITU_BASE_URL', 'https://data.itu.int/api'),
+            enabled=_get_env('ITU_ENABLED', True, bool),
+            requires_auth=False,
+            rate_limit=_get_env('ITU_RATE_LIMIT', '5 per second'),
+            cache_ttl=_get_env('ITU_CACHE_TTL', 86400, int)
+        )
+        
+        # UNWTO
+        sources['unwto'] = APISourceConfig(
+            id='unwto',
+            name='World Tourism Organization',
+            base_url=_get_env('UNWTO_BASE_URL', 'https://www.unwto.org/api'),
+            enabled=_get_env('UNWTO_ENABLED', True, bool),
+            requires_auth=False,
+            rate_limit=_get_env('UNWTO_RATE_LIMIT', '5 per second'),
+            cache_ttl=_get_env('UNWTO_CACHE_TTL', 86400, int)
+        )
+        
+        # Open-Meteo
+        sources['open_meteo'] = APISourceConfig(
+            id='open_meteo',
+            name='Open-Meteo Weather API',
+            base_url=_get_env('OPEN_METEO_BASE_URL', 'https://api.open-meteo.com'),
+            enabled=_get_env('OPEN_METEO_ENABLED', True, bool),
+            requires_auth=False,
+            rate_limit=_get_env('OPEN_METEO_RATE_LIMIT', '10 per second'),
+            cache_ttl=_get_env('OPEN_METEO_CACHE_TTL', 3600, int)
+        )
+        
+        return sources
     
-    @property
-    def FLASK_ENV(self) -> str:
-        return self._FLASK_ENV
+    def get_enabled_sources(self) -> List[str]:
+        """Get list of enabled API source IDs."""
+        return [source_id for source_id, config in self.API_SOURCES.items() if config.enabled]
     
-    @property
-    def DEBUG(self) -> bool:
-        return self._DEBUG
-    
-    @property
-    def DUCKDB_PATH(self) -> str:
-        return self._DUCKDB_PATH
-    
-    @property
-    def DATABASE_URL(self) -> str:
-        return self._DATABASE_URL
-    
-    @property
-    def SQLALCHEMY_DATABASE_URI(self) -> str:
-        return self._SQLALCHEMY_DATABASE_URI
-    
-    @property
-    def SQLALCHEMY_TRACK_MODIFICATIONS(self) -> bool:
-        return self._SQLALCHEMY_TRACK_MODIFICATIONS
-    
-    @property
-    def MAIL_SERVER(self) -> str:
-        return self._MAIL_SERVER
-    
-    @property
-    def MAIL_PORT(self) -> int:
-        return self._MAIL_PORT
-    
-    @property
-    def MAIL_USE_TLS(self) -> bool:
-        return self._MAIL_USE_TLS
-    
-    @property
-    def MAIL_USE_SSL(self) -> bool:
-        return self._MAIL_USE_SSL
-    
-    @property
-    def MAIL_USERNAME(self) -> str:
-        return self._MAIL_USERNAME
-    
-    @property
-    def MAIL_PASSWORD(self) -> str:
-        return self._MAIL_PASSWORD
-    
-    @property
-    def MAIL_DEFAULT_SENDER(self) -> str:
-        return self._MAIL_DEFAULT_SENDER
-    
-    @property
-    def API_RATE_LIMIT(self) -> int:
-        return self._API_RATE_LIMIT
-    
-    @property
-    def API_TIMEOUT(self) -> int:
-        return self._API_TIMEOUT
-    
-    @property
-    def API_RETRY_COUNT(self) -> int:
-        return self._API_RETRY_COUNT
-    
-    @property
-    def CACHE_TYPE(self) -> str:
-        return self._CACHE_TYPE
-    
-    @property
-    def CACHE_TTL(self) -> int:
-        return self._CACHE_TTL
-    
-    @property
-    def LOG_LEVEL(self) -> str:
-        return self._LOG_LEVEL
-    
-    @property
-    def LOG_FILE(self) -> str:
-        return self._LOG_FILE
-    
-    @property
-    def LOG_MAX_BYTES(self) -> int:
-        return self._LOG_MAX_BYTES
-    
-    @property
-    def LOG_BACKUP_COUNT(self) -> int:
-        return self._LOG_BACKUP_COUNT
-    
-    @property
-    def SESSION_LIFETIME(self) -> int:
-        return self._SESSION_LIFETIME
-    
-    @property
-    def WTF_CSRF_ENABLED(self) -> bool:
-        return self._WTF_CSRF_ENABLED
-    
-    @property
-    def DEVELOPER_MODE(self) -> bool:
-        return self._DEVELOPER_MODE
-    
-    @property
-    def STRIPE_PUBLISHABLE_KEY(self) -> str:
-        return self._STRIPE_PUBLISHABLE_KEY
-    
-    @property
-    def STRIPE_SECRET_KEY(self) -> str:
-        return self._STRIPE_SECRET_KEY
-    
-    @property
-    def SUBSCRIPTION_TIERS(self) -> Dict:
-        return self._SUBSCRIPTION_TIERS
-    
-    @property
-    def RATE_LIMIT_ENABLED(self) -> bool:
-        return self._RATE_LIMIT_ENABLED
-    
-    @property
-    def RATE_LIMIT_STORAGE_URL(self) -> str:
-        return self._RATE_LIMIT_STORAGE_URL
-    
-    @property
-    def MAX_LOGIN_ATTEMPTS(self) -> int:
-        return self._MAX_LOGIN_ATTEMPTS
-    
-    @property
-    def LOCKOUT_DURATION(self) -> int:
-        return self._LOCKOUT_DURATION
-    
-    @property
-    def PASSWORD_MIN_LENGTH(self) -> int:
-        return self._PASSWORD_MIN_LENGTH
-    
-    @property
-    def REQUIRE_HTTPS(self) -> bool:
-        return self._REQUIRE_HTTPS
+    def get_source_config(self, source_id: str) -> Optional[APISourceConfig]:
+        """Get configuration for a specific API source."""
+        return self.API_SOURCES.get(source_id)
     
     def to_dict(self, redact_secrets: bool = True) -> Dict[str, Any]:
         """
         Convert configuration to dictionary.
         
         Args:
-            redact_secrets: If True, redact sensitive values like SECRET_KEY
+            redact_secrets: If True, redact sensitive values
         
         Returns:
             Dictionary representation of configuration
         """
         config_dict = {
-            'FLASK_ENV': self._FLASK_ENV,
-            'DEBUG': self._DEBUG,
-            'DUCKDB_PATH': self._DUCKDB_PATH,
-            'DATABASE_URL': self._DATABASE_URL,
-            'SQLALCHEMY_DATABASE_URI': self._SQLALCHEMY_DATABASE_URI,
-            'SQLALCHEMY_TRACK_MODIFICATIONS': self._SQLALCHEMY_TRACK_MODIFICATIONS,
-            'MAIL_SERVER': self._MAIL_SERVER,
-            'MAIL_PORT': self._MAIL_PORT,
-            'MAIL_USE_TLS': self._MAIL_USE_TLS,
-            'MAIL_USE_SSL': self._MAIL_USE_SSL,
-            'MAIL_DEFAULT_SENDER': self._MAIL_DEFAULT_SENDER,
-            'API_RATE_LIMIT': self._API_RATE_LIMIT,
-            'API_TIMEOUT': self._API_TIMEOUT,
-            'API_RETRY_COUNT': self._API_RETRY_COUNT,
-            'CACHE_TYPE': self._CACHE_TYPE,
-            'CACHE_TTL': self._CACHE_TTL,
-            'LOG_LEVEL': self._LOG_LEVEL,
-            'LOG_FILE': self._LOG_FILE,
-            'LOG_MAX_BYTES': self._LOG_MAX_BYTES,
-            'LOG_BACKUP_COUNT': self._LOG_BACKUP_COUNT,
-            'SESSION_LIFETIME': self._SESSION_LIFETIME,
-            'WTF_CSRF_ENABLED': self._WTF_CSRF_ENABLED,
-            'DEVELOPER_MODE': self._DEVELOPER_MODE,
-            'SUBSCRIPTION_TIERS': self._SUBSCRIPTION_TIERS,
-            'RATE_LIMIT_ENABLED': self._RATE_LIMIT_ENABLED,
-            'RATE_LIMIT_STORAGE_URL': self._RATE_LIMIT_STORAGE_URL,
-            'MAX_LOGIN_ATTEMPTS': self._MAX_LOGIN_ATTEMPTS,
-            'LOCKOUT_DURATION': self._LOCKOUT_DURATION,
-            'PASSWORD_MIN_LENGTH': self._PASSWORD_MIN_LENGTH,
-            'REQUIRE_HTTPS': self._REQUIRE_HTTPS,
+            'FLASK_ENV': self.FLASK_ENV,
+            'FLASK_DEBUG': self.FLASK_DEBUG,
+            'HOST': self.HOST,
+            'PORT': self.PORT,
+            'DUCKDB_PATH': self.DUCKDB_PATH,
+            'DATABASE_URL': self.DATABASE_URL,
+            'CACHE': {
+                'cache_type': self.CACHE.cache_type,
+                'ttl': self.CACHE.ttl,
+                'redis_host': self.CACHE.redis_host,
+                'redis_port': self.CACHE.redis_port,
+            },
+            'RATE_LIMIT': {
+                'enabled': self.RATE_LIMIT.enabled,
+                'storage_url': self.RATE_LIMIT.storage_url,
+                'default_limit': self.RATE_LIMIT.default_limit,
+            },
+            'API_TIMEOUT': self.API_TIMEOUT,
+            'API_RETRY_COUNT': self.API_RETRY_COUNT,
+            'PERFORMANCE': {
+                'max_concurrent_requests': self.PERFORMANCE.max_concurrent_requests,
+                'connection_pool_size': self.PERFORMANCE.connection_pool_size,
+                'enable_compression': self.PERFORMANCE.enable_compression,
+            },
+            'LOG_LEVEL': self.LOG_LEVEL,
+            'LOG_FILE': self.LOG_FILE,
+            'ENABLED_SOURCES': self.get_enabled_sources(),
         }
         
-        # Add sensitive fields with redaction option
         if redact_secrets:
             config_dict['SECRET_KEY'] = '***REDACTED***'
-            config_dict['MAIL_USERNAME'] = '***REDACTED***' if self._MAIL_USERNAME else None
-            config_dict['MAIL_PASSWORD'] = '***REDACTED***' if self._MAIL_PASSWORD else None
-            config_dict['STRIPE_PUBLISHABLE_KEY'] = '***REDACTED***'
-            config_dict['STRIPE_SECRET_KEY'] = '***REDACTED***'
         else:
-            config_dict['SECRET_KEY'] = self._SECRET_KEY
-            config_dict['MAIL_USERNAME'] = self._MAIL_USERNAME
-            config_dict['MAIL_PASSWORD'] = self._MAIL_PASSWORD
-            config_dict['STRIPE_PUBLISHABLE_KEY'] = self._STRIPE_PUBLISHABLE_KEY
-            config_dict['STRIPE_SECRET_KEY'] = self._STRIPE_SECRET_KEY
+            config_dict['SECRET_KEY'] = self.SECRET_KEY
         
         return config_dict
     
     def __repr__(self) -> str:
         """String representation of Config."""
-        return f"<Config env={self._FLASK_ENV} debug={self._DEBUG}>"
+        return f"<Config env={self.FLASK_ENV} debug={self.FLASK_DEBUG} sources={len(self.get_enabled_sources())}>"
+
+
+# Global config instance (lazy initialization)
+_config: Optional[Config] = None
+
+
+def get_config() -> Config:
+    """
+    Get or create the global configuration instance.
+    
+    Returns:
+        Config instance
+    """
+    global _config
+    if _config is None:
+        _config = Config()
+    return _config
+
+
+def reset_config() -> None:
+    """Reset the global configuration instance (useful for testing)."""
+    global _config
+    _config = None

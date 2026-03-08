@@ -1,0 +1,37 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/achbj/Code/bonzainsights/WorldInsights",
+        "/Users/achbj/Code/bonzainsights/WorldInsights/screenshots",
+        "/Users/achbj/Code/bonzainsights/WorldInsights/logs",
+        "/Users/achbj/Code/bonzainsights/WorldInsights/data"
+      ],
+      "env": {},
+      "disabled": false
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-playwright"
+      ],
+      "env": {
+        "BROWSER": "chromium"
+      },
+      "disabled": false
+    },
+    "sqlite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sqlite"
+      ],
+      "env": {},
+      "disabled": false
+    }
+  }
+}

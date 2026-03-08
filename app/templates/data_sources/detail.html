@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}{{ source.name }} - Data Sources{% endblock %}
+
+{% block meta_description %}{{ source.description }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex items-center space-x-4 mb-4">
+                <a href="/data-sources" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </a>
+                <h1 class="text-3xl font-display font-bold text-gray-900">{{ source.name }}</h1>
+            </div>
+            <p class="text-lg text-gray-600">{{ source.description }}</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Source Info -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sticky top-24">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Source Information</h2>
+                    
+                    <div class="space-y-4">
+                        {% if source.documentation %}
+                        <div>
+                            <label class="text-sm font-medium text-gray-500">Documentation</label>
+                            <a href="{{ source.documentation }}" target="_blank" class="text-sm text-primary-600 hover:text-primary-700 hover:underline">
+                                View API Documentation →
+                            </a>
+                        </div>
+                        {% endif %}
+                        
+                        {% if source.api_endpoint %}
+                        <div>
+                            <label class="text-sm font-medium text-gray-500">API Endpoint</label>
+                            <code class="block mt-1 text-xs bg-gray-100 rounded px-2 py-1 text-gray-700 break-all">
+                                {{ source.api_endpoint }}
+                            </code>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-6 pt-6 border-t border-gray-200">
+                        <button 
+                            hx-post="/data-sources/api/{{ request.path.split('/')[-1] }}/refresh"
+                            hx-swap="outerHTML"
+                            class="w-full py-2 px-4 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                            Refresh Cache
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indicators List -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold text-gray-900">
+                            Available Indicators
+                            <span class="ml-2 text-sm font-normal text-gray-500">({{ total_indicators }} total)</span>
+                        </h2>
+                    </div>
+                    
+                    <div class="divide-y divide-gray-200 max-h-[600px] overflow-y-auto">
+                        {% for indicator in indicators %}
+                        <div class="p-4 hover:bg-gray-50 transition-colors">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-medium text-gray-900">{{ indicator.name }}</h4>
+                                    <code class="text-xs text-gray-500 bg-gray-100 rounded px-1.5 py-0.5 mt-1 inline-block">
+                                        {{ indicator.code }}
+                                    </code>
+                                    {% if indicator.description %}
+                                    <p class="text-xs text-gray-600 mt-2 line-clamp-2">{{ indicator.description }}</p>
+                                    {% endif %}
+                                </div>
+                                <button 
+                                    onclick="navigator.clipboard.writeText('{{ indicator.code }}')"
+                                    class="text-gray-400 hover:text-gray-600 p-1"
+                                    title="Copy indicator code">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="p-8 text-center text-gray-500">
+                            No indicators available for this source
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    {% if total_indicators > 100 %}
+                    <div class="p-4 border-t border-gray-200 bg-gray-50 text-center">
+                        <p class="text-sm text-gray-600">
+                            Showing 100 of {{ total_indicators }} indicators. Use the Dashboard Builder to search all indicators.
+                        </p>
+                        <a href="/dashboard/builder" class="text-sm text-primary-600 hover:text-primary-700 font-medium mt-2 inline-block">
+                            Go to Dashboard Builder →
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

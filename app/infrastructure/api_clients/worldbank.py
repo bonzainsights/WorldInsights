@@ -35,19 +35,28 @@ class WorldBankClient(BaseAPIClient):
     BASE_URL = 'https://api.worldbank.org/v2'
     SOURCE_NAME = 'World Bank'
     
-    def __init__(self, timeout: int = 30, max_retries: int = 3):
+    def __init__(
+        self,
+        timeout: int = 30,
+        max_retries: int = 3,
+        cache_ttl: int = 86400
+    ):
         """
         Initialize World Bank API client.
-        
+
         Args:
             timeout: Request timeout in seconds
             max_retries: Maximum number of retry attempts
+            cache_ttl: Cache TTL in seconds (default: 24 hours)
         """
         super().__init__(
             base_url=self.BASE_URL,
             timeout=timeout,
             max_retries=max_retries,
-            rate_limit_delay=0.1  # Be respectful to free API
+            backoff_factor=0.5,
+            rate_limit="10 per second",
+            cache_ttl=cache_ttl,
+            headers={'Accept': 'application/json'}
         )
         self.logger.info("World Bank API client initialized")
     

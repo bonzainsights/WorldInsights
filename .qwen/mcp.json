@@ -1,0 +1,33 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/achbj/Code/bonzainsights/WorldInsights"
+      ],
+      "description": "Access to project files, logs, and screenshots"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-playwright"
+      ],
+      "description": "Browser automation for frontend testing"
+    }
+  },
+  "permissions": {
+    "filesystem": {
+      "read": true,
+      "write": true,
+      "allowedPaths": [
+        "/Users/achbj/Code/bonzainsights/WorldInsights"
+      ]
+    },
+    "playwright": {
+      "enabled": true
+    }
+  }
+}

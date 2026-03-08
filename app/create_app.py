@@ -57,11 +57,14 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     # ============================================
     if config is None:
         config = Config()
-    
+
     # Convert Config object to dict for Flask config
     if hasattr(config, 'to_dict'):
-        # It's our Config class
+        # It's our Config class - use the dict representation
         config_dict = config.to_dict(redact_secrets=False)
+        # Add nested config values as flat attributes for Flask-SQLAlchemy
+        config_dict['SQLALCHEMY_DATABASE_URI'] = getattr(config, 'SQLALCHEMY_DATABASE_URI', config_dict.get('DATABASE_URL'))
+        config_dict['SQLALCHEMY_TRACK_MODIFICATIONS'] = getattr(config, 'SQLALCHEMY_TRACK_MODIFICATIONS', False)
         app.config.update(config_dict)
     elif isinstance(config, dict):
         # It's already a dict
@@ -69,7 +72,7 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     else:
         # It's an object with attributes
         for key in dir(config):
-            if key.isupper():
+            if key.isupper() and not key.startswith('_'):
                 app.config[key] = getattr(config, key)
     
     # Set testing flag if in testing environment
@@ -79,7 +82,31 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     # ============================================
     # Initialize logging
     # ============================================
-    logger = setup_logging(config)
+    # Get log settings from config
+    if isinstance(config, Config):
+        log_level = config.LOG_LEVEL
+        log_file = config.LOG_FILE
+        log_max_bytes = config.LOG_MAX_BYTES
+        log_backup_count = config.LOG_BACKUP_COUNT
+    elif isinstance(config, dict):
+        log_level = config.get('LOG_LEVEL', 'INFO')
+        log_file = config.get('LOG_FILE')
+        log_max_bytes = config.get('LOG_MAX_BYTES', 10485760)
+        log_backup_count = config.get('LOG_BACKUP_COUNT', 5)
+    else:
+        log_level = 'INFO'
+        log_file = None
+        log_max_bytes = 10485760
+        log_backup_count = 5
+    
+    setup_logging(
+        level=log_level,
+        log_file=log_file,
+        max_bytes=log_max_bytes,
+        backup_count=log_backup_count
+    )
+    
+    logger = get_logger(__name__)
     logger.info(f"WorldInsights application starting in {app.config.get('FLASK_ENV', 'production')} mode")
     
     # ============================================
@@ -309,16 +336,22 @@ def create_app(config: Optional[Union[Config, Dict[str, Any]]] = None) -> Flask:
     # ============================================
     from app.blueprints.auth import auth_bp
     app.register_blueprint(auth_bp)
-    
+
     from app.blueprints.api import api_bp
     app.register_blueprint(api_bp)
-    
+
     from app.blueprints.frontend import frontend_bp
     app.register_blueprint(frontend_bp)
-    
+
     from app.blueprints.visualization import visualization_bp
     app.register_blueprint(visualization_bp)
-    
+
+    from app.blueprints.dashboard import dashboard_bp
+    app.register_blueprint(dashboard_bp)
+
+    from app.blueprints.data_sources import data_sources_bp
+    app.register_blueprint(data_sources_bp)
+
     logger.info("WorldInsights application initialized successfully")
     
     return app

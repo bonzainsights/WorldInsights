@@ -23,3 +23,5 @@ zxcvbn==4.4.28
 pytest==9.0.2
 pytest-cov==7.0.0
 pyyaml
+
+Flask-APScheduler==1.13.1

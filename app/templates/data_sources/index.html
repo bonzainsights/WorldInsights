@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+
+{% block title %}Explore Data Sources - WorldInsights{% endblock %}
+
+{% block meta_description %}Browse and explore data from World Bank, WHO, FAO, NASA, and Open-Meteo. Search thousands of indicators across multiple categories.{% endblock %}
+
+{% block content %}
+<!-- Data Sources Page -->
+<div class="min-h-screen bg-gray-50"
+     x-data="dataSourcesPage()"
+     x-init="init()">
+
+  <!-- Header -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="text-center">
+        <h1 class="text-3xl font-display font-bold text-gray-900 mb-4">Explore Data Sources</h1>
+        <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+          Access thousands of indicators from the world's most trusted data organizations. 
+          Search, filter, and discover insights across economics, health, agriculture, and climate.
+        </p>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="mt-8 max-w-2xl mx-auto">
+        <div class="relative">
+          <input type="text"
+                 x-model="searchQuery"
+                 @input="search()"
+                 placeholder="Search indicators across all sources..."
+                 class="w-full pl-12 pr-4 py-4 text-lg border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 shadow-sm">
+          <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-7 7 7 7 0 017-7z"></path>
+          </svg>
+          <button x-show="searchQuery" 
+                  @click="searchQuery = ''; search()"
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Source Filter Tabs -->
+      <div class="mt-8 flex flex-wrap justify-center gap-2">
+        <button @click="selectedSource = 'all'"
+                :class="selectedSource === 'all' ? 'bg-primary-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                class="px-4 py-2 text-sm font-medium rounded-lg border transition-colors">
+          All Sources
+        </button>
+        <template x-for="source in sources" :key="source.id">
+          <button @click="selectedSource = source.id"
+                  :class="selectedSource === source.id ? 'bg-primary-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                  class="px-4 py-2 text-sm font-medium rounded-lg border transition-colors flex items-center">
+            <span x-text="source.icon" class="mr-2"></span>
+            <span x-text="source.name"></span>
+          </button>
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Statistics Bar -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div>
+          <div class="text-2xl font-bold text-primary-600" x-text="formatNumber(totalIndicators)"></div>
+          <div class="text-sm text-gray-500 mt-1">Total Indicators</div>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-primary-600" x-text="formatNumber(totalCountries)"></div>
+          <div class="text-sm text-gray-500 mt-1">Countries</div>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-primary-600" x-text="sources.length"></div>
+          <div class="text-sm text-gray-500 mt-1">Data Sources</div>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-primary-600">1960-2024</div>
+          <div class="text-sm text-gray-500 mt-1">Year Range</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Source Cards -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      <template x-for="source in sources" :key="source.id">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden card-hover">
+          <!-- Card Header -->
+          <div class="px-6 py-4 border-b border-gray-200" :class="source.bgColor">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <span class="text-3xl" x-text="source.icon"></span>
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900" x-text="source.name"></h3>
+                  <p class="text-xs text-gray-500" x-text="source.category"></p>
+                </div>
+              </div>
+              <span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
+                Healthy
+              </span>
+            </div>
+          </div>
+
+          <!-- Card Body -->
+          <div class="p-6">
+            <p class="text-sm text-gray-600 mb-4" x-text="source.description"></p>
+            
+            <div class="space-y-2 mb-4">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Indicators</span>
+                <span class="font-medium text-gray-900" x-text="formatNumber(source.indicatorCount)"></span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Countries</span>
+                <span class="font-medium text-gray-900" x-text="formatNumber(source.countryCount)"></span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Data Range</span>
+                <span class="font-medium text-gray-900" x-text="source.yearRange"></span>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-2">
+              <a :href="'/data-sources/indicators?source=' + source.id"
+                 class="flex-1 text-center px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors">
+                Browse Indicators
+              </a>
+              <a :href="'/dashboard/builder?source=' + source.id"
+                 class="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                Use in Dashboard
+              </a>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <!-- Search Results -->
+    <div x-show="searchQuery" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-gray-700">
+          Search Results
+          <span class="ml-2 text-gray-500 font-normal" x-text=" '(' + searchResults.length + ' indicators found)'"></span>
+        </h3>
+        <button @click="searchQuery = ''; search()" class="text-sm text-primary-600 hover:text-primary-700">
+          Clear Search
+        </button>
+      </div>
+      
+      <div class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+        <template x-if="searchResults.length === 0">
+          <div class="p-8 text-center text-gray-500">
+            No indicators found matching "<span x-text="searchQuery"></span>"
+          </div>
+        </template>
+        <template x-for="indicator in searchResults.slice(0, 50)" :key="indicator.code">
+          <div class="p-4 hover:bg-gray-50 transition-colors">
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <div class="flex items-center space-x-2 mb-1">
+                  <h4 class="text-sm font-medium text-gray-900" x-text="indicator.name"></h4>
+                  <span class="px-2 py-0.5 text-xs rounded-full bg-gray-100 text-gray-600" x-text="indicator.source"></span>
+                </div>
+                <p class="text-xs text-gray-500 mb-2" x-text="indicator.code"></p>
+                <p class="text-sm text-gray-600" x-text="indicator.description || 'No description available'"></p>
+              </div>
+              <a :href="'/dashboard/builder?indicator=' + indicator.code"
+                 class="ml-4 px-3 py-1.5 text-xs font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors">
+                Add to Dashboard
+              </a>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <!-- Recent Indicators (when not searching) -->
+    <div x-show="!searchQuery" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+        <h3 class="text-sm font-semibold text-gray-700">Recently Updated Indicators</h3>
+      </div>
+      
+      <div class="divide-y divide-gray-200">
+        <template x-for="indicator in recentIndicators" :key="indicator.code">
+          <div class="p-4 hover:bg-gray-50 transition-colors">
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <div class="flex items-center space-x-2 mb-1">
+                  <h4 class="text-sm font-medium text-gray-900" x-text="indicator.name"></h4>
+                  <span class="px-2 py-0.5 text-xs rounded-full bg-gray-100 text-gray-600" x-text="indicator.source"></span>
+                </div>
+                <p class="text-xs text-gray-500 mb-2" x-text="indicator.code"></p>
+                <p class="text-sm text-gray-600" x-text="indicator.description || 'No description available'"></p>
+              </div>
+              <a :href="'/dashboard/builder?indicator=' + indicator.code"
+                 class="ml-4 px-3 py-1.5 text-xs font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors">
+                Add to Dashboard
+              </a>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+/**
+ * Data Sources Page Alpine.js Component
+ */
+function dataSourcesPage() {
+  return {
+    // Data sources configuration
+    sources: [
+      {
+        id: 'worldbank',
+        name: 'World Bank',
+        icon: '🏦',
+        category: 'Economic • Development',
+        description: 'Global development indicators including GDP, poverty, education, and infrastructure data from 200+ countries.',
+        bgColor: 'bg-gradient-to-r from-blue-50 to-blue-100',
+        indicatorCount: 16000,
+        countryCount: 217,
+        yearRange: '1960-2024'
+      },
+      {
+        id: 'who',
+        name: 'World Health Organization',
+        icon: '⚕️',
+        category: 'Health • Medicine',
+        description: 'Global health statistics including disease prevalence, mortality rates, healthcare access, and nutrition indicators.',
+        bgColor: 'bg-gradient-to-r from-red-50 to-red-100',
+        indicatorCount: 1200,
+        countryCount: 194,
+        yearRange: '2000-2024'
+      },
+      {
+        id: 'fao',
+        name: 'Food and Agriculture Organization',
+        icon: '🌾',
+        category: 'Agriculture • Food Security',
+        description: 'Agricultural production, food security, nutrition, land use, and fisheries data from around the world.',
+        bgColor: 'bg-gradient-to-r from-green-50 to-green-100',
+        indicatorCount: 3500,
+        countryCount: 200,
+        yearRange: '1961-2024'
+      },
+      {
+        id: 'nasa',
+        name: 'NASA / NOAA',
+        icon: '🛰️',
+        category: 'Climate • Environment',
+        description: 'Climate data, temperature anomalies, CO2 levels, sea level rise, and environmental monitoring.',
+        bgColor: 'bg-gradient-to-r from-purple-50 to-purple-100',
+        indicatorCount: 500,
+        countryCount: 195,
+        yearRange: '1880-2024'
+      },
+      {
+        id: 'openmeteo',
+        name: 'Open-Meteo',
+        icon: '🌤️',
+        category: 'Weather • Forecasting',
+        description: 'Historical and forecast weather data including temperature, precipitation, wind, and solar radiation.',
+        bgColor: 'bg-gradient-to-r from-cyan-50 to-cyan-100',
+        indicatorCount: 100,
+        countryCount: 195,
+        yearRange: '1940-2024'
+      }
+    ],
+
+    // State
+    selectedSource: 'all',
+    searchQuery: '',
+    allIndicators: [],
+    searchResults: [],
+    recentIndicators: [],
+    totalIndicators: 0,
+    totalCountries: 0,
+
+    /**
+     * Initialize the page
+     */
+    async init() {
+      console.log('[Data Sources] Initializing...');
+      
+      // Load all indicators
+      await this.loadIndicators();
+      
+      // Calculate totals
+      this.totalIndicators = this.allIndicators.length;
+      this.totalCountries = 200; // Approximate
+
+      // Get recent indicators
+      this.recentIndicators = this.allIndicators.slice(0, 20);
+
+      // Check URL params
+      const urlParams = new URLSearchParams(window.location.search);
+      const sourceParam = urlParams.get('source');
+      if (sourceParam && this.sources.some(s => s.id === sourceParam)) {
+        this.selectedSource = sourceParam;
+      }
+
+      const searchParam = urlParams.get('search');
+      if (searchParam) {
+        this.searchQuery = searchParam;
+        this.search();
+      }
+    },
+
+    /**
+     * Load all indicators from API
+     */
+    async loadIndicators() {
+      try {
+        this.allIndicators = await WorldInsightsAPI.getIndicators();
+        console.log(`[Data Sources] Loaded ${this.allIndicators.length} indicators`);
+      } catch (error) {
+        console.error('[Data Sources] Error loading indicators:', error);
+        // Fallback to source-based counts
+        this.allIndicators = [];
+      }
+    },
+
+    /**
+     * Search indicators
+     */
+    search: debounce(function() {
+      if (!this.searchQuery || this.searchQuery.length < 2) {
+        this.searchResults = [];
+        return;
+      }
+
+      const query = this.searchQuery.toLowerCase();
+      
+      let filtered = this.allIndicators.filter(ind => 
+        ind.name?.toLowerCase().includes(query) ||
+        ind.code?.toLowerCase().includes(query) ||
+        ind.description?.toLowerCase().includes(query)
+      );
+
+      // Filter by source if selected
+      if (this.selectedSource !== 'all') {
+        filtered = filtered.filter(ind => ind.source === this.selectedSource);
+      }
+
+      this.searchResults = filtered.slice(0, 100);
+    }, 300),
+
+    /**
+     * Format number with commas
+     */
+    formatNumber(num) {
+      if (num === null || num === undefined) return '0';
+      return new Intl.NumberFormat().format(num);
+    }
+  };
+}
+
+// Debounce utility
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+</script>
+{% endblock %}

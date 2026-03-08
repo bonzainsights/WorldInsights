@@ -1,349 +1,506 @@
-{% extends "base.html" %} {% block title %}3D Globe - WorldInsights{% endblock %} {% block extra_css %}
+{% extends "base.html" %}
+
+{% block title %}3D Globe Visualization - WorldInsights{% endblock %}
+
+{% block meta_description %}Explore global data on an interactive 3D globe. Visualize indicators by country with choropleth mapping and time-series analysis.{% endblock %}
+
+{% block extra_css %}
 <style>
-    /* Premium Dark Mode / Glassmorphism for the Globe View */
-    
-    body {
-        background: #0f172a;
-        /* Deep space blue */
-        color: #e2e8f0;
-        overflow: hidden;
-        /* Hide scrollbars for immersive view */
-    }
-    /* Override Navbar to be semi-transparent on this page */
-    
-    nav {
-        background: rgba(15, 23, 42, 0.8) !important;
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .globe-wrapper {
-        position: relative;
-        width: 100vw;
-        height: calc(100vh - 70px);
-        /* Adjust for navbar */
-        overflow: hidden;
-    }
-    /* Floating Control Panel */
-    
-    .controls-panel {
-        position: absolute;
-        top: 2rem;
-        left: 2rem;
-        width: 320px;
-        background: rgba(30, 41, 59, 0.7);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-        z-index: 100;
-        transition: transform 0.3s ease;
-    }
-    
-    .controls-panel:hover {
-        background: rgba(30, 41, 59, 0.85);
-    }
-    
-    .panel-header {
-        margin-bottom: 1.5rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        padding-bottom: 1rem;
-    }
-    
-    .panel-header h2 {
-        font-size: 1.25rem;
-        font-weight: 700;
-        background: linear-gradient(to right, #60a5fa, #c084fc);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin: 0;
-    }
-    
-    .control-group {
-        margin-bottom: 1.25rem;
-    }
-    
-    .control-group label {
-        display: block;
-        font-size: 0.875rem;
-        color: #94a3b8;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
-    }
-    
-    .control-group select,
-    .control-group input {
-        width: 100%;
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        color: white;
-        padding: 0.75rem;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    
-    .control-group select:hover {
-        border-color: #60a5fa;
-    }
-    
-    .control-group select:focus {
-        outline: none;
-        border-color: #60a5fa;
-        box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
-    }
-    
-    .btn-visualize {
-        width: 100%;
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-        color: white;
-        border: none;
-        padding: 0.875rem;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    
-    .btn-visualize:hover {
-        box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
-        transform: translateY(-1px);
-    }
-    
-    .btn-visualize:active {
-        transform: translateY(0);
-    }
-    
-    .btn-visualize:disabled {
-        opacity: 0.7;
-        cursor: wait;
-    }
-    /* Plotly Container */
-    
-    #globe-plot {
-        width: 100%;
-        height: 100%;
-    }
-    /* Loading Overlay */
-    
-    .loader-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(15, 23, 42, 0.7);
-        backdrop-filter: blur(4px);
-        z-index: 50;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transition: opacity 0.3s;
-        pointer-events: none;
-        opacity: 0;
-    }
-    
-    .loader-overlay.active {
-        opacity: 1;
-        pointer-events: all;
-    }
-    
-    .spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid rgba(255, 255, 255, 0.1);
-        border-left-color: #60a5fa;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin-bottom: 1rem;
-    }
-    
-    @keyframes spin {
-        100% {
-            transform: rotate(360deg);
-        }
-    }
+  /* Full-screen globe container */
+  #globe-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  /* Control panel overlay */
+  .globe-controls {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 10;
+    width: 320px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+
+  /* Loading overlay */
+  .globe-loading {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 </style>
-{% endblock %} {% block content %}
-<div class="globe-wrapper">
-    <!-- Controls -->
-    <div class="controls-panel">
-        <div class="panel-header">
-            <h2>Global Intelligence</h2>
-            <p style="font-size: 0.8rem; color: #64748b; margin-top: 5px">
-                3D Interactive Data Visualization
-            </p>
+{% endblock %}
+
+{% block content %}
+<!-- 3D Globe Visualization -->
+<div class="relative"
+     x-data="globeVisualization()"
+     x-init="init()">
+
+  <!-- Loading Overlay -->
+  <div x-show="isLoading" class="globe-loading">
+    <svg class="animate-spin w-16 h-16 text-primary-600 mb-4" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+    <p class="text-gray-600 font-medium">Loading Globe Visualization...</p>
+    <p class="text-gray-500 text-sm mt-2">Fetching GeoJSON and indicator data</p>
+  </div>
+
+  <!-- Globe Container -->
+  <div id="globe-container"></div>
+
+  <!-- Control Panel -->
+  <div class="globe-controls">
+    <div class="bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden">
+      
+      <!-- Panel Header -->
+      <div class="px-4 py-3 border-b border-gray-200 bg-gradient-to-r from-primary-600 to-primary-700">
+        <h3 class="text-white font-semibold flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Globe Controls
+        </h3>
+      </div>
+
+      <!-- Panel Content -->
+      <div class="p-4 space-y-4">
+        
+        <!-- Data Source -->
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Data Source</label>
+          <select x-model="selectedSource" @change="loadGlobeData()"
+                  class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+            <option value="worldbank">World Bank</option>
+            <option value="who">WHO</option>
+            <option value="fao">FAO</option>
+            <option value="nasa">NASA/NOAA</option>
+          </select>
         </div>
 
-        <div class="control-group">
-            <label>Data Source</label>
-            <select id="source-select">
-        <option value="worldbank">World Bank (Economy)</option>
-        <option value="weather">Open Meteo (Climate)</option>
-        <option value="who">WHO (Health)</option>
-        <option value="nasa">NASA (Solar)</option>
-      </select>
+        <!-- Indicator -->
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Indicator</label>
+          <select x-model="selectedIndicator" @change="loadGlobeData()"
+                  class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+            <template x-for="indicator in availableIndicators" :key="indicator.code">
+              <option :value="indicator.code" x-text="indicator.name"></option>
+            </template>
+          </select>
         </div>
 
-        <div class="control-group">
-            <label>Indicator</label>
-            <!-- Populated dynamically or hardcoded for MVP stability -->
-            <select id="indicator-select">
-        <option value="NY.GDP.MKTP.CD">GDP (Current US$)</option>
-        <option value="SP.POP.TOTL">Population</option>
-        <option value="temperature_2m_mean">Temperature (2m)</option>
-        <option value="WHOSIS_000001">Life Expectancy</option>
-      </select>
+        <!-- Year Slider -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-medium text-gray-700">Year</label>
+            <span class="text-sm font-semibold text-primary-600" x-text="selectedYear"></span>
+          </div>
+          <input type="range" 
+                 x-model="selectedYear"
+                 @input="loadGlobeData()"
+                 min="2000" 
+                 max="2024" 
+                 step="1"
+                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600">
+          <div class="flex justify-between text-xs text-gray-500 mt-1">
+            <span>2000</span>
+            <span>2024</span>
+          </div>
         </div>
 
-        <div class="control-group">
-            <label>Year</label>
-            <input type="number" id="year-input" value="2024" min="1990" max="2025" />
+        <!-- Color Scale -->
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Color Scale</label>
+          <select x-model="colorScale" @change="updateColorScale()"
+                  class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+            <option value="Viridis">Viridis</option>
+            <option value="Plasma">Plasma</option>
+            <option value="Inferno">Inferno</option>
+            <option value="Magma">Magma</option>
+            <option value="Blues">Blues</option>
+            <option value="Greens">Greens</option>
+            <option value="Reds">Reds</option>
+            <option value="YlOrRd">Yellow-Orange-Red</option>
+            <option value="BuPu">Blue-Purple</option>
+          </select>
         </div>
 
-        <button class="btn-visualize" id="update-btn" onclick="updateGlobe()">
-      Render Globe
-    </button>
+        <!-- Playback Controls -->
+        <div class="border-t border-gray-200 pt-4">
+          <label class="block text-xs font-medium text-gray-700 mb-2">Time Playback</label>
+          <div class="flex items-center space-x-2">
+            <button @click="togglePlayback()"
+                    :class="isPlaying ? 'bg-red-600 hover:bg-red-700' : 'bg-primary-600 hover:bg-primary-700'"
+                    class="flex-1 py-2 text-white text-sm font-medium rounded-lg transition-colors flex items-center justify-center">
+              <svg x-show="!isPlaying" class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path>
+              </svg>
+              <svg x-show="isPlaying" class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"></path>
+              </svg>
+              <span x-text="isPlaying ? 'Pause' : 'Play'"></span>
+            </button>
+            <button @click="resetYear()"
+                    class="px-3 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors">
+              Reset
+            </button>
+          </div>
+        </div>
 
-        <div id="status-msg" style="
-        margin-top: 1rem;
-        font-size: 0.8rem;
-        color: #ef4444;
-        min-height: 1.2em;
-      "></div>
+        <!-- Legend -->
+        <div class="border-t border-gray-200 pt-4">
+          <label class="block text-xs font-medium text-gray-700 mb-2">Value Legend</label>
+          <div class="h-4 rounded bg-gradient-to-r from-blue-100 via-green-300 to-red-600 mb-2"></div>
+          <div class="flex justify-between text-xs text-gray-500">
+            <span x-text="formatValue(minValue)"></span>
+            <span x-text="formatValue(maxValue)"></span>
+          </div>
+        </div>
+
+        <!-- Country Info -->
+        <div x-show="selectedCountry" class="border-t border-gray-200 pt-4 bg-gray-50 -mx-4 -mb-4 p-4">
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-sm font-semibold text-gray-900" x-text="selectedCountry?.name"></h4>
+            <button @click="selectedCountry = null" class="text-gray-400 hover:text-gray-600">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-sm">
+            <div>
+              <span class="text-gray-500">Code:</span>
+              <span class="ml-1 font-medium" x-text="selectedCountry?.iso_code"></span>
+            </div>
+            <div>
+              <span class="text-gray-500">Value:</span>
+              <span class="ml-1 font-medium" x-text="formatValue(selectedCountry?.value)"></span>
+            </div>
+          </div>
+          <a :href="'/dashboard/builder?country=' + selectedCountry?.iso_code"
+             class="mt-2 block text-center px-3 py-1.5 bg-primary-600 text-white text-xs font-medium rounded hover:bg-primary-700 transition-colors">
+            View in Dashboard
+          </a>
+        </div>
+
+      </div>
     </div>
 
-    <!-- Loader -->
-    <div id="loader" class="loader-overlay">
-        <div class="spinner"></div>
-        <p>Analyzing Global Data...</p>
+    <!-- Help Card -->
+    <div class="mt-4 bg-white rounded-xl shadow-lg border border-gray-200 p-4">
+      <h4 class="text-sm font-semibold text-gray-900 mb-2">How to Use</h4>
+      <ul class="text-xs text-gray-600 space-y-1">
+        <li>• <strong>Drag</strong> to rotate the globe</li>
+        <li>• <strong>Scroll</strong> to zoom in/out</li>
+        <li>• <strong>Click</strong> a country for details</li>
+        <li>• Use <strong>Play</strong> to animate through years</li>
+      </ul>
     </div>
+  </div>
 
-    <!-- 3D Plot -->
-    <div id="globe-plot"></div>
+  <!-- Back Button -->
+  <a href="/dashboard/builder"
+     class="fixed top-20 left-4 z-10 inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-lg shadow-md border border-gray-200 hover:bg-gray-50 transition-colors">
+    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+    </svg>
+    Back to Dashboard
+  </a>
+
 </div>
-{% endblock %} {% block extra_js %}
-<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+{% endblock %}
+
+{% block extra_js %}
 <script>
-    // Initial Render
-    document.addEventListener("DOMContentLoaded", () => {
-        updateGlobe();
-    });
+/**
+ * 3D Globe Visualization Alpine.js Component
+ */
+function globeVisualization() {
+  return {
+    // State
+    isLoading: true,
+    selectedSource: 'worldbank',
+    selectedIndicator: 'NY.GDP.MKTP.CD',
+    selectedYear: 2022,
+    colorScale: 'Viridis',
+    isPlaying: false,
+    playbackInterval: null,
+    minValue: 0,
+    maxValue: 100,
+    selectedCountry: null,
+    globeData: null,
+    availableIndicators: [],
 
-    async function updateGlobe() {
-        const source = document.getElementById("source-select").value;
-        const indicator = document.getElementById("indicator-select").value;
-        const year = document.getElementById("year-input").value;
-        const btn = document.getElementById("update-btn");
-        const loader = document.getElementById("loader");
-        const status = document.getElementById("status-msg");
+    // Popular indicators by source
+    indicatorsBySource: {
+      worldbank: [
+        { code: 'NY.GDP.MKTP.CD', name: 'GDP (current US$)' },
+        { code: 'SP.POP.TOTL', name: 'Population, total' },
+        { code: 'NY.GDP.PCAP.CD', name: 'GDP per capita (current US$)' },
+        { code: 'SP.DYN.LE00.IN', name: 'Life expectancy at birth' },
+        { code: 'SE.ADT.LITR.ZS', name: 'Adult literacy rate' },
+        { code: 'SH.DYN.MORT', name: 'Mortality rate, under-5' }
+      ],
+      who: [
+        { code: 'WHOSIS_000001', name: 'Life expectancy at birth' },
+        { code: 'WHOSIS_000002', name: 'Healthy life expectancy' },
+        { code: 'MDG_000001', name: 'Maternal mortality ratio' },
+        { code: 'WHOSIS_000003', name: 'Under-5 mortality rate' }
+      ],
+      fao: [
+        { code: 'QC_PA_TOTL', name: 'Agricultural production index' },
+        { code: 'FS_FOOD_TOTL', name: 'Food supply quantity' },
+        { code: 'RL_TOTL_AGRI', name: 'Agricultural land area' }
+      ],
+      nasa: [
+        { code: 'temperature_anomaly', name: 'Temperature Anomaly' },
+        { code: 'co2_concentration', name: 'CO2 Concentration' },
+        { code: 'sea_level', name: 'Sea Level Rise' }
+      ]
+    },
 
-        // UI State
-        btn.disabled = true;
-        loader.classList.add("active");
-        status.innerText = "";
+    /**
+     * Initialize the globe visualization
+     */
+    async init() {
+      console.log('[Globe Visualization] Initializing...');
+      
+      // Load indicators for selected source
+      this.loadIndicatorsForSource();
+      
+      // Load initial globe data
+      await this.loadGlobeData();
 
-        try {
-            // 1. Fetch Data
-            const url = `/api/data/globe?source=${source}&indicator=${indicator}&year=${year}`;
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                const err = await response.json();
-                throw new Error(err.error || "Failed to fetch data");
-            }
-
-            const geojson = await response.json();
-
-            if (!geojson.features || geojson.features.length === 0) {
-                throw new Error("No data available for this selection.");
-            }
-
-            // 2. Prepare Plotly Data
-            // We use Choropleth Mapbox or Scattergeo.
-            // Scaled values for coloring
-            const zValues = geojson.features.map((f) => f.properties.value);
-            const textValues = geojson.features.map(
-                (f) =>
-                `${f.properties.name}<br>${indicator}: ${f.properties.formatted_value}`
-            );
-            // For Choropleth, we need locations (ISO-3) and z
-            const locations = geojson.features.map((f) => f.properties.iso_code);
-
-            const data = [{
-                type: "choropleth",
-                locationmode: "ISO-3",
-                locations: locations,
-                z: zValues,
-                text: textValues,
-                colorscale: "Plasma",
-                marker: {
-                    line: {
-                        color: "rgba(255,255,255,0.2)",
-                        width: 0.5,
-                    },
-                },
-                colorbar: {
-                    title: "Value",
-                    thickness: 10,
-                    len: 0.3,
-                    x: 0.9,
-                    y: 0.2,
-                    tickfont: {
-                        color: "#cbd5e1",
-                    },
-                    titlefont: {
-                        color: "#cbd5e1",
-                    },
-                },
-            }, ];
-
-            const layout = {
-                paper_bgcolor: "rgba(0,0,0,0)",
-                plot_bgcolor: "rgba(0,0,0,0)",
-                geo: {
-                    showframe: false,
-                    showcoastlines: false,
-                    projection: {
-                        type: "orthographic",
-                    },
-                    bgcolor: "rgba(0,0,0,0)",
-                    lakecolor: "#1e293b",
-                    oceancolor: "#1e293b", // Match background for seamless look
-                    landcolor: "#334155",
-                    showocean: true,
-                    showlakes: true,
-                    showland: true,
-                    showcountries: true,
-                    countrycolor: "#475569",
-                },
-                margin: {
-                    r: 0,
-                    t: 0,
-                    l: 0,
-                    b: 0,
-                },
-                showlegend: false,
-            };
-
-            const config = {
-                responsive: true,
-                displayModeBar: false,
-            };
-
-            Plotly.newPlot("globe-plot", data, layout, config);
-        } catch (e) {
-            console.error(e);
-            status.innerText = `Error: ${e.message}`;
-        } finally {
-            btn.disabled = false;
-            loader.classList.remove("active");
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        if (this.globeData) {
+          Plotly.Plots.resize('globe-container');
         }
+      });
+    },
+
+    /**
+     * Load indicators for current source
+     */
+    loadIndicatorsForSource() {
+      this.availableIndicators = this.indicatorsBySource[this.selectedSource] || [];
+      if (this.availableIndicators.length > 0) {
+        this.selectedIndicator = this.availableIndicators[0].code;
+      }
+    },
+
+    /**
+     * Load globe data from API
+     */
+    async loadGlobeData() {
+      this.isLoading = true;
+
+      try {
+        // Fetch GeoJSON data with indicator values
+        const geojson = await WorldInsightsAPI.getGlobeData(
+          this.selectedSource,
+          this.selectedIndicator,
+          this.selectedYear
+        );
+
+        this.globeData = geojson;
+        
+        // Calculate min/max for color scale
+        const values = geojson.features
+          .map(f => f.properties.value)
+          .filter(v => v !== null && v !== undefined);
+        
+        if (values.length > 0) {
+          this.minValue = Math.min(...values);
+          this.maxValue = Math.max(...values);
+        }
+
+        // Render the globe
+        await this.renderGlobe(geojson);
+        
+      } catch (error) {
+        console.error('[Globe Visualization] Error loading data:', error);
+        WorldInsightsToast.show('Failed to load globe data: ' + error.message, 'error');
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    /**
+     * Render the 3D globe using Plotly
+     */
+    async renderGlobe(geojson) {
+      const container = document.getElementById('globe-container');
+      if (!container) return;
+
+      // Extract values and country codes
+      const locations = geojson.features.map(f => f.properties.iso_code);
+      const values = geojson.features.map(f => f.properties.value || 0);
+      const countryNames = geojson.features.map(f => f.properties.name);
+      const formattedValues = geojson.features.map(f => {
+        const v = f.properties.value;
+        return v !== null && v !== undefined ? f.properties.formatted_value : 'N/A';
+      });
+
+      // Create the choropleth mapbox trace
+      const trace = {
+        type: 'choroplethmapbox',
+        geojson: geojson,
+        locations: locations,
+        z: values,
+        featureidkey: 'properties.iso_code',
+        colorscale: this.colorScale,
+        showscale: true,
+        marker: {
+          line: {
+            width: 0.5,
+            color: 'white'
+          }
+        },
+        hovertemplate: '<b>%{customdata}</b><br>Value: %{text}<extra></extra>',
+        customdata: countryNames,
+        text: formattedValues,
+        colorbar: {
+          title: 'Value',
+          thickness: 15,
+          len: 0.5,
+          x: 0.95,
+          y: 0.5
+        }
+      };
+
+      // Layout configuration
+      const layout = {
+        margin: { t: 0, l: 0, r: 0, b: 0 },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        mapbox: {
+          style: 'light',
+          center: {
+            lat: 20,
+            lon: 0
+          },
+          zoom: 1.3,
+          pitch: 0
+        },
+        showlegend: false,
+        hovermode: 'closest'
+      };
+
+      // Configuration
+      const config = {
+        responsive: true,
+        displayModeBar: true,
+        displaylogo: false,
+        scrollZoom: true,
+        modeBarButtonsToRemove: ['lasso2d', 'select2d'],
+        doubleClick: 'reset'
+      };
+
+      // Render the plot
+      Plotly.newPlot(container, [trace], layout, config);
+
+      // Add click handler for country selection
+      container.on('plotly_click', (data) => {
+        const point = data.points[0];
+        if (point) {
+          const index = point.pointIndex;
+          this.selectedCountry = {
+            name: countryNames[index],
+            iso_code: locations[index],
+            value: values[index],
+            formatted_value: formattedValues[index]
+          };
+        }
+      });
+    },
+
+    /**
+     * Update color scale
+     */
+    updateColorScale() {
+      if (this.globeData) {
+        this.renderGlobe(this.globeData);
+      }
+    },
+
+    /**
+     * Toggle time playback
+     */
+    togglePlayback() {
+      if (this.isPlaying) {
+        this.stopPlayback();
+      } else {
+        this.startPlayback();
+      }
+    },
+
+    /**
+     * Start playback animation
+     */
+    startPlayback() {
+      this.isPlaying = true;
+      
+      this.playbackInterval = setInterval(() => {
+        this.selectedYear++;
+        if (this.selectedYear > 2024) {
+          this.selectedYear = 2000;
+        }
+        this.loadGlobeData();
+      }, 1000); // 1 second per year
+    },
+
+    /**
+     * Stop playback animation
+     */
+    stopPlayback() {
+      this.isPlaying = false;
+      if (this.playbackInterval) {
+        clearInterval(this.playbackInterval);
+        this.playbackInterval = null;
+      }
+    },
+
+    /**
+     * Reset year to current
+     */
+    resetYear() {
+      this.stopPlayback();
+      this.selectedYear = 2022;
+      this.loadGlobeData();
+    },
+
+    /**
+     * Format value for display
+     */
+    formatValue(value) {
+      if (value === null || value === undefined) return 'N/A';
+      
+      // Format large numbers
+      if (Math.abs(value) >= 1e9) {
+        return (value / 1e9).toFixed(1) + 'B';
+      }
+      if (Math.abs(value) >= 1e6) {
+        return (value / 1e6).toFixed(1) + 'M';
+      }
+      if (Math.abs(value) >= 1e3) {
+        return (value / 1e3).toFixed(1) + 'K';
+      }
+      
+      return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
     }
+  };
+}
 </script>
 {% endblock %}

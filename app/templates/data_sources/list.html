@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Data Sources - WorldInsights{% endblock %}
+
+{% block meta_description %}Explore data sources available in WorldInsights including World Bank, WHO, FAO, NASA, and more.{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <h1 class="text-3xl font-display font-bold text-gray-900">Data Sources</h1>
+            <p class="mt-2 text-lg text-gray-600">Access global data from authoritative sources</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            {% for source in sources %}
+            <a href="/data-sources/{{ source.id }}" 
+               class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-primary-300 transition-all group">
+                
+                <!-- Source Header -->
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                            {{ source.name }}
+                        </h3>
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-2">
+                            <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5"></span>
+                            {{ source.status|title }}
+                        </span>
+                    </div>
+                    <svg class="w-5 h-5 text-gray-400 group-hover:text-primary-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </div>
+
+                <!-- Description -->
+                <p class="text-sm text-gray-600 mb-4 line-clamp-3">
+                    {{ source.description }}
+                </p>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-2 gap-3 mb-4">
+                    <div class="bg-gray-50 rounded-md p-2">
+                        <p class="text-xs text-gray-500">Indicators</p>
+                        <p class="text-sm font-semibold text-gray-900">{{ source.indicators_count }}</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-md p-2">
+                        <p class="text-xs text-gray-500">Coverage</p>
+                        <p class="text-sm font-semibold text-gray-900">{{ source.coverage }}</p>
+                    </div>
+                </div>
+
+                <!-- Update Frequency -->
+                <div class="flex items-center text-xs text-gray-500">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Updated {{ source.update_frequency|lower }}
+                </div>
+
+            </a>
+            {% endfor %}
+
+        </div>
+
+        <!-- Additional Info -->
+        <div class="mt-12 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">About Our Data Sources</h2>
+            <div class="prose prose-sm text-gray-600 max-w-none">
+                <p>
+                    WorldInsights aggregates data from multiple authoritative sources to provide comprehensive global insights.
+                    All data is fetched directly from official APIs and normalized to a common schema for easy comparison and analysis.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">📊 Comprehensive Coverage</h4>
+                        <p class="text-sm">Access 18,000+ indicators covering economy, health, agriculture, climate, and more.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">🔄 Always Current</h4>
+                        <p class="text-sm">Data is refreshed regularly from source APIs to ensure accuracy.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">🔍 Easy to Use</h4>
+                        <p class="text-sm">Unified schema makes it simple to compare data across different sources.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+<!-- Toast Notification Component -->
+<!-- Usage: Include in base.html or any page that needs toast notifications -->
+
+<div id="toast-container" 
+     class="fixed top-4 right-4 z-50 space-y-2"
+     aria-live="polite"
+     aria-atomic="true">
+  <!-- Toasts will be dynamically added here by WorldInsightsToast.show() -->
+</div>
+
+<!-- Toast Template (for reference) -->
+<template id="toast-template">
+  <div class="toast flex items-center p-4 rounded-lg shadow-lg max-w-sm card-hover transition-all duration-300 transform translate-x-full opacity-0"
+       role="alert">
+    <!-- Icon will be inserted here -->
+    <p class="text-sm font-medium ml-3"></p>
+    <button class="ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex h-8 w-8 hover:bg-gray-200 transition-colors"
+            aria-label="Dismiss">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+</template>
+
+<script>
+/**
+ * Toast notification system
+ * Usage: WorldInsightsToast.show('Message', 'success')
+ * Types: success, error, warning, info
+ */
+(function() {
+  'use strict';
+
+  const Toast = {
+    show(message, type = 'info', duration = 5000) {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `toast flex items-center p-4 rounded-lg shadow-lg max-w-sm card-hover ${this.getTypeClasses(type)}`;
+      toast.setAttribute('role', 'alert');
+      
+      toast.innerHTML = `
+        ${this.getIcon(type)}
+        <p class="text-sm font-medium ml-3">${this.escapeHtml(message)}</p>
+        <button onclick="this.parentElement.remove()" class="ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex h-8 w-8 hover:bg-gray-200 transition-colors" aria-label="Dismiss">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      // Trigger animation
+      requestAnimationFrame(() => {
+        toast.classList.add('show');
+      });
+
+      // Auto-remove
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, duration);
+    },
+
+    getTypeClasses(type) {
+      const classes = {
+        success: 'bg-green-50 border-l-4 border-green-500 text-green-800',
+        error: 'bg-red-50 border-l-4 border-red-500 text-red-800',
+        warning: 'bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800',
+        info: 'bg-blue-50 border-l-4 border-blue-500 text-blue-800'
+      };
+      return classes[type] || classes.info;
+    },
+
+    getIcon(type) {
+      const icons = {
+        success: '<svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+        error: '<svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+        warning: '<svg class="w-5 h-5 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>',
+        info: '<svg class="w-5 h-5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+      };
+      return icons[type] || icons.info;
+    },
+
+    escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  };
+
+  // Export to global scope
+  window.WorldInsightsToast = Toast;
+})();
+</script>

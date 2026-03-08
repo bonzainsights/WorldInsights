@@ -3,41 +3,200 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="{% block meta_description %}WorldInsights - Global Data Intelligence Platform for Researchers and Analysts{% endblock %}"
-    />
-    <title>
-      {% block title %}WorldInsights - Global Data Intelligence{% endblock %}
-    </title>
+    <meta name="description" content="{% block meta_description %}WorldInsights - Global Data Intelligence Platform for Researchers and Analysts{% endblock %}" />
+    <title>{% block title %}WorldInsights - Global Data Intelligence{% endblock %}</title>
 
-    <!-- Fonts -->
+    <!-- Preconnect to CDNs for faster loading -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
-      rel="stylesheet"
-    />
 
-    <!-- Main Stylesheet -->
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/main.css') }}"
-    />
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS (CDN for development - no build step) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+            },
+            colors: {
+              primary: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                200: '#bfdbfe',
+                300: '#93c5fd',
+                400: '#60a5fa',
+                500: '#3b82f6',
+                600: '#2563eb',
+                700: '#1d4ed8',
+                800: '#1e40af',
+                900: '#1e3a8a',
+              },
+              accent: {
+                50: '#f0fdf4',
+                100: '#dcfce7',
+                200: '#bbf7d0',
+                300: '#86efac',
+                400: '#4ade80',
+                500: '#22c55e',
+                600: '#16a34a',
+                700: '#15803d',
+                800: '#166534',
+                900: '#14532d',
+              },
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.3s ease-in',
+              'slide-in': 'slideIn 0.3s ease-out',
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideIn: {
+                '0%': { transform: 'translateY(-10px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- HTMX (Hypermedia-driven JavaScript) -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.3/dist/htmx.min.js"></script>
+    <script>
+      // HTMX configuration
+      htmx.config.defaultSwapStyle = 'innerHTML';
+      htmx.config.timeout = 30000;
+      htmx.config.withCredentials = true;
+
+      // HTMX event logging (development)
+      document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          document.body.addEventListener('htmx:afterRequest', function(evt) {
+            console.log('HTMX:', evt.detail.pathInfo.requestPath, evt.detail.successful);
+          });
+          document.body.addEventListener('htmx:responseError', function(evt) {
+            console.error('HTMX Error:', evt.detail);
+          });
+        }
+      });
+    </script>
+
+    <!-- Alpine.js (Lightweight reactivity) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+
+    <!-- Plotly.js (Lazy loaded on pages that need it) -->
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+
+    <!-- HTMX & Component Styles -->
+    <style>
+      /* HTMX loading indicator */
+      .htmx-indicator { display: none; }
+      .htmx-request .htmx-indicator { display: inline-block; }
+      .htmx-request.htmx-indicator { display: inline-block; }
+
+      /* Smooth scrolling */
+      html { scroll-behavior: smooth; }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar { width: 8px; height: 8px; }
+      ::-webkit-scrollbar-track { background: #f1f5f9; }
+      ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+      /* Plotly container */
+      .plotly-container { width: 100%; height: 500px; min-height: 400px; }
+      .plotly-fullscreen { width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; }
+
+      /* Loading spinner */
+      .spinner {
+        border: 3px solid #e2e8f0;
+        border-top: 3px solid #3b82f6;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        animation: spin 1s linear infinite;
+      }
+      .spinner-lg { width: 40px; height: 40px; border-width: 4px; }
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+      /* Toast notifications */
+      .toast {
+        transform: translateX(100%);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+      .toast.show { transform: translateX(0); opacity: 1; }
+
+      /* Mobile menu transition */
+      .mobile-menu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      .mobile-menu.open { max-height: 500px; }
+
+      /* Focus styles for accessibility */
+      :focus-visible {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
+      }
+
+      /* Card hover effect */
+      .card-hover {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+
     {% block extra_css %}{% endblock %}
   </head>
 
-  <body>
-    {% include 'includes/_navigation.html' %} {% include
-    'includes/_flash_messages.html' %}
+  <body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans antialiased" 
+        x-data="{ 
+          darkMode: localStorage.getItem('darkMode') === 'true' || false,
+          mobileMenuOpen: false, 
+          toasts: [] 
+        }"
+        x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val)); if (darkMode) document.documentElement.classList.add('dark')">
+    <!-- Navigation -->
+    {% include 'includes/_navigation.html' %}
+
+    <!-- Flash Messages -->
+    {% include 'includes/_flash_messages.html' %}
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2" aria-live="polite"></div>
 
     <!-- Main Content -->
-    <main>{% block content %}{% endblock %}</main>
+    <main class="min-h-screen pt-16">
+      {% block content %}{% endblock %}
+    </main>
 
+    <!-- Footer -->
     {% include 'includes/_footer.html' %}
 
-    <!-- JavaScript -->
+    <!-- Main JavaScript -->
+    <script src="{{ url_for('static', filename='js/api.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- Page-specific JavaScript -->
     {% block extra_js %}{% endblock %}
   </body>
 </html>
