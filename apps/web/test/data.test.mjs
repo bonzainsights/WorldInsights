@@ -2,7 +2,11 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-import { ReleaseLoadError, loadStaticRelease } from "../dist/apps/web/src/data.js";
+import {
+  ReleaseLoadError,
+  loadCatalogIndicator,
+  loadStaticRelease,
+} from "../dist/apps/web/src/data.js";
 
 const fixtureRoot = new URL("../../../tests/fixtures/contracts/static-release-v1/", import.meta.url);
 
@@ -63,5 +67,65 @@ test("rejects release asset paths that escape the data directory", async () => {
   await assert.rejects(
     loadStaticRelease("https://example.test/data/", mappedFetch(files)),
     (error) => error instanceof ReleaseLoadError && /escapes/.test(error.message),
+  );
+});
+
+
+async function catalogFixtureFiles() {
+  const root = new URL(
+    "../../../tests/fixtures/contracts/catalog-release-v2/",
+    import.meta.url,
+  );
+  const latest = JSON.parse(await readFile(new URL("latest.json", root), "utf8"));
+  const catalog = JSON.parse(await readFile(new URL(latest.catalog, root), "utf8"));
+  const paths = ["latest.json", latest.catalog, ...Object.keys(catalog.files)];
+  const releasePrefix = `releases/${latest.release_id}/`;
+  return new Map(
+    await Promise.all(
+      paths.map(async (path) => {
+        const fixturePath = path === "latest.json" || path === latest.catalog
+          ? path
+          : `${releasePrefix}${path}`;
+        return [`/data/${fixturePath}`, await readFile(new URL(fixturePath, root), "utf8")];
+      }),
+    ),
+  );
+}
+
+test("loads V2 catalog metadata before lazily fetching an indicator", async () => {
+  const files = await catalogFixtureFiles();
+  const requests = [];
+  const fetcher = async (input) => {
+    const url = new URL(input);
+    requests.push(url.pathname);
+    const body = files.get(url.pathname);
+    return body === undefined
+      ? new Response("not found", { status: 404 })
+      : new Response(body, { status: 200 });
+  };
+
+  const release = await loadStaticRelease("https://example.test/data/", fetcher);
+  assert.equal(release.kind, "catalog");
+  assert.deepEqual(requests, [
+    "/data/latest.json",
+    "/data/releases/catalog-test-v2/catalog.json",
+  ]);
+
+  const selected = await loadCatalogIndicator(release, "wb.sp.pop.totl", fetcher);
+  assert.deepEqual(selected.coverage.geography_ids, [1, 2]);
+  assert.equal(selected.observations.length, 2);
+  assert.equal(requests.length, 4);
+});
+
+test("rejects a tampered V2 indicator partition", async () => {
+  const files = await catalogFixtureFiles();
+  const path = "/data/releases/catalog-test-v2/indicators/wb.sp.pop.totl/coverage.json";
+  files.set(path, files.get(path).replace('"0x6"', '"0xe"'));
+  const fetcher = mappedFetch(files);
+  const release = await loadStaticRelease("https://example.test/data/", fetcher);
+
+  await assert.rejects(
+    loadCatalogIndicator(release, "wb.sp.pop.totl", fetcher),
+    (error) => error instanceof ReleaseLoadError && /checksum mismatch/.test(error.message),
   );
 });

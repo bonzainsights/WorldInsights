@@ -10,6 +10,11 @@ import {
   parseObservationsV1,
   parseReleaseManifestV1,
 } from "../dist/index.js";
+import {
+  parseCatalogReleaseV2,
+  parseLatestRelease,
+  parseLatestReleaseV2,
+} from "../dist/catalog-v2.js";
 
 const fixturesRoot = new URL("../../../tests/fixtures/contracts/", import.meta.url);
 
@@ -70,4 +75,37 @@ test("matches Python operation and visualization validation", async () => {
       }),
     /not valid/,
   );
+});
+
+
+test("parses the Python-generated V2 catalog fixture", async () => {
+  const root = new URL("../../../tests/fixtures/contracts/catalog-release-v2/", import.meta.url);
+  const latest = parseLatestReleaseV2(
+    JSON.parse(await readFile(new URL("latest.json", root), "utf8")),
+  );
+  const catalog = parseCatalogReleaseV2(
+    JSON.parse(await readFile(new URL(latest.catalog, root), "utf8")),
+  );
+
+  assert.equal(parseLatestRelease(latest).schema_version, 2);
+  assert.equal(catalog.release.release_id, latest.release_id);
+  assert.deepEqual(
+    catalog.indicators.map((indicator) => indicator.indicator_variant_id),
+    ["test.gdp.per.capita", "wb.sp.pop.totl"],
+  );
+  assert.ok(catalog.indicators.every((indicator) => catalog.files[indicator.coverage]));
+});
+
+test("rejects unsafe or undeclared V2 catalog asset paths", async () => {
+  const root = new URL("../../../tests/fixtures/contracts/catalog-release-v2/", import.meta.url);
+  const latest = JSON.parse(await readFile(new URL("latest.json", root), "utf8"));
+  const catalog = JSON.parse(await readFile(new URL(latest.catalog, root), "utf8"));
+
+  const unsafe = structuredClone(catalog);
+  unsafe.indicators[0].coverage = "../outside.json";
+  assert.throws(() => parseCatalogReleaseV2(unsafe), /safe relative asset path/);
+
+  const undeclared = structuredClone(catalog);
+  delete undeclared.files[undeclared.indicators[0].coverage];
+  assert.throws(() => parseCatalogReleaseV2(undeclared), /undeclared file/);
 });

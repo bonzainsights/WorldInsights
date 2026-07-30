@@ -1,6 +1,5 @@
 import {
   parseCoverageManifestV1,
-  parseLatestReleaseV1,
   parseObservationsV1,
   parseReleaseManifestV1,
   type CoverageManifestV1,
@@ -8,14 +7,36 @@ import {
   type ObservationV1,
   type ReleaseManifestV1,
 } from "../../../packages/contracts/src/index.js";
+import {
+  parseCatalogReleaseV2,
+  parseLatestRelease,
+  type CatalogIndicatorV2,
+  type CatalogReleaseV2,
+  type LatestReleaseV2,
+} from "../../../packages/contracts/src/catalog-v2.js";
 
-export interface StaticRelease {
+export interface StaticSingleIndicatorRelease {
+  kind: "single";
   latest: LatestReleaseV1;
   manifest: ReleaseManifestV1;
   coverage: CoverageManifestV1;
   observations: ObservationV1[];
 }
 
+export interface StaticCatalogRelease {
+  kind: "catalog";
+  latest: LatestReleaseV2;
+  catalog: CatalogReleaseV2;
+  catalogUrl: URL;
+}
+
+export interface StaticCatalogIndicator {
+  metadata: CatalogIndicatorV2;
+  coverage: CoverageManifestV1;
+  observations: ObservationV1[];
+}
+
+export type StaticRelease = StaticSingleIndicatorRelease | StaticCatalogRelease;
 export type FetchLike = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 
 export class ReleaseLoadError extends Error {
@@ -32,7 +53,18 @@ export async function loadStaticRelease(
   const normalizedBase = directoryUrl(baseUrl);
   const latestUrl = new URL("latest.json", normalizedBase);
   const latestText = await fetchText(latestUrl, fetcher);
-  const latest = parseLatestReleaseV1(parseJson(latestText, latestUrl));
+  const latest = parseLatestRelease(parseJson(latestText, latestUrl));
+
+  if (latest.schema_version === 2) {
+    const catalogUrl = safeAssetUrl(latest.catalog, normalizedBase);
+    const catalogText = await fetchText(catalogUrl, fetcher);
+    await assertSha256(catalogText, latest.catalog_sha256, "catalog");
+    const catalog = parseCatalogReleaseV2(parseJson(catalogText, catalogUrl));
+    if (catalog.release.release_id !== latest.release_id) {
+      throw new ReleaseLoadError("latest release ID does not match the catalog");
+    }
+    return { kind: "catalog", latest, catalog, catalogUrl };
+  }
 
   const manifestUrl = safeAssetUrl(latest.manifest, normalizedBase);
   const manifestText = await fetchText(manifestUrl, fetcher);
@@ -46,56 +78,101 @@ export async function loadStaticRelease(
   const coverage = await loadChecksummedJson(
     "coverage.json",
     releaseDirectory,
-    manifest,
+    manifest.files,
     fetcher,
     parseCoverageManifestV1,
   );
   const observations = await loadChecksummedJson(
     "observations.json",
     releaseDirectory,
-    manifest,
+    manifest.files,
     fetcher,
     parseObservationsV1,
   );
 
-  validateReleaseConsistency(manifest, coverage, observations);
-  return { latest, manifest, coverage, observations };
+  validateIndicatorConsistency(
+    manifest.release.release_id,
+    manifest.indicator.indicator_variant_id,
+    manifest.row_count,
+    coverage,
+    observations,
+  );
+  return { kind: "single", latest, manifest, coverage, observations };
+}
+
+export async function loadCatalogIndicator(
+  release: StaticCatalogRelease,
+  indicatorVariantId: string,
+  fetcher: FetchLike = globalThis.fetch.bind(globalThis),
+): Promise<StaticCatalogIndicator> {
+  const metadata = release.catalog.indicators.find(
+    (indicator) => indicator.indicator_variant_id === indicatorVariantId,
+  );
+  if (!metadata) {
+    throw new ReleaseLoadError(`catalog does not contain indicator: ${indicatorVariantId}`);
+  }
+
+  const releaseDirectory = new URL("./", release.catalogUrl);
+  const coverage = await loadChecksummedJson(
+    metadata.coverage,
+    releaseDirectory,
+    release.catalog.files,
+    fetcher,
+    parseCoverageManifestV1,
+  );
+  const observations = await loadChecksummedJson(
+    metadata.observations,
+    releaseDirectory,
+    release.catalog.files,
+    fetcher,
+    parseObservationsV1,
+  );
+  validateIndicatorConsistency(
+    release.catalog.release.release_id,
+    metadata.indicator_variant_id,
+    metadata.row_count,
+    coverage,
+    observations,
+  );
+  return { metadata, coverage, observations };
 }
 
 async function loadChecksummedJson<T>(
   path: string,
   releaseDirectory: URL,
-  manifest: ReleaseManifestV1,
+  files: Record<string, { sha256: string }>,
   fetcher: FetchLike,
   parser: (value: unknown) => T,
 ): Promise<T> {
-  const metadata = manifest.files[path];
-  if (!metadata) throw new ReleaseLoadError(`manifest does not declare ${path}`);
+  const metadata = files[path];
+  if (!metadata) throw new ReleaseLoadError(`release does not declare ${path}`);
   const url = safeAssetUrl(path, releaseDirectory);
   const text = await fetchText(url, fetcher);
   await assertSha256(text, metadata.sha256, path);
   return parser(parseJson(text, url));
 }
 
-function validateReleaseConsistency(
-  manifest: ReleaseManifestV1,
+function validateIndicatorConsistency(
+  releaseId: string,
+  indicatorVariantId: string,
+  rowCount: number,
   coverage: CoverageManifestV1,
   observations: ObservationV1[],
 ): void {
-  if (manifest.row_count !== observations.length) {
-    throw new ReleaseLoadError("manifest row count does not match observations");
+  if (rowCount !== observations.length) {
+    throw new ReleaseLoadError("declared row count does not match observations");
   }
-  if (coverage.indicator_variant_id !== manifest.indicator.indicator_variant_id) {
-    throw new ReleaseLoadError("coverage indicator does not match the manifest");
+  if (coverage.indicator_variant_id !== indicatorVariantId) {
+    throw new ReleaseLoadError("coverage indicator does not match the catalog");
   }
   const geographyIds = new Set(coverage.geography_ids);
   const periods = new Set(coverage.periods);
   for (const observation of observations) {
-    if (observation.release_id !== manifest.release.release_id) {
-      throw new ReleaseLoadError("observation release ID does not match the manifest");
+    if (observation.release_id !== releaseId) {
+      throw new ReleaseLoadError("observation release ID does not match the release");
     }
-    if (observation.indicator_variant_id !== manifest.indicator.indicator_variant_id) {
-      throw new ReleaseLoadError("observation indicator does not match the manifest");
+    if (observation.indicator_variant_id !== indicatorVariantId) {
+      throw new ReleaseLoadError("observation indicator does not match the catalog");
     }
     if (!geographyIds.has(observation.geography_id)) {
       throw new ReleaseLoadError("observation geography is absent from coverage");

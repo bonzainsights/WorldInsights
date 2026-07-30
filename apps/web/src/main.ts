@@ -19,6 +19,11 @@ async function start(): Promise<void> {
 }
 
 function renderRelease(root: HTMLElement, release: StaticRelease): void {
+  if (release.kind === "catalog") {
+    renderCatalog(root, release);
+    return;
+  }
+
   const values = release.observations
     .map((observation) => observation.value)
     .filter((value): value is number => value !== null);
@@ -76,6 +81,43 @@ function renderRelease(root: HTMLElement, release: StaticRelease): void {
           <div><dt>Rows</dt><dd>${release.manifest.row_count}</dd></div>
           <div><dt>Pipeline</dt><dd>${escapeHtml(release.manifest.release.pipeline_version)}</dd></div>
         </dl>
+      </section>
+    </main>`;
+}
+
+
+function renderCatalog(
+  root: HTMLElement,
+  release: Extract<StaticRelease, { kind: "catalog" }>,
+): void {
+  root.innerHTML = `
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Static-first global data explorer</p>
+        <h1>WorldInsights</h1>
+        <p class="lede">A verified multi-indicator catalog is ready for exploration.</p>
+      </div>
+      <span class="release-badge">${escapeHtml(release.latest.release_id)}</span>
+    </header>
+    <main>
+      <section class="metrics" aria-label="Catalog summary">
+        ${metric("Provider", release.catalog.release.provider_id)}
+        ${metric("Indicators", String(release.catalog.indicators.length))}
+        ${metric("Dataset", release.catalog.release.dataset_id)}
+        ${metric("Pipeline", release.catalog.release.pipeline_version)}
+      </section>
+      <section class="panel">
+        <p class="eyebrow">Available indicators</p>
+        <div class="bars" role="list">
+          ${release.catalog.indicators.map((indicator) => `
+            <article class="bar-row" role="listitem">
+              <div class="bar-label">
+                <strong>${escapeHtml(indicator.name)}</strong>
+                <span>${indicator.row_count} rows</span>
+              </div>
+              <small>${escapeHtml(indicator.provider_id)} · ${escapeHtml(indicator.unit_id)} · ${escapeHtml(indicator.frequency)}</small>
+            </article>`).join("")}
+        </div>
       </section>
     </main>`;
 }
