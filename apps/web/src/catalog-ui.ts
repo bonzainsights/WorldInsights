@@ -9,6 +9,7 @@ import type {
 import type { CompatibleObservationSet } from "./explorer.js";
 import { scatterPlotHtml } from "./scatter.js";
 import { trendChartHtml } from "./trend.js";
+import { provenanceHtml } from "./provenance.js";
 
 const OPERATION_LABELS: Record<Operation, string> = {
   map: "Map one feature",
@@ -178,7 +179,8 @@ export function compatibleObservationHtml(
             .join("")}
         </tbody>
       </table>
-    </div>`;
+    </div>
+    ${provenanceHtml(release, selectedIds)}`;
 }
 
 export function scopeControlsHtml(
