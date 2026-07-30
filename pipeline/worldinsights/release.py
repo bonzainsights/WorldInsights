@@ -1,20 +1,25 @@
-"""Deterministic static release asset builder."""
+"""Deterministic static release asset builders."""
 
 from __future__ import annotations
 
 import hashlib
 import json
+import re
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Iterable
 
 from worldinsights.compatibility import CoverageIndex
-from worldinsights.contracts import DataRelease, GeographyType, IndicatorVariant, Observation
+from worldinsights.contracts import DataRelease, IndicatorVariant, Observation
+
+_SAFE_ASSET_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 
 
 @dataclass(frozen=True, slots=True)
 class ReleaseArtifacts:
+    """Files produced by the backwards-compatible single-indicator release."""
+
     release_directory: Path
     manifest_path: Path
     observations_path: Path
@@ -22,12 +27,30 @@ class ReleaseArtifacts:
     latest_path: Path
 
 
+@dataclass(frozen=True, slots=True)
+class IndicatorReleaseInput:
+    """One indicator and its observations inside a catalog release."""
+
+    indicator: IndicatorVariant
+    observations: tuple[Observation, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class CatalogReleaseArtifacts:
+    """Files produced by a version-two multi-indicator catalog release."""
+
+    release_directory: Path
+    catalog_path: Path
+    latest_path: Path
+    indicator_directories: tuple[Path, ...]
+
+
 def canonical_json_bytes(value: Any) -> bytes:
     """Serialize JSON deterministically for checksums and immutable assets."""
 
-    return (json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n").encode(
-        "utf-8"
-    )
+    return (
+        json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n"
+    ).encode("utf-8")
 
 
 def sha256_bytes(content: bytes) -> str:
@@ -127,21 +150,14 @@ def build_static_release(
     indicator: IndicatorVariant,
     observations: Iterable[Observation],
 ) -> ReleaseArtifacts:
-    """Build one immutable static release and atomically update latest metadata."""
+    """Build one immutable V1 single-indicator release.
 
-    observation_list = sorted(
-        observations,
-        key=lambda row: (row.indicator_variant_id, row.geography_id, row.period.start),
-    )
-    if not observation_list:
-        raise ValueError("a release must contain at least one observation")
-    if any(row.release_id != release.release_id for row in observation_list):
-        raise ValueError("observation release IDs must match the release")
+    This remains supported so already-published static clients and fixtures do not
+    change silently while the multi-indicator catalog is introduced.
+    """
 
-    release_directory = output_root / "releases" / release.release_id
-    if release_directory.exists() and any(release_directory.iterdir()):
-        raise FileExistsError(f"immutable release already exists: {release.release_id}")
-    release_directory.mkdir(parents=True, exist_ok=True)
+    observation_list = _validated_observations(release, indicator, observations)
+    release_directory = _prepare_release_directory(output_root, release.release_id)
 
     observations_path = release_directory / "observations.json"
     observations_checksum = write_json(
@@ -184,3 +200,132 @@ def build_static_release(
         coverage_path=coverage_path,
         latest_path=latest_path,
     )
+
+
+def build_catalog_release(
+    *,
+    output_root: Path,
+    release: DataRelease,
+    indicators: Iterable[IndicatorReleaseInput],
+) -> CatalogReleaseArtifacts:
+    """Build an immutable V2 release containing independently queryable indicators.
+
+    Indicator files are isolated so a browser can fetch only the selected
+    feature. The catalog lists all paths and checksums in deterministic order.
+    """
+
+    indicator_inputs = sorted(
+        indicators,
+        key=lambda item: item.indicator.indicator_variant_id,
+    )
+    if not indicator_inputs:
+        raise ValueError("a catalog release must contain at least one indicator")
+
+    indicator_ids = [item.indicator.indicator_variant_id for item in indicator_inputs]
+    if len(set(indicator_ids)) != len(indicator_ids):
+        raise ValueError("indicator IDs must be unique inside a catalog release")
+
+    for item in indicator_inputs:
+        _validate_indicator_asset_id(item.indicator.indicator_variant_id)
+        if item.indicator.provider_id != release.provider_id:
+            raise ValueError("indicator provider must match the release provider")
+        if item.indicator.dataset_id != release.dataset_id:
+            raise ValueError("indicator dataset must match the release dataset")
+
+    release_directory = _prepare_release_directory(output_root, release.release_id)
+    catalog_entries: list[dict[str, Any]] = []
+    file_checksums: dict[str, dict[str, str]] = {}
+    indicator_directories: list[Path] = []
+
+    for item in indicator_inputs:
+        indicator = item.indicator
+        rows = _validated_observations(release, indicator, item.observations)
+        relative_directory = Path("indicators") / indicator.indicator_variant_id
+        indicator_directory = release_directory / relative_directory
+        indicator_directories.append(indicator_directory)
+
+        observations_relative = relative_directory / "observations.json"
+        observations_path = release_directory / observations_relative
+        observations_checksum = write_json(
+            observations_path,
+            [observation_to_dict(row) for row in rows],
+        )
+
+        coverage = build_coverage_index(indicator, rows)
+        coverage_relative = relative_directory / "coverage.json"
+        coverage_path = release_directory / coverage_relative
+        coverage_checksum = write_json(coverage_path, coverage_to_dict(coverage))
+
+        observations_key = observations_relative.as_posix()
+        coverage_key = coverage_relative.as_posix()
+        file_checksums[observations_key] = {"sha256": observations_checksum}
+        file_checksums[coverage_key] = {"sha256": coverage_checksum}
+        catalog_entries.append(
+            {
+                **indicator_to_dict(indicator),
+                "row_count": len(rows),
+                "observations": observations_key,
+                "coverage": coverage_key,
+            }
+        )
+
+    catalog = {
+        "schema_version": 2,
+        "release": release_to_dict(release),
+        "indicators": catalog_entries,
+        "files": file_checksums,
+    }
+    catalog_path = release_directory / "catalog.json"
+    catalog_checksum = write_json(catalog_path, catalog)
+
+    latest_path = output_root / "latest.json"
+    write_json(
+        latest_path,
+        {
+            "schema_version": 2,
+            "release_id": release.release_id,
+            "catalog": f"releases/{release.release_id}/catalog.json",
+            "catalog_sha256": catalog_checksum,
+        },
+    )
+
+    return CatalogReleaseArtifacts(
+        release_directory=release_directory,
+        catalog_path=catalog_path,
+        latest_path=latest_path,
+        indicator_directories=tuple(indicator_directories),
+    )
+
+
+def _validated_observations(
+    release: DataRelease,
+    indicator: IndicatorVariant,
+    observations: Iterable[Observation],
+) -> list[Observation]:
+    rows = sorted(
+        observations,
+        key=lambda row: (row.indicator_variant_id, row.geography_id, row.period.start),
+    )
+    if not rows:
+        raise ValueError("an indicator release must contain at least one observation")
+    if any(row.release_id != release.release_id for row in rows):
+        raise ValueError("observation release IDs must match the release")
+    if any(row.indicator_variant_id != indicator.indicator_variant_id for row in rows):
+        raise ValueError("observation indicator does not match release indicator")
+    if any(row.unit_id != indicator.unit_id for row in rows):
+        raise ValueError("observation unit does not match release indicator")
+    return rows
+
+
+def _prepare_release_directory(output_root: Path, release_id: str) -> Path:
+    _validate_indicator_asset_id(release_id)
+    release_directory = output_root / "releases" / release_id
+    if release_directory.exists() and any(release_directory.iterdir()):
+        raise FileExistsError(f"immutable release already exists: {release_id}")
+    release_directory.mkdir(parents=True, exist_ok=True)
+    return release_directory
+
+
+def _validate_indicator_asset_id(value: str) -> None:
+    if not _SAFE_ASSET_ID.fullmatch(value):
+        raise ValueError(f"unsafe static asset identifier: {value!r}")
