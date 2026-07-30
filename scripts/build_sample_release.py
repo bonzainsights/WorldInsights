@@ -30,8 +30,9 @@ from worldinsights.release import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_POPULATION_FIXTURE = ROOT / "tests/fixtures/world_bank/population_page.json"
-DEFAULT_GDP_FIXTURE = ROOT / "tests/fixtures/world_bank/gdp_per_capita_2023_page.json"
+LEGACY_POPULATION_FIXTURE = ROOT / "tests/fixtures/world_bank/population_page.json"
+DEFAULT_POPULATION_FIXTURE = ROOT / "tests/fixtures/world_bank/population_2019_2023_page.json"
+DEFAULT_GDP_FIXTURE = ROOT / "tests/fixtures/world_bank/gdp_per_capita_2019_2023_page.json"
 DEFAULT_MAPPINGS = ROOT / "data/mappings/world_bank_geographies.json"
 
 SAMPLE_GEOGRAPHIES = (
@@ -49,7 +50,7 @@ def build_sample(
     population_bytes = population_fixture.read_bytes()
     gdp_bytes = gdp_fixture.read_bytes()
     adapter = WorldBankAdapter.from_mapping_file(DEFAULT_MAPPINGS)
-    release_id = "world-bank-indicators-2023-sample"
+    release_id = "world-bank-indicators-2019-2023-sample"
 
     population_records = [
         record
@@ -89,7 +90,7 @@ def build_sample(
         dataset_id=adapter.dataset_id,
         retrieved_at=datetime(2026, 7, 30, tzinfo=timezone.utc),
         source_checksum=combined_source.hexdigest(),
-        pipeline_version="0.3.0",
+        pipeline_version="0.4.0",
     )
     population = IndicatorVariant(
         indicator_variant_id="wb.sp.pop.totl",
@@ -125,10 +126,9 @@ def build_sample(
     return artifacts.latest_path
 
 
-
 def build_legacy_v1_contract_fixture(
     output_root: Path,
-    population_fixture: Path = DEFAULT_POPULATION_FIXTURE,
+    population_fixture: Path = LEGACY_POPULATION_FIXTURE,
 ) -> Path:
     """Rebuild the frozen V1 fixture used for cross-language compatibility tests."""
 
@@ -171,6 +171,7 @@ def build_legacy_v1_contract_fixture(
         indicator=indicator,
         observations=observations,
     ).latest_path
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
