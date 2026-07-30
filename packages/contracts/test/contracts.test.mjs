@@ -90,6 +90,10 @@ test("parses the Python-generated V2 catalog fixture", async () => {
   assert.equal(parseLatestRelease(latest).schema_version, 2);
   assert.equal(catalog.release.release_id, latest.release_id);
   assert.deepEqual(
+    catalog.geographies.map((geography) => geography.canonical_code),
+    ["DEU", "NPL", "USA"],
+  );
+  assert.deepEqual(
     catalog.indicators.map((indicator) => indicator.indicator_variant_id),
     ["test.gdp.per.capita", "wb.sp.pop.totl"],
   );
@@ -108,4 +112,8 @@ test("rejects unsafe or undeclared V2 catalog asset paths", async () => {
   const undeclared = structuredClone(catalog);
   delete undeclared.files[undeclared.indicators[0].coverage];
   assert.throws(() => parseCatalogReleaseV2(undeclared), /undeclared file/);
+
+  const invalidParent = structuredClone(catalog);
+  invalidParent.geographies[0].parent_id = 99;
+  assert.throws(() => parseCatalogReleaseV2(invalidParent), /parent is not declared/);
 });

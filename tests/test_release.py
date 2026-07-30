@@ -7,6 +7,7 @@ import pytest
 from worldinsights.contracts import (
     DataRelease,
     Frequency,
+    Geography,
     GeographyType,
     IndicatorVariant,
     Observation,
@@ -15,6 +16,15 @@ from worldinsights.contracts import (
 )
 from worldinsights.release import build_static_release, canonical_json_bytes, sha256_bytes
 
+
+
+
+def geographies() -> list[Geography]:
+    return [
+        Geography(1, "DEU", "Germany", GeographyType.COUNTRY),
+        Geography(2, "NPL", "Nepal", GeographyType.COUNTRY),
+        Geography(3, "USA", "United States", GeographyType.COUNTRY),
+    ]
 
 def indicator() -> IndicatorVariant:
     return IndicatorVariant(
@@ -177,12 +187,18 @@ def test_catalog_release_is_deterministic_and_partitioned_by_indicator(tmp_path:
             IndicatorReleaseInput(second_indicator(), tuple(second_observations())),
             IndicatorReleaseInput(indicator(), tuple(observations())),
         ],
+        geographies=geographies(),
     )
 
     catalog = json.loads(artifacts.catalog_path.read_text(encoding="utf-8"))
     latest = json.loads(artifacts.latest_path.read_text(encoding="utf-8"))
 
     assert catalog["schema_version"] == 2
+    assert [(item["geography_id"], item["canonical_code"]) for item in catalog["geographies"]] == [
+        (1, "DEU"),
+        (2, "NPL"),
+        (3, "USA"),
+    ]
     assert [entry["indicator_variant_id"] for entry in catalog["indicators"]] == [
         "test.gdp.per.capita",
         "wb.sp.pop.totl",
@@ -229,6 +245,7 @@ def test_catalog_release_rejects_duplicate_indicator_ids(tmp_path: Path) -> None
             output_root=tmp_path,
             release=release(),
             indicators=[item, item],
+            geographies=geographies(),
         )
 
 
@@ -242,6 +259,7 @@ def test_catalog_release_rejects_mismatched_indicator_observations(tmp_path: Pat
             indicators=[
                 IndicatorReleaseInput(indicator(), tuple(second_observations())),
             ],
+            geographies=geographies(),
         )
 
 
@@ -273,4 +291,33 @@ def test_catalog_release_rejects_unsafe_asset_identifiers(tmp_path: Path) -> Non
             output_root=tmp_path,
             release=release(),
             indicators=[IndicatorReleaseInput(unsafe, (row,))],
+            geographies=geographies(),
+        )
+
+
+def test_catalog_release_rejects_undeclared_observation_geography(tmp_path: Path) -> None:
+    from worldinsights.release import IndicatorReleaseInput, build_catalog_release
+
+    with pytest.raises(ValueError, match="not declared"):
+        build_catalog_release(
+            output_root=tmp_path,
+            release=release(),
+            indicators=[IndicatorReleaseInput(second_indicator(), tuple(second_observations()))],
+            geographies=geographies()[:2],
+        )
+
+
+def test_catalog_release_rejects_missing_geography_parent(tmp_path: Path) -> None:
+    from worldinsights.release import IndicatorReleaseInput, build_catalog_release
+
+    invalid_geographies = [
+        Geography(1, "DEU", "Germany", GeographyType.COUNTRY, parent_id=99),
+        Geography(2, "NPL", "Nepal", GeographyType.COUNTRY),
+    ]
+    with pytest.raises(ValueError, match="parent must exist"):
+        build_catalog_release(
+            output_root=tmp_path,
+            release=release(),
+            indicators=[IndicatorReleaseInput(indicator(), tuple(observations()))],
+            geographies=invalid_geographies,
         )

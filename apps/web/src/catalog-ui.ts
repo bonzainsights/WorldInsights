@@ -128,6 +128,9 @@ export function compatibleObservationHtml(
     release.catalog.indicators.map((indicator) => [indicator.indicator_variant_id, indicator]),
   );
   const rows = alignObservationRows(result.observations);
+  const geographyNames = new Map(
+    release.catalog.geographies.map((geography) => [geography.geography_id, geography.name]),
+  );
 
   return `
     <div class="panel-heading">
@@ -155,7 +158,7 @@ export function compatibleObservationHtml(
           ${rows
             .map((row) => `
               <tr>
-                <th scope="row">${escapeHtml(geographyLabel(row.geographyId))}</th>
+                <th scope="row">${escapeHtml(geographyLabel(row.geographyId, geographyNames))}</th>
                 <td>${escapeHtml(row.period)}</td>
                 ${selectedIds
                   .map((indicatorId) => `<td>${formatNumber(row.values.get(indicatorId) ?? null)}</td>`)
@@ -226,13 +229,11 @@ function metric(label: string, value: string): string {
   return `<article><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></article>`;
 }
 
-function geographyLabel(geographyId: number): string {
-  const names: Record<number, string> = {
-    1: "Germany",
-    2: "Nepal",
-    3: "United States",
-  };
-  return names[geographyId] ?? `Geography ${geographyId}`;
+function geographyLabel(
+  geographyId: number,
+  names: ReadonlyMap<number, string>,
+): string {
+  return names.get(geographyId) ?? `Geography ${geographyId}`;
 }
 
 function formatNumber(value: number | null): string {

@@ -13,6 +13,17 @@ export interface LatestReleaseV2 {
   catalog_sha256: string;
 }
 
+
+export interface CatalogGeographyV2 {
+  geography_id: number;
+  canonical_code: string;
+  name: string;
+  geography_type: GeographyType;
+  parent_id: number | null;
+  valid_from: string | null;
+  valid_to: string | null;
+}
+
 export interface CatalogIndicatorV2 {
   indicator_variant_id: string;
   provider_id: string;
@@ -38,6 +49,7 @@ export interface CatalogReleaseV2 {
     source_checksum: string;
     pipeline_version: string;
   };
+  geographies: CatalogGeographyV2[];
   indicators: CatalogIndicatorV2[];
   files: Record<string, { sha256: string }>;
 }
@@ -73,7 +85,7 @@ export function parseLatestReleaseV2(value: unknown): LatestReleaseV2 {
 
 export function parseCatalogReleaseV2(value: unknown): CatalogReleaseV2 {
   const root = object(value, "catalog");
-  exactKeys(root, ["schema_version", "release", "indicators", "files"], "catalog");
+  exactKeys(root, ["schema_version", "release", "geographies", "indicators", "files"], "catalog");
   literal(root.schema_version, 2, "catalog.schema_version");
 
   const release = object(root.release, "catalog.release");
@@ -93,6 +105,61 @@ export function parseCatalogReleaseV2(value: unknown): CatalogReleaseV2 {
     source_checksum: sha256(release.source_checksum, "catalog.release.source_checksum"),
     pipeline_version: nonEmptyString(release.pipeline_version, "catalog.release.pipeline_version"),
   };
+
+  const geographies = array(root.geographies, "catalog.geographies").map((item, index) => {
+    const geography = object(item, `catalog.geographies[${index}]`);
+    exactKeys(geography, [
+      "geography_id",
+      "canonical_code",
+      "name",
+      "geography_type",
+      "parent_id",
+      "valid_from",
+      "valid_to",
+    ], `catalog.geographies[${index}]`);
+    const validFrom = nullableIsoDate(
+      geography.valid_from,
+      `catalog.geographies[${index}].valid_from`,
+    );
+    const validTo = nullableIsoDate(
+      geography.valid_to,
+      `catalog.geographies[${index}].valid_to`,
+    );
+    if (validFrom !== null && validTo !== null && validFrom > validTo) {
+      fail(`catalog.geographies[${index}] valid_from is after valid_to`);
+    }
+    return {
+      geography_id: positiveInteger(
+        geography.geography_id,
+        `catalog.geographies[${index}].geography_id`,
+      ),
+      canonical_code: nonEmptyString(
+        geography.canonical_code,
+        `catalog.geographies[${index}].canonical_code`,
+      ),
+      name: nonEmptyString(geography.name, `catalog.geographies[${index}].name`),
+      geography_type: enumValue(
+        geography.geography_type,
+        GEOGRAPHY_TYPES,
+        `catalog.geographies[${index}].geography_type`,
+      ),
+      parent_id: nullablePositiveInteger(
+        geography.parent_id,
+        `catalog.geographies[${index}].parent_id`,
+      ),
+      valid_from: validFrom,
+      valid_to: validTo,
+    } satisfies CatalogGeographyV2;
+  });
+  if (geographies.length === 0) fail("catalog must contain at least one geography");
+  unique(geographies.map((item) => item.geography_id), "catalog geography IDs");
+  unique(geographies.map((item) => item.canonical_code), "catalog geography codes");
+  const knownGeographyIds = new Set(geographies.map((item) => item.geography_id));
+  for (const [index, geography] of geographies.entries()) {
+    if (geography.parent_id !== null && !knownGeographyIds.has(geography.parent_id)) {
+      fail(`catalog.geographies[${index}] parent is not declared`);
+    }
+  }
 
   const fileObject = object(root.files, "catalog.files");
   const files: Record<string, { sha256: string }> = {};
@@ -168,7 +235,7 @@ export function parseCatalogReleaseV2(value: unknown): CatalogReleaseV2 {
   if (indicators.length === 0) fail("catalog must contain at least one indicator");
   unique(indicators.map((indicator) => indicator.indicator_variant_id), "catalog indicator IDs");
 
-  return { schema_version: 2, release: parsedRelease, indicators, files };
+  return { schema_version: 2, release: parsedRelease, geographies, indicators, files };
 }
 
 function object(value: unknown, field: string): Record<string, unknown> {
@@ -186,6 +253,17 @@ function array(value: unknown, field: string): unknown[] {
 function nonEmptyString(value: unknown, field: string): string {
   if (typeof value !== "string" || !value.trim()) fail(`${field} must be a non-empty string`);
   return value;
+}
+
+function positiveInteger(value: unknown, field: string): number {
+  if (!Number.isInteger(value) || (value as number) <= 0) {
+    fail(`${field} must be a positive integer`);
+  }
+  return value as number;
+}
+
+function nullablePositiveInteger(value: unknown, field: string): number | null {
+  return value === null ? null : positiveInteger(value, field);
 }
 
 function nonNegativeInteger(value: unknown, field: string): number {
@@ -233,6 +311,15 @@ function sha256(value: unknown, field: string): string {
   const text = nonEmptyString(value, field);
   if (!/^[a-f0-9]{64}$/.test(text)) {
     fail(`${field} must be a lowercase SHA-256 hex digest`);
+  }
+  return text;
+}
+
+function nullableIsoDate(value: unknown, field: string): string | null {
+  if (value === null) return null;
+  const text = nonEmptyString(value, field);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(text) || Number.isNaN(Date.parse(`${text}T00:00:00Z`))) {
+    fail(`${field} must be an ISO date or null`);
   }
   return text;
 }

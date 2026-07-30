@@ -10,7 +10,7 @@
     {
       "indicator": {"id": "SP.POP.TOTL", "value": "Population, total"},
       "country": {"id": "DE", "value": "Germany"},
-      "countryiso3code": "DET¢,
+      "countryiso3code": "DEU",
       "date": "2023",
       "value": 83280000,
       "unit": "",

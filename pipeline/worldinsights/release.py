@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from worldinsights.compatibility import CoverageIndex
-from worldinsights.contracts import DataRelease, IndicatorVariant, Observation
+from worldinsights.contracts import DataRelease, Geography, IndicatorVariant, Observation
 
 _SAFE_ASSET_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 
@@ -116,6 +116,18 @@ def release_to_dict(release: DataRelease) -> dict[str, Any]:
     }
 
 
+def geography_to_dict(geography: Geography) -> dict[str, Any]:
+    return {
+        "geography_id": geography.geography_id,
+        "canonical_code": geography.canonical_code,
+        "name": geography.name,
+        "geography_type": geography.geography_type.value,
+        "parent_id": geography.parent_id,
+        "valid_from": geography.valid_from.isoformat() if geography.valid_from else None,
+        "valid_to": geography.valid_to.isoformat() if geography.valid_to else None,
+    }
+
+
 def indicator_to_dict(indicator: IndicatorVariant) -> dict[str, Any]:
     return {
         "indicator_variant_id": indicator.indicator_variant_id,
@@ -207,6 +219,7 @@ def build_catalog_release(
     output_root: Path,
     release: DataRelease,
     indicators: Iterable[IndicatorReleaseInput],
+    geographies: Iterable[Geography],
 ) -> CatalogReleaseArtifacts:
     """Build an immutable V2 release containing independently queryable indicators.
 
@@ -220,6 +233,20 @@ def build_catalog_release(
     )
     if not indicator_inputs:
         raise ValueError("a catalog release must contain at least one indicator")
+
+    geography_list = sorted(geographies, key=lambda item: item.geography_id)
+    if not geography_list:
+        raise ValueError("a catalog release must contain at least one geography")
+    geography_ids = [item.geography_id for item in geography_list]
+    geography_codes = [item.canonical_code for item in geography_list]
+    if len(set(geography_ids)) != len(geography_ids):
+        raise ValueError("geography IDs must be unique inside a catalog release")
+    if len(set(geography_codes)) != len(geography_codes):
+        raise ValueError("geography codes must be unique inside a catalog release")
+    known_geography_ids = set(geography_ids)
+    for geography in geography_list:
+        if geography.parent_id is not None and geography.parent_id not in known_geography_ids:
+            raise ValueError("geography parent must exist inside the catalog release")
 
     indicator_ids = [item.indicator.indicator_variant_id for item in indicator_inputs]
     if len(set(indicator_ids)) != len(indicator_ids):
@@ -240,6 +267,8 @@ def build_catalog_release(
     for item in indicator_inputs:
         indicator = item.indicator
         rows = _validated_observations(release, indicator, item.observations)
+        if any(row.geography_id not in known_geography_ids for row in rows):
+            raise ValueError("observation geography is not declared in the catalog")
         relative_directory = Path("indicators") / indicator.indicator_variant_id
         indicator_directory = release_directory / relative_directory
         indicator_directories.append(indicator_directory)
@@ -272,6 +301,7 @@ def build_catalog_release(
     catalog = {
         "schema_version": 2,
         "release": release_to_dict(release),
+        "geographies": [geography_to_dict(item) for item in geography_list],
         "indicators": catalog_entries,
         "files": file_checksums,
     }
