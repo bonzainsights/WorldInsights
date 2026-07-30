@@ -1,4 +1,12 @@
+import type { Operation } from "../../../packages/contracts/src/index.js";
+import {
+  catalogExplorerShell,
+  compatibilityStatusHtml,
+  compatibleObservationHtml,
+  statusBadgeClass,
+} from "./catalog-ui.js";
 import { loadStaticRelease, type StaticRelease } from "./data.js";
+import { CatalogExplorer } from "./explorer.js";
 
 const geographyNames: Record<number, string> = {
   1: "Germany",
@@ -12,15 +20,15 @@ async function start(): Promise<void> {
 
   try {
     const release = await loadStaticRelease();
-    renderRelease(root, release);
+    await renderRelease(root, release);
   } catch (error) {
     renderError(root, error);
   }
 }
 
-function renderRelease(root: HTMLElement, release: StaticRelease): void {
+async function renderRelease(root: HTMLElement, release: StaticRelease): Promise<void> {
   if (release.kind === "catalog") {
-    renderCatalog(root, release);
+    await renderCatalog(root, release);
     return;
   }
 
@@ -85,50 +93,87 @@ function renderRelease(root: HTMLElement, release: StaticRelease): void {
     </main>`;
 }
 
-
-function renderCatalog(
+async function renderCatalog(
   root: HTMLElement,
   release: Extract<StaticRelease, { kind: "catalog" }>,
-): void {
-  root.innerHTML = `
-    <header class="hero">
-      <div>
-        <p class="eyebrow">Static-first global data explorer</p>
-        <h1>WorldInsights</h1>
-        <p class="lede">A verified multi-indicator catalog is ready for exploration.</p>
-      </div>
-      <span class="release-badge">${escapeHtml(release.latest.release_id)}</span>
-    </header>
-    <main>
-      <section class="metrics" aria-label="Catalog summary">
-        ${metric("Provider", release.catalog.release.provider_id)}
-        ${metric("Indicators", String(release.catalog.indicators.length))}
-        ${metric("Dataset", release.catalog.release.dataset_id)}
-        ${metric("Pipeline", release.catalog.release.pipeline_version)}
-      </section>
-      <section class="panel">
-        <p class="eyebrow">Available indicators</p>
-        <div class="bars" role="list">
-          ${release.catalog.indicators.map((indicator) => `
-            <article class="bar-row" role="listitem">
-              <div class="bar-label">
-                <strong>${escapeHtml(indicator.name)}</strong>
-                <span>${indicator.row_count} rows</span>
-              </div>
-              <small>${escapeHtml(indicator.provider_id)} · ${escapeHtml(indicator.unit_id)} · ${escapeHtml(indicator.frequency)}</small>
-            </article>`).join("")}
-        </div>
-      </section>
-    </main>`;
+): Promise<void> {
+  root.innerHTML = catalogExplorerShell(release);
+  const explorer = new CatalogExplorer(release);
+  const form = requiredElement<HTMLFormElement>(root, "#explorer-form");
+  const operationSelect = requiredElement<HTMLSelectElement>(root, "#operation-select");
+  const status = requiredElement<HTMLElement>(root, "#compatibility-status");
+  const badge = requiredElement<HTMLElement>(root, "#compatibility-badge");
+  const loadButton = requiredElement<HTMLButtonElement>(root, "#load-observations");
+  const results = requiredElement<HTMLElement>(root, "#explorer-results");
+  let revision = 0;
+
+  const selectedIndicatorIds = (): string[] =>
+    [...form.querySelectorAll<HTMLInputElement>('input[name="indicators"]:checked')].map(
+      (input) => input.value,
+    );
+
+  const refreshCompatibility = async (): Promise<void> => {
+    const currentRevision = ++revision;
+    badge.className = "status-badge checking";
+    badge.textContent = "Checking";
+    status.innerHTML = "<p>Checking compact coverage metadata…</p>";
+    loadButton.disabled = true;
+    explorer.setSelection(operationSelect.value as Operation, selectedIndicatorIds());
+    try {
+      const compatibility = await explorer.evaluate();
+      if (currentRevision !== revision) return;
+      status.innerHTML = compatibilityStatusHtml(compatibility);
+      badge.className = statusBadgeClass(compatibility.status);
+      badge.textContent = compatibility.status;
+      loadButton.disabled = compatibility.status === "invalid";
+    } catch (error) {
+      if (currentRevision !== revision) return;
+      status.innerHTML = `<p class="inline-error">${escapeHtml(errorMessage(error))}</p>`;
+      badge.className = "status-badge invalid";
+      badge.textContent = "error";
+    }
+  };
+
+  form.addEventListener("change", () => {
+    void refreshCompatibility();
+  });
+  loadButton.addEventListener("click", () => {
+    const buttonRevision = revision;
+    loadButton.disabled = true;
+    loadButton.textContent = "Loading verified observations…";
+    results.innerHTML = "<p>Downloading only compatible observation partitions…</p>";
+    void explorer
+      .loadCompatibleObservations()
+      .then((observationSet) => {
+        if (buttonRevision !== revision) return;
+        results.innerHTML = compatibleObservationHtml(release, observationSet);
+      })
+      .catch((error) => {
+        if (buttonRevision !== revision) return;
+        results.innerHTML = `<p class="inline-error">${escapeHtml(errorMessage(error))}</p>`;
+      })
+      .finally(() => {
+        if (buttonRevision !== revision) return;
+        loadButton.textContent = "Load compatible data";
+        loadButton.disabled = false;
+      });
+  });
+
+  await refreshCompatibility();
+}
+
+function requiredElement<T extends Element>(root: ParentNode, selector: string): T {
+  const element = root.querySelector<T>(selector);
+  if (!element) throw new Error(`missing required element: ${selector}`);
+  return element;
 }
 
 function renderError(root: HTMLElement, error: unknown): void {
-  const message = error instanceof Error ? error.message : String(error);
   root.innerHTML = `
     <main class="error-panel">
       <p class="eyebrow">Release validation failed</p>
       <h1>WorldInsights could not load this release.</h1>
-      <p>${escapeHtml(message)}</p>
+      <p>${escapeHtml(errorMessage(error))}</p>
     </main>`;
 }
 
@@ -138,6 +183,10 @@ function metric(label: string, value: string): string {
 
 function formatNumber(value: number | null): string {
   return value === null ? "No data" : new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(value);
+}
+
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
 }
 
 function escapeHtml(value: string): string {
