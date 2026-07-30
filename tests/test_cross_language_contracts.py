@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from scripts.build_sample_release import build_sample
+from scripts.build_sample_release import build_legacy_v1_contract_fixture
 from worldinsights.recipe import recipe_from_dict, recipe_to_dict
 
 FIXTURE_ROOT = Path(__file__).parent / "fixtures" / "contracts"
@@ -13,7 +13,7 @@ def test_python_accepts_canonical_recipe_fixture() -> None:
 
 
 def test_static_release_fixture_matches_python_builder(tmp_path: Path) -> None:
-    latest_path = build_sample(tmp_path)
+    latest_path = build_legacy_v1_contract_fixture(tmp_path)
     latest = json.loads(latest_path.read_text())
     release_root = tmp_path / "releases" / latest["release_id"]
     actual = {

@@ -18,15 +18,21 @@ if (result.status !== 0) process.exit(result.status ?? 1);
 await mkdir(output, { recursive: true });
 await cp(resolve(appRoot, "index.html"), resolve(output, "index.html"));
 await cp(resolve(appRoot, "styles.css"), resolve(output, "styles.css"));
-await cp(
-  resolve(repositoryRoot, "tests/fixtures/contracts/static-release-v1"),
-  resolve(output, "data"),
-  { recursive: true },
+const sampleResult = spawnSync(
+  "python",
+  [resolve(repositoryRoot, "scripts/build_sample_release.py"), "--output", resolve(output, "data")],
+  {
+    cwd: repositoryRoot,
+    stdio: "inherit",
+    env: { ...process.env, PYTHONPATH: resolve(repositoryRoot, "pipeline") },
+  },
 );
+if (sampleResult.status !== 0) process.exit(sampleResult.status ?? 1);
 
 const buildMetadata = {
   built_at: new Date().toISOString(),
-  data_source: "tests/fixtures/contracts/static-release-v1",
+  data_source: "pinned World Bank population and GDP-per-capita fixtures",
+  release_schema: 2,
 };
 await writeFile(
   resolve(output, "build.json"),
