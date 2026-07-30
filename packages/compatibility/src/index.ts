@@ -42,6 +42,14 @@ const OPERATION_ARITY: Record<Operation, readonly [number, number | null]> = {
   correlation: [2, null],
 };
 
+export function operationAcceptsIndicatorCount(
+  operation: Operation,
+  count: number,
+): boolean {
+  const [minimum, maximum] = OPERATION_ARITY[operation];
+  return count >= minimum && (maximum === null || count <= maximum);
+}
+
 export function convertibleUnitPairKey(left: string, right: string): string {
   return [left, right].sort().join("::");
 }
@@ -53,8 +61,7 @@ export function evaluateCoverageCompatibility(
 ): CompatibilityResult {
   if (indexes.length === 0) return invalidResult("no_indicators");
 
-  const [minimum, maximum] = OPERATION_ARITY[operation];
-  if (indexes.length < minimum || (maximum !== null && indexes.length > maximum)) {
+  if (!operationAcceptsIndicatorCount(operation, indexes.length)) {
     return invalidResult("operation_arity");
   }
 

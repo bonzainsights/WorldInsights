@@ -100,33 +100,62 @@ export async function loadStaticRelease(
   return { kind: "single", latest, manifest, coverage, observations };
 }
 
+export async function loadCatalogCoverage(
+  release: StaticCatalogRelease,
+  indicatorVariantId: string,
+  fetcher: FetchLike = globalThis.fetch.bind(globalThis),
+): Promise<CoverageManifestV1> {
+  const metadata = findCatalogIndicator(release, indicatorVariantId);
+  const coverage = await loadChecksummedJson(
+    metadata.coverage,
+    new URL("./", release.catalogUrl),
+    release.catalog.files,
+    fetcher,
+    parseCoverageManifestV1,
+  );
+  if (coverage.indicator_variant_id !== metadata.indicator_variant_id) {
+    throw new ReleaseLoadError("coverage indicator does not match the catalog");
+  }
+  return coverage;
+}
+
+export async function loadCatalogObservations(
+  release: StaticCatalogRelease,
+  indicatorVariantId: string,
+  fetcher: FetchLike = globalThis.fetch.bind(globalThis),
+): Promise<ObservationV1[]> {
+  const metadata = findCatalogIndicator(release, indicatorVariantId);
+  const observations = await loadChecksummedJson(
+    metadata.observations,
+    new URL("./", release.catalogUrl),
+    release.catalog.files,
+    fetcher,
+    parseObservationsV1,
+  );
+  if (observations.length !== metadata.row_count) {
+    throw new ReleaseLoadError("declared row count does not match observations");
+  }
+  for (const observation of observations) {
+    if (observation.release_id !== release.catalog.release.release_id) {
+      throw new ReleaseLoadError("observation release ID does not match the release");
+    }
+    if (observation.indicator_variant_id !== metadata.indicator_variant_id) {
+      throw new ReleaseLoadError("observation indicator does not match the catalog");
+    }
+  }
+  return observations;
+}
+
 export async function loadCatalogIndicator(
   release: StaticCatalogRelease,
   indicatorVariantId: string,
   fetcher: FetchLike = globalThis.fetch.bind(globalThis),
 ): Promise<StaticCatalogIndicator> {
-  const metadata = release.catalog.indicators.find(
-    (indicator) => indicator.indicator_variant_id === indicatorVariantId,
-  );
-  if (!metadata) {
-    throw new ReleaseLoadError(`catalog does not contain indicator: ${indicatorVariantId}`);
-  }
-
-  const releaseDirectory = new URL("./", release.catalogUrl);
-  const coverage = await loadChecksummedJson(
-    metadata.coverage,
-    releaseDirectory,
-    release.catalog.files,
-    fetcher,
-    parseCoverageManifestV1,
-  );
-  const observations = await loadChecksummedJson(
-    metadata.observations,
-    releaseDirectory,
-    release.catalog.files,
-    fetcher,
-    parseObservationsV1,
-  );
+  const metadata = findCatalogIndicator(release, indicatorVariantId);
+  const [coverage, observations] = await Promise.all([
+    loadCatalogCoverage(release, indicatorVariantId, fetcher),
+    loadCatalogObservations(release, indicatorVariantId, fetcher),
+  ]);
   validateIndicatorConsistency(
     release.catalog.release.release_id,
     metadata.indicator_variant_id,
@@ -135,6 +164,19 @@ export async function loadCatalogIndicator(
     observations,
   );
   return { metadata, coverage, observations };
+}
+
+function findCatalogIndicator(
+  release: StaticCatalogRelease,
+  indicatorVariantId: string,
+): CatalogIndicatorV2 {
+  const metadata = release.catalog.indicators.find(
+    (indicator) => indicator.indicator_variant_id === indicatorVariantId,
+  );
+  if (!metadata) {
+    throw new ReleaseLoadError(`catalog does not contain indicator: ${indicatorVariantId}`);
+  }
+  return metadata;
 }
 
 async function loadChecksummedJson<T>(
