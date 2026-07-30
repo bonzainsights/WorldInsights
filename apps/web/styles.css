@@ -155,3 +155,18 @@ select {
 .scope-option:has(input:checked) { background: #0d293b; }
 .scope-option input { accent-color: #56b4ff; }
 @media (max-width: 560px) { .scope-grid { grid-template-columns: 1fr; } }
+
+.scatter-card { margin-bottom: 2rem; padding-bottom: 1.75rem; border-bottom: 1px solid #1e3552; }
+.chart-heading { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-end; margin-bottom: 1rem; }
+.chart-heading h3 { margin: 0; font-size: clamp(1.25rem, 2.5vw, 1.8rem); }
+.chart-heading > span, .chart-note { color: #8fa6bf; }
+.scatter-chart { display: block; width: 100%; min-width: 42rem; height: auto; border: 1px solid #203851; border-radius: .9rem; background: #081522; }
+.chart-grid line { stroke: #1b334d; stroke-width: 1; }
+.chart-grid text { fill: #829bb6; font-size: 12px; }
+.axis-line { stroke: #90abc7; stroke-width: 1.5; }
+.axis-title { fill: #c9d9e9; font-size: 14px; font-weight: 700; }
+.scatter-point circle { fill: #6dddc4; stroke: #081522; stroke-width: 3; cursor: default; }
+.scatter-point circle:focus { outline: none; stroke: #fff0a6; stroke-width: 5; }
+.scatter-point text { fill: #dceafa; font-size: 12px; font-weight: 700; pointer-events: none; }
+.chart-note { margin: .8rem 0 0; font-size: .86rem; line-height: 1.5; }
+@media (max-width: 720px) { .chart-heading { align-items: flex-start; flex-direction: column; } .scatter-card { overflow-x: auto; } }

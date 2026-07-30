@@ -7,6 +7,7 @@ import type {
   StaticCatalogRelease,
 } from "./data.js";
 import type { CompatibleObservationSet } from "./explorer.js";
+import { scatterPlotHtml } from "./scatter.js";
 
 const OPERATION_LABELS: Record<Operation, string> = {
   map: "Map one feature",
@@ -134,8 +135,12 @@ export function compatibleObservationHtml(
   const geographyNames = new Map(
     release.catalog.geographies.map((geography) => [geography.geography_id, geography.name]),
   );
+  const visualization = result.operation === "scatter" || result.operation === "correlation"
+    ? scatterPlotHtml(release.catalog.indicators, release.catalog.geographies, result.observations)
+    : "";
 
   return `
+    ${visualization}
     <div class="panel-heading">
       <div>
         <p class="eyebrow">Compatible observations</p>
@@ -172,7 +177,6 @@ export function compatibleObservationHtml(
       </table>
     </div>`;
 }
-
 
 export function scopeControlsHtml(
   release: StaticCatalogRelease,

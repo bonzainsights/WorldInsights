@@ -28,6 +28,7 @@ export interface ExplorerScope {
 }
 
 export interface CompatibleObservationSet {
+  operation: Operation;
   compatibility: CompatibilityResult;
   observations: ReadonlyMap<string, ObservationV1[]>;
 }
@@ -153,7 +154,11 @@ export class CatalogExplorer {
         ] as const;
       }),
     );
-    return { compatibility, observations: new Map(entries) };
+    return {
+      operation: this.#selection.operation,
+      compatibility,
+      observations: new Map(entries),
+    };
   }
 
   #coverage(indicatorId: string): Promise<CoverageManifestV1> {
