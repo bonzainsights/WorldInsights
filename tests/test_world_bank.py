@@ -74,3 +74,41 @@ def test_paginated_response_is_rejected() -> None:
 
     with pytest.raises(WorldBankError, match="paginated"):
         adapter().parse_records(raw)
+
+
+
+def test_normalizes_pinned_gdp_per_capita_fixture() -> None:
+    from worldinsights.providers.world_bank import (
+        GDP_PER_CAPITA_CURRENT_USD_UNIT_ID,
+        GDP_PER_CAPITA_CURRENT_USD_VARIANT_ID,
+    )
+
+    fixture = ROOT / "tests/fixtures/world_bank/gdp_per_capita_2023_page.json"
+    instance = adapter()
+    records = instance.parse_records(json.loads(fixture.read_text(encoding="utf-8")))
+    observations = instance.normalize_records(
+        records,
+        release_id="world-bank-gdp-per-capita-2023-sample",
+        indicator_variant_id=GDP_PER_CAPITA_CURRENT_USD_VARIANT_ID,
+        unit_id=GDP_PER_CAPITA_CURRENT_USD_UNIT_ID,
+    )
+
+    assert records[0].indicator_code == "NY.GDP.PCAP.CD"
+    assert records[0].indicator_name == "GDP per capita (current US$)"
+    assert [row.geography_id for row in observations] == [1, 2, 3]
+    assert [row.value for row in observations] == [54776.8, 1382.4, 82586.8]
+    assert all(row.period.label == "2023" for row in observations)
+    assert all(row.unit_id == "current_usd_per_person" for row in observations)
+
+
+def test_builds_gdp_per_capita_query_url() -> None:
+    from worldinsights.providers.world_bank import GDP_PER_CAPITA_CURRENT_USD_CODE
+
+    url = adapter().build_indicator_url(
+        GDP_PER_CAPITA_CURRENT_USD_CODE,
+        start_year=2023,
+        end_year=2023,
+    )
+
+    assert "/indicator/NY.GDP.PCAP.CD" in url
+    assert "date=2023%3A2023" in url

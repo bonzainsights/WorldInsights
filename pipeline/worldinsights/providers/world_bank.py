@@ -14,6 +14,10 @@ from worldinsights.contracts import Observation, ObservationStatus, Period
 
 WORLD_BANK_BASE_URL = "https://api.worldbank.org/v2"
 
+GDP_PER_CAPITA_CURRENT_USD_CODE = "NY.GDP.PCAP.CD"
+GDP_PER_CAPITA_CURRENT_USD_VARIANT_ID = "wb.ny.gdp.pcap.cd"
+GDP_PER_CAPITA_CURRENT_USD_UNIT_ID = "current_usd_per_person"
+
 
 class WorldBankError(RuntimeError):
     """Raised when the World Bank response cannot be safely normalized."""
