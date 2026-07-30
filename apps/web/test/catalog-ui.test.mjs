@@ -103,7 +103,8 @@ test("compatible observations align selected feature values by geography and per
   assert.match(html, /Nepal/);
   assert.match(html, /30,896,590/);
   assert.match(html, />20</);
-  assert.equal((html.match(/<tr>/g) ?? []).length, 2);
+  const observationTable = html.match(/<table class="data-table">([\s\S]*?)<\/table>/)?.[1] ?? "";
+  assert.equal((observationTable.match(/<tr>/g) ?? []).length, 2);
 });
 
 
