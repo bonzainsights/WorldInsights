@@ -82,6 +82,9 @@ export function catalogExplorerShell(release: StaticCatalogRelease): string {
           <div id="compatibility-status" role="status" aria-live="polite">
             <p>Checking compact coverage metadata…</p>
           </div>
+          <div id="scope-controls" class="scope-controls">
+            <p class="field-help">Valid countries and periods will appear here.</p>
+          </div>
           <button id="load-observations" class="primary-button" type="button" disabled>
             Load compatible data
           </button>
@@ -167,6 +170,44 @@ export function compatibleObservationHtml(
             .join("")}
         </tbody>
       </table>
+    </div>`;
+}
+
+
+export function scopeControlsHtml(
+  release: StaticCatalogRelease,
+  result: CompatibilityResult,
+): string {
+  if (result.status === "invalid") {
+    return `<p class="field-help">Resolve compatibility blockers before choosing countries and periods.</p>`;
+  }
+  const geographyNames = new Map(
+    release.catalog.geographies.map((geography) => [geography.geography_id, geography.name]),
+  );
+  const geographyOptions = result.geography_ids
+    .map((geographyId) => `
+      <label class="scope-option">
+        <input type="checkbox" name="scope-geography" value="${geographyId}" checked />
+        <span>${escapeHtml(geographyNames.get(geographyId) ?? `Geography ${geographyId}`)}</span>
+      </label>`)
+    .join("");
+  const periodOptions = result.periods
+    .map((period) => `
+      <label class="scope-option">
+        <input type="checkbox" name="scope-period" value="${escapeHtml(period)}" checked />
+        <span>${escapeHtml(period)}</span>
+      </label>`)
+    .join("");
+  return `
+    <div class="scope-grid">
+      <fieldset>
+        <legend>Countries and regions</legend>
+        <div class="scope-list">${geographyOptions}</div>
+      </fieldset>
+      <fieldset>
+        <legend>Periods</legend>
+        <div class="scope-list">${periodOptions}</div>
+      </fieldset>
     </div>`;
 }
 

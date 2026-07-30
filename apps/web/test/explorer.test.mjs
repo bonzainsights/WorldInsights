@@ -87,3 +87,43 @@ test("does not load observations for an invalid ratio", async () => {
   );
   assert.equal(requests.filter((path) => path.endsWith("observations.json")).length, 0);
 });
+
+test("valid scope narrows observations after compatibility", async () => {
+  const files = await fixtureFiles();
+  const requests = [];
+  const fetcher = trackedFetch(files, requests);
+  const release = await loadStaticRelease("https://example.test/data/", fetcher);
+  const explorer = new CatalogExplorer(release, fetcher);
+  explorer.setSelection("map", ["wb.sp.pop.totl"]);
+  explorer.setScope({ geography_ids: [2], periods: ["2023"] });
+
+  const result = await explorer.loadCompatibleObservations();
+  assert.deepEqual(result.observations.get("wb.sp.pop.totl").map((row) => row.geography_id), [2]);
+});
+
+test("unavailable scope fails before observation download", async () => {
+  const files = await fixtureFiles();
+  const requests = [];
+  const fetcher = trackedFetch(files, requests);
+  const release = await loadStaticRelease("https://example.test/data/", fetcher);
+  const explorer = new CatalogExplorer(release, fetcher);
+  explorer.setSelection("map", ["wb.sp.pop.totl"]);
+  explorer.setScope({ geography_ids: [3], periods: ["2023"] });
+
+  await assert.rejects(
+    explorer.loadCompatibleObservations(),
+    /scope geography is unavailable/,
+  );
+  assert.equal(requests.filter((path) => path.endsWith("observations.json")).length, 0);
+});
+
+test("changing features resets stale scope", async () => {
+  const files = await fixtureFiles();
+  const fetcher = trackedFetch(files, []);
+  const release = await loadStaticRelease("https://example.test/data/", fetcher);
+  const explorer = new CatalogExplorer(release, fetcher);
+  explorer.setSelection("map", ["wb.sp.pop.totl"]);
+  explorer.setScope({ geography_ids: [1], periods: ["2023"] });
+  explorer.setSelection("map", ["test.gdp.per.capita"]);
+  assert.deepEqual(explorer.scope, {});
+});

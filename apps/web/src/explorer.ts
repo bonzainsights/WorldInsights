@@ -22,6 +22,11 @@ export interface ExplorerSelection {
   indicator_variant_ids: readonly string[];
 }
 
+export interface ExplorerScope {
+  geography_ids?: readonly number[];
+  periods?: readonly string[];
+}
+
 export interface CompatibleObservationSet {
   compatibility: CompatibilityResult;
   observations: ReadonlyMap<string, ObservationV1[]>;
@@ -31,6 +36,7 @@ export class CatalogExplorer {
   readonly release: StaticCatalogRelease;
   readonly fetcher: FetchLike;
   #selection: ExplorerSelection = { operation: "map", indicator_variant_ids: [] };
+  #scope: ExplorerScope = {};
   #coverageCache = new Map<string, Promise<CoverageManifestV1>>();
   #observationCache = new Map<string, Promise<ObservationV1[]>>();
 
@@ -46,6 +52,13 @@ export class CatalogExplorer {
     };
   }
 
+  get scope(): ExplorerScope {
+    return {
+      ...(this.#scope.geography_ids ? { geography_ids: [...this.#scope.geography_ids] } : {}),
+      ...(this.#scope.periods ? { periods: [...this.#scope.periods] } : {}),
+    };
+  }
+
   setSelection(operation: Operation, indicatorVariantIds: readonly string[]): void {
     const uniqueIds = [...new Set(indicatorVariantIds)];
     if (uniqueIds.length !== indicatorVariantIds.length) {
@@ -57,6 +70,34 @@ export class CatalogExplorer {
     const unknown = uniqueIds.find((indicatorId) => !knownIds.has(indicatorId));
     if (unknown) throw new ReleaseLoadError(`catalog does not contain indicator: ${unknown}`);
     this.#selection = { operation, indicator_variant_ids: uniqueIds };
+    this.#scope = {};
+  }
+
+  setScope(scope: ExplorerScope): void {
+    const geographyIds = scope.geography_ids ? [...scope.geography_ids] : undefined;
+    const periods = scope.periods ? [...scope.periods] : undefined;
+    if (geographyIds) {
+      if (geographyIds.length === 0) throw new ReleaseLoadError("scope must include at least one geography");
+      if (geographyIds.some((geographyId) => !Number.isInteger(geographyId) || geographyId <= 0)) {
+        throw new ReleaseLoadError("scope geography IDs must be positive integers");
+      }
+      if (new Set(geographyIds).size !== geographyIds.length) {
+        throw new ReleaseLoadError("scope geography IDs must be unique");
+      }
+    }
+    if (periods) {
+      if (periods.length === 0) throw new ReleaseLoadError("scope must include at least one period");
+      if (periods.some((period) => !period.trim())) {
+        throw new ReleaseLoadError("scope periods cannot be empty");
+      }
+      if (new Set(periods).size !== periods.length) {
+        throw new ReleaseLoadError("scope periods must be unique");
+      }
+    }
+    this.#scope = {
+      ...(geographyIds ? { geography_ids: geographyIds } : {}),
+      ...(periods ? { periods } : {}),
+    };
   }
 
   async evaluate(): Promise<CompatibilityResult> {
@@ -75,8 +116,30 @@ export class CatalogExplorer {
         `selection is incompatible: ${compatibility.blockers.join(", ")}`,
       );
     }
-    const allowedGeographies = new Set(compatibility.geography_ids);
-    const allowedPeriods = new Set(compatibility.periods);
+    const selectedGeographies = this.#scope.geography_ids
+      ? [...this.#scope.geography_ids]
+      : compatibility.geography_ids;
+    const selectedPeriods = this.#scope.periods
+      ? [...this.#scope.periods]
+      : compatibility.periods;
+    const compatibleGeographies = new Set(compatibility.geography_ids);
+    const compatiblePeriods = new Set(compatibility.periods);
+    const unavailableGeography = selectedGeographies.find(
+      (geographyId) => !compatibleGeographies.has(geographyId),
+    );
+    if (unavailableGeography !== undefined) {
+      throw new ReleaseLoadError(
+        `scope geography is unavailable for this selection: ${unavailableGeography}`,
+      );
+    }
+    const unavailablePeriod = selectedPeriods.find((period) => !compatiblePeriods.has(period));
+    if (unavailablePeriod !== undefined) {
+      throw new ReleaseLoadError(
+        `scope period is unavailable for this selection: ${unavailablePeriod}`,
+      );
+    }
+    const allowedGeographies = new Set(selectedGeographies);
+    const allowedPeriods = new Set(selectedPeriods);
     const entries = await Promise.all(
       this.#selection.indicator_variant_ids.map(async (indicatorId) => {
         const observations = await this.#observations(indicatorId);

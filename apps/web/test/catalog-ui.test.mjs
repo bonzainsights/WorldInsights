@@ -7,6 +7,7 @@ import {
   catalogExplorerShell,
   compatibilityStatusHtml,
   compatibleObservationHtml,
+  scopeControlsHtml,
 } from "../dist/apps/web/src/catalog-ui.js";
 
 async function releaseFixture() {
@@ -103,4 +104,23 @@ test("compatible observations align selected feature values by geography and per
   assert.match(html, /30,896,590/);
   assert.match(html, />20</);
   assert.equal((html.match(/<tr>/g) ?? []).length, 2);
+});
+
+
+test("scope controls use canonical catalog geography names and shared periods", async () => {
+  const release = await releaseFixture();
+  const html = scopeControlsHtml(release, {
+    status: "valid",
+    compatibility_class: "exact",
+    geography_bits_hex: "0x6",
+    geography_ids: [1, 2],
+    periods: ["2023"],
+    geography_types: ["country"],
+    blockers: [],
+    warnings: [],
+  });
+  assert.match(html, /Germany/);
+  assert.match(html, /Nepal/);
+  assert.match(html, /scope-geography/);
+  assert.match(html, /scope-period/);
 });

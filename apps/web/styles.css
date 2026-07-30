@@ -146,3 +146,12 @@ select {
 @media (max-width: 560px) {
   .coverage-metrics { grid-template-columns: 1fr; }
 }
+.scope-controls { margin-top: 1.25rem; }
+.scope-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+.scope-grid fieldset { min-width: 0; margin: 0; padding: .8rem; border: 1px solid #203b59; border-radius: .8rem; }
+.scope-grid legend { padding: 0 .35rem; color: #c6d8eb; font-weight: 800; }
+.scope-list { display: grid; gap: .45rem; max-height: 11rem; overflow: auto; }
+.scope-option { display: flex; gap: .55rem; align-items: center; padding: .45rem .5rem; border-radius: .55rem; background: #091727; cursor: pointer; }
+.scope-option:has(input:checked) { background: #0d293b; }
+.scope-option input { accent-color: #56b4ff; }
+@media (max-width: 560px) { .scope-grid { grid-template-columns: 1fr; } }

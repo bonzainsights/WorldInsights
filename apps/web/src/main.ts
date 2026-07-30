@@ -3,6 +3,7 @@ import {
   catalogExplorerShell,
   compatibilityStatusHtml,
   compatibleObservationHtml,
+  scopeControlsHtml,
   statusBadgeClass,
 } from "./catalog-ui.js";
 import { loadStaticRelease, type StaticRelease } from "./data.js";
@@ -104,6 +105,7 @@ async function renderCatalog(
   const status = requiredElement<HTMLElement>(root, "#compatibility-status");
   const badge = requiredElement<HTMLElement>(root, "#compatibility-badge");
   const loadButton = requiredElement<HTMLButtonElement>(root, "#load-observations");
+  const scopeControls = requiredElement<HTMLElement>(root, "#scope-controls");
   const results = requiredElement<HTMLElement>(root, "#explorer-results");
   let revision = 0;
 
@@ -117,6 +119,7 @@ async function renderCatalog(
     badge.className = "status-badge checking";
     badge.textContent = "Checking";
     status.innerHTML = "<p>Checking compact coverage metadata…</p>";
+    scopeControls.innerHTML = `<p class="field-help">Valid countries and periods will appear here.</p>`;
     loadButton.disabled = true;
     explorer.setSelection(operationSelect.value as Operation, selectedIndicatorIds());
     try {
@@ -125,17 +128,34 @@ async function renderCatalog(
       status.innerHTML = compatibilityStatusHtml(compatibility);
       badge.className = statusBadgeClass(compatibility.status);
       badge.textContent = compatibility.status;
+      scopeControls.innerHTML = scopeControlsHtml(release, compatibility);
       loadButton.disabled = compatibility.status === "invalid";
     } catch (error) {
       if (currentRevision !== revision) return;
       status.innerHTML = `<p class="inline-error">${escapeHtml(errorMessage(error))}</p>`;
       badge.className = "status-badge invalid";
       badge.textContent = "error";
+      scopeControls.innerHTML = `<p class="inline-error">Scope controls could not be prepared.</p>`;
     }
   };
 
   form.addEventListener("change", () => {
     void refreshCompatibility();
+  });
+  scopeControls.addEventListener("change", () => {
+    const geographyIds = [
+      ...scopeControls.querySelectorAll<HTMLInputElement>('input[name="scope-geography"]:checked'),
+    ].map((input) => Number(input.value));
+    const periods = [
+      ...scopeControls.querySelectorAll<HTMLInputElement>('input[name="scope-period"]:checked'),
+    ].map((input) => input.value);
+    try {
+      explorer.setScope({ geography_ids: geographyIds, periods });
+      loadButton.disabled = false;
+    } catch (error) {
+      loadButton.disabled = true;
+      status.innerHTML = `<p class="inline-error">${escapeHtml(errorMessage(error))}</p>`;
+    }
   });
   loadButton.addEventListener("click", () => {
     const buttonRevision = revision;
