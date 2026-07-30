@@ -16,6 +16,11 @@ import {
   recipeFromUrl,
   urlWithRecipe,
 } from "./recipe-url.js";
+import {
+  compatibleObservationsCsv,
+  csvFileName,
+  downloadCsv,
+} from "./export-csv.js";
 
 const geographyNames: Record<number, string> = {
   1: "Germany",
@@ -244,6 +249,18 @@ async function renderCatalog(
       .then((observationSet) => {
         if (buttonRevision !== revision) return;
         results.innerHTML = compatibleObservationHtml(release, observationSet);
+        const exportButton = document.createElement("button");
+        exportButton.id = "export-csv";
+        exportButton.className = "primary-button";
+        exportButton.type = "button";
+        exportButton.textContent = "Download CSV";
+        exportButton.addEventListener("click", () => {
+          downloadCsv(
+            csvFileName(release),
+            compatibleObservationsCsv(release, observationSet),
+          );
+        });
+        results.append(exportButton);
       })
       .catch((error) => {
         if (buttonRevision !== revision) return;
