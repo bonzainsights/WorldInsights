@@ -135,6 +135,12 @@ _OPERATION_ARITY: dict[Operation, tuple[int, int | None]] = {
 }
 
 
+def operation_arity(operation: Operation) -> tuple[int, int | None]:
+    """Return the inclusive indicator-count bounds for an analytical operation."""
+
+    return _OPERATION_ARITY[operation]
+
+
 def evaluate_compatibility(
     operation: Operation,
     indexes: list[CoverageIndex],
