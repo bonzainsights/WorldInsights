@@ -8,6 +8,7 @@ import type {
 } from "./data.js";
 import type { CompatibleObservationSet } from "./explorer.js";
 import { scatterPlotHtml } from "./scatter.js";
+import { trendChartHtml } from "./trend.js";
 
 const OPERATION_LABELS: Record<Operation, string> = {
   map: "Map one feature",
@@ -137,7 +138,9 @@ export function compatibleObservationHtml(
   );
   const visualization = result.operation === "scatter" || result.operation === "correlation"
     ? scatterPlotHtml(release.catalog.indicators, release.catalog.geographies, result.observations)
-    : "";
+    : result.operation === "trend"
+      ? trendChartHtml(release.catalog.indicators, release.catalog.geographies, result.observations)
+      : "";
 
   return `
     ${visualization}
