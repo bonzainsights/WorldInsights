@@ -1,4 +1,7 @@
-import type { Operation } from "../../../packages/contracts/src/index.js";
+import type {
+  ExplorationRecipeV1,
+  Operation,
+} from "../../../packages/contracts/src/index.js";
 import {
   catalogExplorerShell,
   compatibilityStatusHtml,
@@ -7,7 +10,12 @@ import {
   statusBadgeClass,
 } from "./catalog-ui.js";
 import { loadStaticRelease, type StaticRelease } from "./data.js";
-import { CatalogExplorer } from "./explorer.js";
+import { CatalogExplorer, type ExplorerScope } from "./explorer.js";
+import {
+  recipeForSelection,
+  recipeFromUrl,
+  urlWithRecipe,
+} from "./recipe-url.js";
 
 const geographyNames: Record<number, string> = {
   1: "Germany",
@@ -98,6 +106,13 @@ async function renderCatalog(
   root: HTMLElement,
   release: Extract<StaticRelease, { kind: "catalog" }>,
 ): Promise<void> {
+  const initialRecipe = await recipeFromUrl(window.location.href);
+  if (initialRecipe && initialRecipe.release_id !== release.latest.release_id) {
+    throw new Error(
+      `recipe release ${initialRecipe.release_id} does not match loaded release ${release.latest.release_id}`,
+    );
+  }
+
   root.innerHTML = catalogExplorerShell(release);
   const explorer = new CatalogExplorer(release);
   const form = requiredElement<HTMLFormElement>(root, "#explorer-form");
@@ -107,12 +122,52 @@ async function renderCatalog(
   const loadButton = requiredElement<HTMLButtonElement>(root, "#load-observations");
   const scopeControls = requiredElement<HTMLElement>(root, "#scope-controls");
   const results = requiredElement<HTMLElement>(root, "#explorer-results");
+  const shareButton = document.createElement("button");
+  shareButton.type = "button";
+  shareButton.className = "primary-button";
+  shareButton.textContent = "Copy shareable link";
+  shareButton.style.background = "#173451";
+  shareButton.style.color = "#cbe8ff";
+  shareButton.style.marginTop = ".65rem";
+  loadButton.insertAdjacentElement("afterend", shareButton);
   let revision = 0;
+  let recipeToRestore = initialRecipe;
 
   const selectedIndicatorIds = (): string[] =>
     [...form.querySelectorAll<HTMLInputElement>('input[name="indicators"]:checked')].map(
       (input) => input.value,
     );
+
+  const currentScope = (): ExplorerScope => {
+    const geographyInputs = [
+      ...scopeControls.querySelectorAll<HTMLInputElement>('input[name="scope-geography"]'),
+    ];
+    const periodInputs = [
+      ...scopeControls.querySelectorAll<HTMLInputElement>('input[name="scope-period"]'),
+    ];
+    const checkedGeographies = geographyInputs.filter((input) => input.checked).map((input) => Number(input.value));
+    const checkedPeriods = periodInputs.filter((input) => input.checked).map((input) => input.value);
+    return {
+      ...(geographyInputs.length > 0 && checkedGeographies.length < geographyInputs.length
+        ? { geography_ids: checkedGeographies }
+        : {}),
+      ...(periodInputs.length > 0 && checkedPeriods.length < periodInputs.length
+        ? { periods: checkedPeriods }
+        : {}),
+    };
+  };
+
+  const syncRecipeUrl = async (): Promise<string> => {
+    const recipe = recipeForSelection(
+      release.latest.release_id,
+      operationSelect.value as Operation,
+      selectedIndicatorIds(),
+      currentScope(),
+    );
+    const nextUrl = await urlWithRecipe(window.location.href, recipe);
+    window.history.replaceState(null, "", nextUrl);
+    return nextUrl;
+  };
 
   const refreshCompatibility = async (): Promise<void> => {
     const currentRevision = ++revision;
@@ -129,7 +184,12 @@ async function renderCatalog(
       badge.className = statusBadgeClass(compatibility.status);
       badge.textContent = compatibility.status;
       scopeControls.innerHTML = scopeControlsHtml(release, compatibility);
+      if (recipeToRestore) {
+        restoreRecipeScope(scopeControls, explorer, recipeToRestore);
+        recipeToRestore = null;
+      }
       loadButton.disabled = compatibility.status === "invalid";
+      if (compatibility.status !== "invalid") await syncRecipeUrl();
     } catch (error) {
       if (currentRevision !== revision) return;
       status.innerHTML = `<p class="inline-error">${escapeHtml(errorMessage(error))}</p>`;
@@ -139,23 +199,40 @@ async function renderCatalog(
     }
   };
 
+  if (initialRecipe) restoreRecipeSelection(form, operationSelect, initialRecipe);
+
   form.addEventListener("change", () => {
     void refreshCompatibility();
   });
   scopeControls.addEventListener("change", () => {
-    const geographyIds = [
-      ...scopeControls.querySelectorAll<HTMLInputElement>('input[name="scope-geography"]:checked'),
-    ].map((input) => Number(input.value));
-    const periods = [
-      ...scopeControls.querySelectorAll<HTMLInputElement>('input[name="scope-period"]:checked'),
-    ].map((input) => input.value);
     try {
-      explorer.setScope({ geography_ids: geographyIds, periods });
+      const scope = explicitScope(scopeControls);
+      explorer.setScope(scope);
       loadButton.disabled = false;
+      void syncRecipeUrl();
     } catch (error) {
       loadButton.disabled = true;
       status.innerHTML = `<p class="inline-error">${escapeHtml(errorMessage(error))}</p>`;
     }
+  });
+  shareButton.addEventListener("click", () => {
+    const originalText = shareButton.textContent;
+    shareButton.disabled = true;
+    void syncRecipeUrl()
+      .then((url) => navigator.clipboard.writeText(url))
+      .then(() => {
+        shareButton.textContent = "Link copied";
+      })
+      .catch((error) => {
+        shareButton.textContent = "Copy failed";
+        status.innerHTML = `<p class="inline-error">${escapeHtml(errorMessage(error))}</p>`;
+      })
+      .finally(() => {
+        window.setTimeout(() => {
+          shareButton.textContent = originalText;
+          shareButton.disabled = false;
+        }, 1400);
+      });
   });
   loadButton.addEventListener("click", () => {
     const buttonRevision = revision;
@@ -180,6 +257,69 @@ async function renderCatalog(
   });
 
   await refreshCompatibility();
+}
+
+function restoreRecipeSelection(
+  form: HTMLFormElement,
+  operationSelect: HTMLSelectElement,
+  recipe: ExplorationRecipeV1,
+): void {
+  operationSelect.value = recipe.operation;
+  const inputs = [...form.querySelectorAll<HTMLInputElement>('input[name="indicators"]')];
+  const requested = new Set(recipe.indicator_variant_ids);
+  const available = new Set(inputs.map((input) => input.value));
+  const unknown = recipe.indicator_variant_ids.find((indicatorId) => !available.has(indicatorId));
+  if (unknown) throw new Error(`recipe indicator is not present in this release: ${unknown}`);
+  for (const input of inputs) input.checked = requested.has(input.value);
+}
+
+function restoreRecipeScope(
+  root: HTMLElement,
+  explorer: CatalogExplorer,
+  recipe: ExplorationRecipeV1,
+): void {
+  const geographyInputs = [
+    ...root.querySelectorAll<HTMLInputElement>('input[name="scope-geography"]'),
+  ];
+  const periodInputs = [
+    ...root.querySelectorAll<HTMLInputElement>('input[name="scope-period"]'),
+  ];
+  const targetGeographies = recipe.geography.mode === "include"
+    ? recipe.geography.geography_ids
+    : geographyInputs.map((input) => Number(input.value));
+  const targetPeriods = recipe.time.mode === "include"
+    ? recipe.time.periods
+    : recipe.time.mode === "latest"
+      ? [periodInputs.at(-1)?.value].filter((value): value is string => Boolean(value))
+      : periodInputs.map((input) => input.value);
+  applyCheckedValues(geographyInputs, targetGeographies.map(String), "geography");
+  applyCheckedValues(periodInputs, targetPeriods, "period");
+  explorer.setScope({
+    ...(recipe.geography.mode === "include" ? { geography_ids: targetGeographies } : {}),
+    ...(recipe.time.mode !== "all_compatible" ? { periods: targetPeriods } : {}),
+  });
+}
+
+function explicitScope(root: HTMLElement): ExplorerScope {
+  const geographyIds = [
+    ...root.querySelectorAll<HTMLInputElement>('input[name="scope-geography"]:checked'),
+  ].map((input) => Number(input.value));
+  const periods = [
+    ...root.querySelectorAll<HTMLInputElement>('input[name="scope-period"]:checked'),
+  ].map((input) => input.value);
+  return { geography_ids: geographyIds, periods };
+}
+
+function applyCheckedValues(
+  inputs: readonly HTMLInputElement[],
+  selectedValues: readonly string[],
+  field: string,
+): void {
+  const selected = new Set(selectedValues);
+  const available = new Set(inputs.map((input) => input.value));
+  const unknown = selectedValues.find((value) => !available.has(value));
+  if (unknown) throw new Error(`recipe ${field} is unavailable for this selection: ${unknown}`);
+  for (const input of inputs) input.checked = selected.has(input.value);
 }
 
 function requiredElement<T extends Element>(root: ParentNode, selector: string): T {
