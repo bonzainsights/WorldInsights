@@ -33,12 +33,13 @@ ROOT = Path(__file__).resolve().parents[1]
 LEGACY_POPULATION_FIXTURE = ROOT / "tests/fixtures/world_bank/population_page.json"
 DEFAULT_POPULATION_FIXTURE = ROOT / "tests/fixtures/world_bank/population_2019_2023_page.json"
 DEFAULT_GDP_FIXTURE = ROOT / "tests/fixtures/world_bank/gdp_per_capita_2019_2023_page.json"
-DEFAULT_MAPPINGS = ROOT / "data/mappings/world_bank_geographies.json"
+LEGACY_MAPPINGS = ROOT / "data/mappings/world_bank_geographies.json"
+DEFAULT_MAPPINGS = ROOT / "data/mappings/world_bank_geographies_m49.json"
 
 SAMPLE_GEOGRAPHIES = (
-    Geography(1, "DEU", "Germany", GeographyType.COUNTRY),
-    Geography(2, "NPL", "Nepal", GeographyType.COUNTRY),
-    Geography(3, "USA", "United States", GeographyType.COUNTRY),
+    Geography(276, "DEU", "Germany", GeographyType.COUNTRY),
+    Geography(524, "NPL", "Nepal", GeographyType.COUNTRY),
+    Geography(840, "USA", "United States", GeographyType.COUNTRY),
 )
 
 
@@ -90,7 +91,7 @@ def build_sample(
         dataset_id=adapter.dataset_id,
         retrieved_at=datetime(2026, 7, 30, tzinfo=timezone.utc),
         source_checksum=combined_source.hexdigest(),
-        pipeline_version="0.4.0",
+        pipeline_version="0.6.0",
     )
     population = IndicatorVariant(
         indicator_variant_id="wb.sp.pop.totl",
@@ -133,7 +134,7 @@ def build_legacy_v1_contract_fixture(
     """Rebuild the frozen V1 fixture used for cross-language compatibility tests."""
 
     source_bytes = population_fixture.read_bytes()
-    adapter = WorldBankAdapter.from_mapping_file(DEFAULT_MAPPINGS)
+    adapter = WorldBankAdapter.from_mapping_file(LEGACY_MAPPINGS)
     records = [
         record
         for record in adapter.parse_records(json.loads(source_bytes))
