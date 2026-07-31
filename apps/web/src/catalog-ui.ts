@@ -7,7 +7,8 @@ import type {
   StaticCatalogRelease,
 } from "./data.js";
 import type { CompatibleObservationSet } from "./explorer.js";
-import { scatterPlotHtml } from "./scatter.js";
+import { correlationSummaryHtml } from "./correlation.js";
+import { alignScatterPoints, scatterPlotHtml } from "./scatter.js";
 import { trendChartHtml } from "./trend.js";
 import { provenanceHtml } from "./provenance.js";
 
@@ -137,11 +138,13 @@ export function compatibleObservationHtml(
   const geographyNames = new Map(
     release.catalog.geographies.map((geography) => [geography.geography_id, geography.name]),
   );
-  const visualization = result.operation === "scatter" || result.operation === "correlation"
-    ? scatterPlotHtml(release.catalog.indicators, release.catalog.geographies, result.observations)
-    : result.operation === "trend"
-      ? trendChartHtml(release.catalog.indicators, release.catalog.geographies, result.observations)
-      : "";
+  const visualization = result.operation === "correlation"
+    ? correlationAnalysisHtml(release, result.observations, selectedIds)
+    : result.operation === "scatter"
+      ? scatterPlotHtml(release.catalog.indicators, release.catalog.geographies, result.observations)
+      : result.operation === "trend"
+        ? trendChartHtml(release.catalog.indicators, release.catalog.geographies, result.observations)
+        : "";
 
   return `
     ${visualization}
@@ -228,6 +231,32 @@ interface AlignedObservationRow {
   geographyId: number;
   period: string;
   values: Map<string, number | null>;
+}
+
+function correlationAnalysisHtml(
+  release: StaticCatalogRelease,
+  observations: ReadonlyMap<string, readonly ObservationV1[]>,
+  selectedIds: readonly string[],
+): string {
+  const xIndicatorId = selectedIds[0];
+  const yIndicatorId = selectedIds[1];
+  if (selectedIds.length !== 2 || !xIndicatorId || !yIndicatorId) {
+    throw new Error("correlation analysis requires exactly two indicators");
+  }
+
+  const metadata = new Map(
+    release.catalog.indicators.map((indicator) => [indicator.indicator_variant_id, indicator]),
+  );
+  const xIndicator = metadata.get(xIndicatorId);
+  const yIndicator = metadata.get(yIndicatorId);
+  if (!xIndicator || !yIndicator) {
+    throw new Error("correlation indicator metadata is missing from the catalog");
+  }
+
+  const points = alignScatterPoints(observations, xIndicatorId, yIndicatorId);
+  return `
+    ${correlationSummaryHtml(points, xIndicator.name, yIndicator.name)}
+    ${scatterPlotHtml(release.catalog.indicators, release.catalog.geographies, observations)}`;
 }
 
 function alignObservationRows(
