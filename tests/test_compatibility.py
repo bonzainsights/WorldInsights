@@ -80,6 +80,23 @@ def test_operation_arity_is_enforced() -> None:
     assert result.blockers == (ReasonCode.OPERATION_ARITY,)
 
 
+def test_correlation_requires_exactly_two_indicators() -> None:
+    indexes = [
+        coverage("a", {1}, {"2024"}),
+        coverage("b", {1}, {"2024"}),
+        coverage("c", {1}, {"2024"}),
+    ]
+
+    too_few = evaluate_compatibility(Operation.CORRELATION, indexes[:1])
+    accepted = evaluate_compatibility(Operation.CORRELATION, indexes[:2])
+    too_many = evaluate_compatibility(Operation.CORRELATION, indexes)
+
+    assert too_few.blockers == (ReasonCode.OPERATION_ARITY,)
+    assert accepted.status is CompatibilityStatus.VALID
+    assert accepted.blockers == ()
+    assert too_many.blockers == (ReasonCode.OPERATION_ARITY,)
+
+
 def test_convertible_units_are_accepted() -> None:
     result = evaluate_compatibility(
         Operation.SCATTER,
