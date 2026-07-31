@@ -27,6 +27,7 @@ if (result.status !== 0) process.exit(result.status ?? 1);
 await mkdir(output, { recursive: true });
 await cp(resolve(appRoot, "index.html"), resolve(output, "index.html"));
 await cp(resolve(appRoot, "styles.css"), resolve(output, "styles.css"));
+await cp(resolve(appRoot, "country-scope.css"), resolve(output, "country-scope.css"));
 
 const releaseArguments = releaseMode === "live"
   ? liveReleaseArguments()
@@ -68,6 +69,9 @@ await writeFile(
 const index = await readFile(resolve(output, "index.html"), "utf8");
 if (!index.includes("apps/web/src/main.js")) {
   throw new Error("index.html does not reference the compiled application entry point");
+}
+if (!index.includes("apps/web/src/country-scope.js")) {
+  throw new Error("index.html does not reference the country scope enhancement");
 }
 
 function liveReleaseArguments() {
