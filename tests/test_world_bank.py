@@ -24,8 +24,43 @@ def test_build_url_is_bounded_and_encoded() -> None:
     url = adapter().build_indicator_url("SP.POP.TOTL", start_year=2020, end_year=2024)
 
     assert url.startswith("https://api.worldbank.org/v2/")
+    assert "/country/all/indicator/SP.POP.TOTL" in url
     assert "date=2020%3A2024" in url
     assert "per_page=20000" in url
+
+
+def test_build_url_scopes_and_sorts_explicit_country_codes() -> None:
+    url = adapter().build_indicator_url(
+        "SP.POP.TOTL",
+        start_year=2019,
+        end_year=2023,
+        country_codes=["usa", "DEU", "npl"],
+    )
+
+    assert "/country/DEU;NPL;USA/indicator/SP.POP.TOTL" in url
+    assert "date=2019%3A2023" in url
+
+
+@pytest.mark.parametrize(
+    "country_codes, message",
+    [
+        ([], "cannot be empty"),
+        (["DE"], "three ASCII letters"),
+        (["D3U"], "three ASCII letters"),
+        (["DEU", "deu"], "duplicate country code"),
+    ],
+)
+def test_build_url_rejects_invalid_country_scopes(
+    country_codes: list[str],
+    message: str,
+) -> None:
+    with pytest.raises(ValueError, match=message):
+        adapter().build_indicator_url(
+            "SP.POP.TOTL",
+            start_year=2019,
+            end_year=2023,
+            country_codes=country_codes,
+        )
 
 
 def test_fixture_parses_records() -> None:
@@ -74,7 +109,6 @@ def test_paginated_response_is_rejected() -> None:
 
     with pytest.raises(WorldBankError, match="paginated"):
         adapter().parse_records(raw)
-
 
 
 def test_normalizes_pinned_gdp_per_capita_fixture() -> None:
