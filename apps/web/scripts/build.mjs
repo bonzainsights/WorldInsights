@@ -52,7 +52,7 @@ const buildMetadata = {
     ? releaseScope === "global"
       ? "live global World Bank Indicators API"
       : "live bounded World Bank Indicators API"
-    : "pinned World Bank population and GDP-per-capita fixtures",
+    : "pinned World Bank population, GDP-per-capita, and life-expectancy fixtures",
   release_schema: 2,
   ...(releaseMode === "live"
     ? {
