@@ -1,0 +1,73 @@
+name: Verify Global Pages
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    if: github.head_ref == 'agent/verify-global-pages'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Verify public global release
+        run: |
+          python - <<'PY'
+          import json
+          import time
+          from urllib.error import HTTPError, URLError
+          from urllib.request import Request, urlopen
+
+          base = "https://bonzainsights.github.io/WorldInsights/"
+
+          def fetch(path: str):
+              request = Request(base + path, headers={"User-Agent": "WorldInsights verification"})
+              with urlopen(request, timeout=15) as response:
+                  if response.status != 200:
+                      raise RuntimeError(f"{path} returned HTTP {response.status}")
+                  return response.read()
+
+          last_error = None
+          for attempt in range(30):
+              try:
+                  build = json.loads(fetch("build.json"))
+                  latest = json.loads(fetch("data/latest.json"))
+                  catalog = json.loads(fetch("data/" + latest["catalog"]))
+                  release_id = str(latest.get("release_id", ""))
+                  geographies = len(catalog.get("geographies", []))
+                  rows = {
+                      item["indicator_variant_id"]: item["row_count"]
+                      for item in catalog.get("indicators", [])
+                  }
+                  if build.get("release_mode") != "live":
+                      raise RuntimeError("release mode is not live")
+                  if build.get("release_scope") != "global":
+                      raise RuntimeError("release scope is not global")
+                  if not release_id.startswith("world-bank-global-indicators-"):
+                      raise RuntimeError(f"release is not global: {release_id}")
+                  if geographies < 200:
+                      raise RuntimeError(f"only {geographies} geographies are deployed")
+                  if len(rows) < 2 or any(value < 1000 for value in rows.values()):
+                      raise RuntimeError(f"indicator partitions are too small: {rows}")
+                  summary = {
+                      "site": base,
+                      "release_id": release_id,
+                      "release_mode": build["release_mode"],
+                      "release_scope": build["release_scope"],
+                      "geography_count": geographies,
+                      "row_counts": rows,
+                      "retrieved_at": catalog["release"]["retrieved_at"],
+                  }
+                  print(json.dumps(summary, indent=2, sort_keys=True))
+                  break
+              except (HTTPError, URLError, RuntimeError, KeyError, ValueError) as error:
+                  last_error = error
+                  if attempt == 29:
+                      raise RuntimeError(f"global Pages verification failed: {last_error}")
+                  time.sleep(5)
+          PY
