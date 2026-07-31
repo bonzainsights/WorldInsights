@@ -11,7 +11,11 @@ from pathlib import Path
 from typing import Any
 
 from worldinsights.contracts import DataRelease
-from worldinsights.geographies import CountryRegistryEntry, iso_m49_country_registry, world_bank_country_mappings
+from worldinsights.geographies import (
+    CountryRegistryEntry,
+    iso_m49_country_registry,
+    world_bank_country_mappings,
+)
 from worldinsights.providers.world_bank import WorldBankAdapter
 from worldinsights.providers.world_bank_countries import (
     build_country_catalog_url,
@@ -20,11 +24,18 @@ from worldinsights.providers.world_bank_countries import (
 )
 from worldinsights.release import IndicatorReleaseInput, build_catalog_release
 
-from build_live_world_bank_release import (
-    INDICATORS,
-    _canonical_json_bytes,
-    _validate_record_grid,
-)
+try:
+    from scripts.build_live_world_bank_release import (
+        INDICATORS,
+        _canonical_json_bytes,
+        _validate_record_grid,
+    )
+except ModuleNotFoundError:  # Direct execution from the scripts directory.
+    from build_live_world_bank_release import (  # type: ignore[no-redef]
+        INDICATORS,
+        _canonical_json_bytes,
+        _validate_record_grid,
+    )
 
 
 PayloadFetcher = Callable[[str], Any]
