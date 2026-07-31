@@ -15,14 +15,18 @@ def test_deployed_browser_spec_covers_global_interactions_and_full_export() -> N
     assert 'page.locator("[data-country-option]:not([hidden])")' in content
     assert 'name: "Clear visible"' in content
     assert 'name: "Select all visible"' in content
+    assert 'input[name="indicators"][value="wb.sp.dyn.le00.in"]' in content
+    assert "toHaveCount(3)" in content
     assert 'operation.selectOption("scatter")' in content
     assert 'name: "Use latest period"' in content
+    assert 'input[name="scope-period"][value="2023"]' in content
     assert 'searchParams.has("r")' in content
     assert 'toHaveClass(/dense-scatter/)' in content
     assert 'page.locator("table.data-table").first()' in content
-    assert 'Showing 100 of ${countryCount} rows' in content
+    assert "resultRowCount" in content
+    assert 'Showing 100 of ${resultRowCount} rows' in content
     assert 'name: "Download CSV"' in content
-    assert "countryCount + 1" in content
+    assert "resultRowCount + 1" in content
     assert 'operation.selectOption("trend")' in content
     assert 'name: "Keep first 5 selected"' in content
     assert 'page.locator(".chart-legend li")' in content

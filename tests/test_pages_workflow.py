@@ -47,7 +47,17 @@ def test_pages_workflow_validates_deploys_and_browser_tests_global_build() -> No
     assert "latest.get(\"schema_version\") != 2" in content
     assert 'release_id.startswith("world-bank-global-indicators-")' in content
     assert 'len(catalog.get("geographies", [])) < 200' in content
+    assert '"wb.ny.gdp.pcap.cd"' in content
+    assert '"wb.sp.dyn.le00.in"' in content
+    assert '"wb.sp.pop.totl"' in content
+    assert "set(indicators) != required_indicator_ids" in content
     assert 'item.get("row_count", 0) < 1_000' in content
+    assert 'life_expectancy.get("provider_indicator_code") != "SP.DYN.LE00.IN"' in content
+    assert (
+        'life_expectancy.get("concept_id") '
+        '!= "health.life_expectancy_at_birth.total"'
+    ) in content
+    assert 'life_expectancy.get("unit_id") != "years"' in content
 
     assert "node-version: \"22\"" in content
     assert "npm install --no-save @playwright/test@1.60.0" in content

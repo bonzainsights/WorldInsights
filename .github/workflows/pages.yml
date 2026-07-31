@@ -151,9 +151,30 @@ jobs:
               raise RuntimeError("production deployment did not publish a global release")
           if len(catalog.get("geographies", [])) < 200:
               raise RuntimeError("global release contains fewer than 200 geographies")
-          indicators = catalog.get("indicators", [])
-          if len(indicators) < 2 or any(item.get("row_count", 0) < 1_000 for item in indicators):
+
+          required_indicator_ids = {
+              "wb.ny.gdp.pcap.cd",
+              "wb.sp.dyn.le00.in",
+              "wb.sp.pop.totl",
+          }
+          indicators = {
+              str(item.get("indicator_variant_id", "")): item
+              for item in catalog.get("indicators", [])
+          }
+          if set(indicators) != required_indicator_ids:
+              raise RuntimeError(
+                  f"global release has the wrong indicator set: {sorted(indicators)}"
+              )
+          if any(item.get("row_count", 0) < 1_000 for item in indicators.values()):
               raise RuntimeError("global release indicator partitions are unexpectedly small")
+          life_expectancy = indicators["wb.sp.dyn.le00.in"]
+          if life_expectancy.get("provider_indicator_code") != "SP.DYN.LE00.IN":
+              raise RuntimeError("life expectancy has the wrong provider identity")
+          if life_expectancy.get("concept_id") != "health.life_expectancy_at_birth.total":
+              raise RuntimeError("life expectancy has the wrong concept identity")
+          if life_expectancy.get("unit_id") != "years":
+              raise RuntimeError("life expectancy has the wrong unit")
+
           if len(main_javascript) < 1_000:
               raise RuntimeError("deployed application JavaScript is unexpectedly small")
           if len(stylesheet) < 1_000:
@@ -162,6 +183,7 @@ jobs:
           print(f"Verified deployed WorldInsights site at {base_url}")
           print(f"Release: {release_id}")
           print(f"Geographies: {len(catalog['geographies'])}")
+          print(f"Indicators: {', '.join(sorted(indicators))}")
           PY
 
       - name: Install pinned Playwright and Chromium

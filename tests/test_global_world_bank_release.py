@@ -12,9 +12,12 @@ from worldinsights.providers.world_bank import WorldBankError
 
 
 FIXED_RETRIEVAL = datetime(2026, 7, 31, 9, 0, tzinfo=timezone.utc)
+LIFE_EXPECTANCY_CODE = "SP.DYN.LE00.IN"
+LIFE_EXPECTANCY_ID = "wb.sp.dyn.le00.in"
 INDICATORS = {
     "SP.POP.TOTL": "Population, total",
     "NY.GDP.PCAP.CD": "GDP per capita (current US$)",
+    LIFE_EXPECTANCY_CODE: "Life expectancy at birth, total (years)",
 }
 
 
@@ -51,7 +54,11 @@ def country_catalog_payload() -> list[object]:
     return [{"page": 1, "pages": 1, "per_page": "400", "total": len(rows)}, rows]
 
 
-def indicator_payload(indicator_code: str, *, missing_key: tuple[str, int] | None = None) -> list[object]:
+def indicator_payload(
+    indicator_code: str,
+    *,
+    missing_key: tuple[str, int] | None = None,
+) -> list[object]:
     rows: list[dict[str, object]] = []
     country_names = {"DEU": "Germany", "NPL": "Nepal", "USA": "United States"}
     for country_index, code in enumerate(("DEU", "NPL", "USA"), start=1):
@@ -116,26 +123,39 @@ def test_global_builder_intersects_catalog_and_builds_m49_release(tmp_path: Path
         registry=registry_subset(),
     )
 
-    assert len(requested_urls) == 3
+    assert len(requested_urls) == 4
     assert requested_urls[0].endswith("/country?format=json&per_page=400")
     assert all(
         "/country/DEU;NPL;USA/indicator/" in url
         for url in requested_urls[1:]
     )
     assert all("date=2022%3A2023" in url for url in requested_urls[1:])
+    assert any(f"/indicator/{LIFE_EXPECTANCY_CODE}?" in url for url in requested_urls[1:])
 
     latest = json.loads(latest_path.read_text(encoding="utf-8"))
     assert latest["release_id"] == "world-bank-global-indicators-2022-2023-20260731T090000Z"
     release_root = tmp_path / "releases" / latest["release_id"]
     catalog = json.loads((release_root / "catalog.json").read_text(encoding="utf-8"))
 
-    assert catalog["release"]["pipeline_version"] == "0.8.0"
+    assert catalog["release"]["pipeline_version"] == "0.9.0"
     assert len(catalog["release"]["source_checksum"]) == 64
     assert {
         item["canonical_code"]: item["geography_id"]
         for item in catalog["geographies"]
     } == {"DEU": 276, "NPL": 524, "USA": 840}
+    assert [item["indicator_variant_id"] for item in catalog["indicators"]] == [
+        "wb.ny.gdp.pcap.cd",
+        LIFE_EXPECTANCY_ID,
+        "wb.sp.pop.totl",
+    ]
     assert {item["row_count"] for item in catalog["indicators"]} == {6}
+    life_expectancy = next(
+        item for item in catalog["indicators"]
+        if item["indicator_variant_id"] == LIFE_EXPECTANCY_ID
+    )
+    assert life_expectancy["provider_indicator_code"] == LIFE_EXPECTANCY_CODE
+    assert life_expectancy["concept_id"] == "health.life_expectancy_at_birth.total"
+    assert life_expectancy["unit_id"] == "years"
 
 
 def test_global_builder_is_deterministic_for_fixed_inputs(tmp_path: Path) -> None:

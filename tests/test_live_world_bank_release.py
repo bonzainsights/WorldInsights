@@ -6,7 +6,7 @@ from typing import Any
 
 import pytest
 
-from scripts.build_live_world_bank_release import build_live_release
+from scripts.build_live_world_bank_release import INDICATORS, build_live_release
 from worldinsights.providers.world_bank import WorldBankError
 
 
@@ -14,12 +14,28 @@ ROOT = Path(__file__).resolve().parents[1]
 POPULATION_FIXTURE = ROOT / "tests/fixtures/world_bank/population_2019_2023_page.json"
 GDP_FIXTURE = ROOT / "tests/fixtures/world_bank/gdp_per_capita_2019_2023_page.json"
 FIXED_RETRIEVAL = datetime(2026, 7, 31, 7, 30, tzinfo=timezone.utc)
+LIFE_EXPECTANCY_CODE = "SP.DYN.LE00.IN"
+LIFE_EXPECTANCY_ID = "wb.sp.dyn.le00.in"
+
+
+def life_expectancy_payload() -> Any:
+    payload = json.loads(POPULATION_FIXTURE.read_text(encoding="utf-8"))
+    rows = payload[1]
+    for index, row in enumerate(rows):
+        row["indicator"] = {
+            "id": LIFE_EXPECTANCY_CODE,
+            "value": "Life expectancy at birth, total (years)",
+        }
+        if row["value"] is not None:
+            row["value"] = round(65.0 + index / 10, 3)
+    return payload
 
 
 def fixture_payloads() -> dict[str, Any]:
     return {
         "SP.POP.TOTL": json.loads(POPULATION_FIXTURE.read_text(encoding="utf-8")),
         "NY.GDP.PCAP.CD": json.loads(GDP_FIXTURE.read_text(encoding="utf-8")),
+        LIFE_EXPECTANCY_CODE: life_expectancy_payload(),
     }
 
 
@@ -42,6 +58,17 @@ def file_snapshot(root: Path) -> dict[str, bytes]:
     }
 
 
+def test_indicator_registry_contains_three_unique_semantic_series() -> None:
+    by_code = {spec.provider_code: spec for spec in INDICATORS}
+
+    assert len(INDICATORS) == len(by_code) == 3
+    assert set(by_code) == {"SP.POP.TOTL", "NY.GDP.PCAP.CD", LIFE_EXPECTANCY_CODE}
+    life_expectancy = by_code[LIFE_EXPECTANCY_CODE]
+    assert life_expectancy.variant_id == LIFE_EXPECTANCY_ID
+    assert life_expectancy.concept_id == "health.life_expectancy_at_birth.total"
+    assert life_expectancy.unit_id == "years"
+
+
 def test_live_builder_creates_bounded_multi_indicator_release(tmp_path: Path) -> None:
     requested_urls: list[str] = []
     latest_path = build_live_release(
@@ -52,10 +79,11 @@ def test_live_builder_creates_bounded_multi_indicator_release(tmp_path: Path) ->
         fetch_payload=fixture_fetcher(fixture_payloads(), requested_urls),
     )
 
-    assert len(requested_urls) == 2
+    assert len(requested_urls) == 3
     assert all("/country/DEU;NPL;USA/indicator/" in url for url in requested_urls)
     assert all("date=2019%3A2023" in url for url in requested_urls)
     assert all("source=2" in url for url in requested_urls)
+    assert any(f"/indicator/{LIFE_EXPECTANCY_CODE}?" in url for url in requested_urls)
 
     latest = json.loads(latest_path.read_text(encoding="utf-8"))
     assert latest["schema_version"] == 2
@@ -64,15 +92,27 @@ def test_live_builder_creates_bounded_multi_indicator_release(tmp_path: Path) ->
     release_root = tmp_path / "releases" / latest["release_id"]
     catalog = json.loads((release_root / "catalog.json").read_text(encoding="utf-8"))
     assert catalog["release"]["retrieved_at"] == "2026-07-31T07:30:00+00:00"
-    assert catalog["release"]["pipeline_version"] == "0.6.0"
+    assert catalog["release"]["pipeline_version"] == "0.9.0"
     assert len(catalog["release"]["source_checksum"]) == 64
     assert [item["geography_id"] for item in catalog["geographies"]] == [276, 524, 840]
     assert [item["indicator_variant_id"] for item in catalog["indicators"]] == [
         "wb.ny.gdp.pcap.cd",
+        LIFE_EXPECTANCY_ID,
         "wb.sp.pop.totl",
     ]
+    life_expectancy = next(
+        item for item in catalog["indicators"]
+        if item["indicator_variant_id"] == LIFE_EXPECTANCY_ID
+    )
+    assert life_expectancy["provider_indicator_code"] == LIFE_EXPECTANCY_CODE
+    assert life_expectancy["concept_id"] == "health.life_expectancy_at_birth.total"
+    assert life_expectancy["unit_id"] == "years"
 
-    for indicator_id in ("wb.ny.gdp.pcap.cd", "wb.sp.pop.totl"):
+    for indicator_id in (
+        "wb.ny.gdp.pcap.cd",
+        LIFE_EXPECTANCY_ID,
+        "wb.sp.pop.totl",
+    ):
         indicator_root = release_root / "indicators" / indicator_id
         observations = json.loads(
             (indicator_root / "observations.json").read_text(encoding="utf-8")

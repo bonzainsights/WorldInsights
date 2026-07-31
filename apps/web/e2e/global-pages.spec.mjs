@@ -40,9 +40,16 @@ test("global selection, chart policies, pagination, and CSV work together", asyn
 
   const operation = page.locator("#operation-select");
   const indicators = page.locator('input[name="indicators"]');
-  await expect(indicators).toHaveCount(2);
+  const gdp = page.locator('input[name="indicators"][value="wb.ny.gdp.pcap.cd"]');
+  const lifeExpectancy = page.locator(
+    'input[name="indicators"][value="wb.sp.dyn.le00.in"]',
+  );
+  await expect(indicators).toHaveCount(3);
+  await expect(gdp).toBeChecked();
+  await expect(lifeExpectancy).not.toBeChecked();
+
   await operation.selectOption("scatter");
-  await indicators.nth(1).check();
+  await lifeExpectancy.check();
   await waitForScope(page);
 
   const loadButton = page.locator("#load-observations");
@@ -52,6 +59,19 @@ test("global selection, chart policies, pagination, and CSV work together", asyn
   await expect.poll(
     () => page.locator('input[name="scope-period"]:checked').count(),
   ).toBe(1);
+
+  const period2023 = page.locator('input[name="scope-period"][value="2023"]');
+  await expect(period2023).toBeVisible();
+  if (!(await period2023.isChecked())) {
+    const selectedPeriod = page.locator('input[name="scope-period"]:checked');
+    const selectedValue = await selectedPeriod.inputValue();
+    await period2023.check();
+    await page.locator(`input[name="scope-period"][value="${selectedValue}"]`).uncheck();
+  }
+  await expect.poll(
+    () => page.locator('input[name="scope-period"]:checked').count(),
+  ).toBe(1);
+  await expect(period2023).toBeChecked();
   await expect(loadButton).toBeEnabled();
   await expect.poll(() => new URL(page.url()).searchParams.has("r")).toBe(true);
 
@@ -63,8 +83,10 @@ test("global selection, chart policies, pagination, and CSV work together", asyn
   await expect(scatter).toHaveClass(/dense-scatter/);
 
   const observationTable = page.locator("table.data-table").first();
+  const resultRowCount = await observationTable.locator("tbody tr").count();
+  expect(resultRowCount).toBeGreaterThan(100);
   await expect(page.locator(".result-pagination-status")).toHaveText(
-    `Showing 100 of ${countryCount} rows`,
+    `Showing 100 of ${resultRowCount} rows`,
   );
   await expect(observationTable.locator("tbody tr:visible")).toHaveCount(100);
 
@@ -74,13 +96,13 @@ test("global selection, chart policies, pagination, and CSV work together", asyn
   const downloadPath = await download.path();
   expect(downloadPath).not.toBeNull();
   const csv = await readFile(downloadPath, "utf8");
-  expect(csv.trimEnd().split(/\r?\n/)).toHaveLength(countryCount + 1);
+  expect(csv.trimEnd().split(/\r?\n/)).toHaveLength(resultRowCount + 1);
 
-  await page.getByRole("button", { name: `Show all ${countryCount} rows` }).click();
-  await expect(observationTable.locator("tbody tr:visible")).toHaveCount(countryCount);
+  await page.getByRole("button", { name: `Show all ${resultRowCount} rows` }).click();
+  await expect(observationTable.locator("tbody tr:visible")).toHaveCount(resultRowCount);
 
   await operation.selectOption("trend");
-  await indicators.nth(1).uncheck();
+  await lifeExpectancy.uncheck();
   await waitForScope(page);
   await expect(page.getByRole("button", { name: "Keep first 5 selected" })).toBeVisible();
   await expect(loadButton).toBeDisabled();

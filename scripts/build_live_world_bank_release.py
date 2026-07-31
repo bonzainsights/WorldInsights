@@ -79,6 +79,13 @@ INDICATORS = (
         concept_id="economy.gdp_per_capita",
         unit_id=GDP_PER_CAPITA_CURRENT_USD_UNIT_ID,
     ),
+    IndicatorSpec(
+        provider_code="SP.DYN.LE00.IN",
+        variant_id="wb.sp.dyn.le00.in",
+        name="Life expectancy at birth, total (years)",
+        concept_id="health.life_expectancy_at_birth.total",
+        unit_id="years",
+    ),
 )
 
 
@@ -166,7 +173,7 @@ def build_live_release(
         dataset_id=adapter.dataset_id,
         retrieved_at=timestamp,
         source_checksum=source_checksum.hexdigest(),
-        pipeline_version="0.6.0",
+        pipeline_version="0.9.0",
     )
     artifacts = build_catalog_release(
         output_root=output_root,
