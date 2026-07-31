@@ -29,6 +29,7 @@ await cp(resolve(appRoot, "index.html"), resolve(output, "index.html"));
 await cp(resolve(appRoot, "styles.css"), resolve(output, "styles.css"));
 await cp(resolve(appRoot, "country-scope.css"), resolve(output, "country-scope.css"));
 await cp(resolve(appRoot, "result-table.css"), resolve(output, "result-table.css"));
+await cp(resolve(appRoot, "scope-policy.css"), resolve(output, "scope-policy.css"));
 
 const releaseArguments = releaseMode === "live"
   ? liveReleaseArguments()
@@ -76,6 +77,9 @@ if (!index.includes("apps/web/src/country-scope.js")) {
 }
 if (!index.includes("apps/web/src/result-table.js")) {
   throw new Error("index.html does not reference result table pagination");
+}
+if (!index.includes("apps/web/src/scope-policy-ui.js")) {
+  throw new Error("index.html does not reference chart scope policy guidance");
 }
 
 function liveReleaseArguments() {

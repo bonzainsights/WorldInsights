@@ -16,6 +16,7 @@ import {
   type FetchLike,
   type StaticCatalogRelease,
 } from "./data.js";
+import { evaluateOperationScope } from "./scope-policy.js";
 
 export interface ExplorerSelection {
   operation: Operation;
@@ -137,6 +138,16 @@ export class CatalogExplorer {
     if (unavailablePeriod !== undefined) {
       throw new ReleaseLoadError(
         `scope period is unavailable for this selection: ${unavailablePeriod}`,
+      );
+    }
+    const policy = evaluateOperationScope(
+      this.#selection.operation,
+      selectedGeographies.length,
+      selectedPeriods.length,
+    );
+    if (!policy.valid) {
+      throw new ReleaseLoadError(
+        `scope is unsuitable for ${this.#selection.operation}: ${policy.messages.join(" ")}`,
       );
     }
     const allowedGeographies = new Set(selectedGeographies);
