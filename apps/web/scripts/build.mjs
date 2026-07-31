@@ -28,6 +28,7 @@ await mkdir(output, { recursive: true });
 await cp(resolve(appRoot, "index.html"), resolve(output, "index.html"));
 await cp(resolve(appRoot, "styles.css"), resolve(output, "styles.css"));
 await cp(resolve(appRoot, "country-scope.css"), resolve(output, "country-scope.css"));
+await cp(resolve(appRoot, "result-table.css"), resolve(output, "result-table.css"));
 
 const releaseArguments = releaseMode === "live"
   ? liveReleaseArguments()
@@ -72,6 +73,9 @@ if (!index.includes("apps/web/src/main.js")) {
 }
 if (!index.includes("apps/web/src/country-scope.js")) {
   throw new Error("index.html does not reference the country scope enhancement");
+}
+if (!index.includes("apps/web/src/result-table.js")) {
+  throw new Error("index.html does not reference result table pagination");
 }
 
 function liveReleaseArguments() {
