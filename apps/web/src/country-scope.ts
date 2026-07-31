@@ -88,7 +88,7 @@ export function enhanceCountryScope(root: HTMLElement): void {
     <p id="country-selection-count" class="country-selection-count" role="status" aria-live="polite"></p>
     <p id="country-search-empty" class="field-help" hidden>No countries match this search.</p>`;
   fieldset.insertBefore(toolbar, countryList);
-  wireCountryScopeControls(root, toolbar, options);
+  wireCountryScopeControls(fieldset, toolbar, options);
 }
 
 export function startCountryScopeEnhancer(): void {
@@ -100,7 +100,7 @@ export function startCountryScopeEnhancer(): void {
 }
 
 function wireCountryScopeControls(
-  root: HTMLElement,
+  fieldset: HTMLFieldSetElement,
   toolbar: HTMLElement,
   options: readonly CountryOptionElement[],
 ): void {
@@ -145,7 +145,7 @@ function wireCountryScopeControls(
   searchInput.addEventListener("input", refresh);
   selectVisible.addEventListener("click", () => setVisibleSelection(true));
   clearVisible.addEventListener("click", () => setVisibleSelection(false));
-  root.addEventListener("change", (event) => {
+  fieldset.addEventListener("change", (event) => {
     const target = event.target;
     if (target instanceof HTMLInputElement && target.name === "scope-geography") refresh();
   });
