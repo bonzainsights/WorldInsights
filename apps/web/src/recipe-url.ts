@@ -111,10 +111,27 @@ async function transform(
   stream: CompressionStream | DecompressionStream,
   maximumBytes: number,
 ): Promise<Uint8Array> {
-  const writer = stream.writable.getWriter();
-  await writer.write(input);
-  await writer.close();
   const reader = stream.readable.getReader();
+  const writer = stream.writable.getWriter();
+  const readPromise = collectTransformedBytes(reader, maximumBytes);
+  const writePromise = (async (): Promise<void> => {
+    await writer.write(input);
+    await writer.close();
+  })();
+
+  try {
+    const [output] = await Promise.all([readPromise, writePromise]);
+    return output;
+  } catch (error) {
+    await Promise.allSettled([writer.abort(error), reader.cancel(error)]);
+    throw error;
+  }
+}
+
+async function collectTransformedBytes(
+  reader: ReadableStreamDefaultReader<Uint8Array>,
+  maximumBytes: number,
+): Promise<Uint8Array> {
   const chunks: Uint8Array[] = [];
   let total = 0;
   while (true) {
@@ -122,7 +139,6 @@ async function transform(
     if (done) break;
     total += value.byteLength;
     if (total > maximumBytes) {
-      await reader.cancel();
       throw new RecipeUrlError("decoded recipe is too large");
     }
     chunks.push(value);

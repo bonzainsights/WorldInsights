@@ -9,6 +9,9 @@ async function waitForScope(page) {
 }
 
 test("global selection, chart policies, pagination, and CSV work together", async ({ page }) => {
+  const pageErrors = [];
+  page.on("pageerror", (error) => pageErrors.push(error.message));
+
   await page.goto("./", { waitUntil: "domcontentloaded" });
   await expect(page.locator("#operation-select")).toBeVisible();
   await expect(page.locator("#country-search")).toBeVisible();
@@ -22,7 +25,7 @@ test("global selection, chart policies, pagination, and CSV work together", asyn
 
   const countrySearch = page.locator("#country-search");
   await countrySearch.fill("Nepal");
-  await expect(page.locator("label.scope-option:not([hidden])")).toHaveCount(1);
+  await expect(page.locator("[data-country-option]:not([hidden])")).toHaveCount(1);
   await expect(page.locator("#country-selection-count")).toContainText("1 visible");
 
   await page.getByRole("button", { name: "Clear visible" }).click();
@@ -59,10 +62,11 @@ test("global selection, chart policies, pagination, and CSV work together", asyn
   expect(pointCount).toBeGreaterThan(40);
   await expect(scatter).toHaveClass(/dense-scatter/);
 
+  const observationTable = page.locator("table.data-table").first();
   await expect(page.locator(".result-pagination-status")).toHaveText(
     `Showing 100 of ${countryCount} rows`,
   );
-  await expect(page.locator("table.data-table tbody tr:visible")).toHaveCount(100);
+  await expect(observationTable.locator("tbody tr:visible")).toHaveCount(100);
 
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("button", { name: "Download CSV" }).click();
@@ -73,7 +77,7 @@ test("global selection, chart policies, pagination, and CSV work together", asyn
   expect(csv.trimEnd().split(/\r?\n/)).toHaveLength(countryCount + 1);
 
   await page.getByRole("button", { name: `Show all ${countryCount} rows` }).click();
-  await expect(page.locator("table.data-table tbody tr:visible")).toHaveCount(countryCount);
+  await expect(observationTable.locator("tbody tr:visible")).toHaveCount(countryCount);
 
   await operation.selectOption("trend");
   await indicators.nth(1).uncheck();
@@ -90,4 +94,5 @@ test("global selection, chart policies, pagination, and CSV work together", asyn
   await expect(page.locator("svg.trend-chart")).toBeVisible({ timeout: 30_000 });
   await expect(page.locator(".chart-legend li")).toHaveCount(5);
   await expect(page.locator(".result-pagination")).toHaveCount(0);
+  expect(pageErrors).toEqual([]);
 });

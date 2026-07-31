@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 import {
   decodeRecipeToken,
@@ -47,4 +48,17 @@ test("uses all-compatible scope when no explicit subset exists", () => {
   assert.deepEqual(all.geography, { mode: "all_compatible", geography_ids: [] });
   assert.deepEqual(all.time, { mode: "all_compatible", periods: [] });
   assert.equal(all.visualization, "line");
+});
+
+test("starts reading compression output before awaiting writable closure", async () => {
+  const source = await readFile(new URL("../src/recipe-url.ts", import.meta.url), "utf8");
+  const reader = source.indexOf("const reader = stream.readable.getReader()");
+  const readPromise = source.indexOf("const readPromise = collectTransformedBytes");
+  const writerClose = source.indexOf("await writer.close()");
+  const coordinated = source.indexOf("Promise.all([readPromise, writePromise])");
+
+  assert.ok(reader >= 0);
+  assert.ok(readPromise > reader);
+  assert.ok(writerClose > readPromise);
+  assert.ok(coordinated > writerClose);
 });
