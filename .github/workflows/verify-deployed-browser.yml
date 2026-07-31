@@ -1,0 +1,73 @@
+name: Verify Deployed Recipe Browser
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/verify-deployed-browser.yml
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Wait for corrected recipe assets
+        run: |
+          python - <<'PY'
+          import time
+          from urllib.request import Request, urlopen
+
+          url = "https://bonzainsights.github.io/WorldInsights/"
+          required = (
+              "apps/web/src/recipe-transition-guard.js",
+              "apps/web/src/country-scope.js",
+              "apps/web/src/result-table.js",
+              "apps/web/src/scope-policy-ui.js",
+          )
+          last = ""
+          for attempt in range(48):
+              request = Request(url, headers={"User-Agent": "WorldInsights recipe verifier"})
+              with urlopen(request, timeout=15) as response:
+                  last = response.read().decode("utf-8")
+              if all(asset in last for asset in required):
+                  print("Verified corrected recipe assets are deployed")
+                  break
+              if attempt == 47:
+                  missing = [asset for asset in required if asset not in last]
+                  raise RuntimeError(f"deployed index is missing corrected assets: {missing}")
+              time.sleep(5)
+          PY
+
+      - name: Install pinned Playwright and Chromium
+        working-directory: apps/web
+        run: |
+          npm install --no-save @playwright/test@1.60.0
+          npx playwright install --with-deps chromium
+
+      - name: Run deployed global browser scenario
+        working-directory: apps/web
+        env:
+          SITE_URL: https://bonzainsights.github.io/WorldInsights/
+        run: npx playwright test --config=playwright.config.mjs --project=chromium
+
+      - name: Upload browser report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployed-recipe-browser-report
+          path: apps/web/playwright-report
+          if-no-files-found: ignore
+          retention-days: 7
