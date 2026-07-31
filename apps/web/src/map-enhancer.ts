@@ -1,5 +1,6 @@
 import type { Operation } from "../../../packages/contracts/src/index.js";
-import { choroplethMapHtml, loadWorldTopology } from "./choropleth.js";
+import { loadWorldTopology } from "./choropleth.js";
+import { choroplethMapHtmlM49 } from "./choropleth-m49.js";
 import { loadStaticRelease } from "./data.js";
 import { CatalogExplorer } from "./explorer.js";
 
@@ -41,7 +42,7 @@ async function enhanceLoadedMap(): Promise<void> {
       loadWorldTopology(),
     ]);
     container.dataset.worldinsightsMap = "ready";
-    container.innerHTML = choroplethMapHtml(
+    container.innerHTML = choroplethMapHtmlM49(
       release.catalog.indicators,
       release.catalog.geographies,
       observationSet.observations,
