@@ -99,7 +99,7 @@ export function correlationSummaryHtml(
   const result = pearsonCorrelation(points);
   if (result.status === "insufficient_pairs") {
     return `
-      <section class="correlation-card" aria-labelledby="correlation-heading">
+      <section class="scatter-card correlation-card" aria-labelledby="correlation-heading">
         <p class="eyebrow">Linear association</p>
         <h3 id="correlation-heading">Pearson correlation is undefined</h3>
         <p>At least two complete pairs are required; ${result.pair_count} ${result.pair_count === 1 ? "is" : "are"} available.</p>
@@ -110,7 +110,7 @@ export function correlationSummaryHtml(
   if (result.status === "zero_variance") {
     const labels = result.constant_axes.map((axis) => axis === "x" ? xLabel : yLabel);
     return `
-      <section class="correlation-card" aria-labelledby="correlation-heading">
+      <section class="scatter-card correlation-card" aria-labelledby="correlation-heading">
         <p class="eyebrow">Linear association</p>
         <h3 id="correlation-heading">Pearson correlation is undefined</h3>
         <p>${escapeHtml(joinLabels(labels))} ${labels.length === 1 ? "has" : "have"} no variation across the ${result.pair_count} complete pairs.</p>
@@ -125,7 +125,7 @@ export function correlationSummaryHtml(
       ? "negative"
       : "zero";
   return `
-    <section class="correlation-card" aria-labelledby="correlation-heading">
+    <section class="scatter-card correlation-card" aria-labelledby="correlation-heading">
       <div class="chart-heading">
         <div>
           <p class="eyebrow">Linear association</p>
