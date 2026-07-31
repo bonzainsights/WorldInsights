@@ -1,0 +1,26 @@
+[
+  {
+    "provider_code": "DEU",
+    "geography_id": 276,
+    "canonical_code": "DEU",
+    "geography_type": "country"
+  },
+  {
+    "provider_code": "NPL",
+    "geography_id": 524,
+    "canonical_code": "NPL",
+    "geography_type": "country"
+  },
+  {
+    "provider_code": "USA",
+    "geography_id": 840,
+    "canonical_code": "USA",
+    "geography_type": "country"
+  },
+  {
+    "provider_code": "WLD",
+    "geography_id": 1,
+    "canonical_code": "WORLD",
+    "geography_type": "aggregate"
+  }
+]
