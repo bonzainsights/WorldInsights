@@ -1,0 +1,99 @@
+name: Global Release Probe
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'agent/global-release-probe'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install project
+        run: python -m pip install --upgrade pip && python -m pip install -e .
+
+      - name: Build validated global release
+        id: build
+        env:
+          PYTHONPATH: ${{ github.workspace }}/pipeline
+        run: |
+          started=$(date +%s)
+          python scripts/build_global_world_bank_release.py \
+            --output probe-data \
+            --start-year 2019 \
+            --end-year 2024
+          finished=$(date +%s)
+          echo "runtime_seconds=$((finished - started))" >> "$GITHUB_OUTPUT"
+
+      - name: Summarize release metrics
+        env:
+          RUNTIME_SECONDS: ${{ steps.build.outputs.runtime_seconds }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path("probe-data")
+          latest = json.loads((root / "latest.json").read_text(encoding="utf-8"))
+          release_root = root / "releases" / latest["release_id"]
+          catalog = json.loads((release_root / "catalog.json").read_text(encoding="utf-8"))
+          coverage_rows = {}
+          period_sets = {}
+          for indicator in catalog["indicators"]:
+              coverage = json.loads((release_root / indicator["coverage"]).read_text(encoding="utf-8"))
+              coverage_rows[indicator["indicator_variant_id"]] = indicator["row_count"]
+              period_sets[indicator["indicator_variant_id"]] = coverage["periods"]
+
+          total_bytes = sum(path.stat().st_size for path in root.rglob("*") if path.is_file())
+          summary = {
+              "release_id": latest["release_id"],
+              "runtime_seconds": int(os.environ["RUNTIME_SECONDS"]),
+              "country_count": len(catalog["geographies"]),
+              "indicator_count": len(catalog["indicators"]),
+              "row_counts": coverage_rows,
+              "periods": period_sets,
+              "artifact_bytes": total_bytes,
+              "source_checksum": catalog["release"]["source_checksum"],
+          }
+          Path("probe-summary.json").write_text(
+              json.dumps(summary, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as output:
+              output.write("## Global World Bank release probe\n\n")
+              output.write(f"- Release: `{summary['release_id']}`\n")
+              output.write(f"- Runtime: **{summary['runtime_seconds']} seconds**\n")
+              output.write(f"- Countries/territories: **{summary['country_count']}**\n")
+              output.write(f"- Indicators: **{summary['indicator_count']}**\n")
+              output.write(f"- Artifact size: **{summary['artifact_bytes']} bytes**\n")
+              for indicator_id, row_count in summary["row_counts"].items():
+                  output.write(f"- `{indicator_id}`: **{row_count} rows**\n")
+          print(json.dumps(summary, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload probe artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: global-world-bank-release-probe
+          path: |
+            probe-data
+            probe-summary.json
+          if-no-files-found: error
+          retention-days: 7
