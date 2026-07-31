@@ -61,8 +61,76 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Deploy static explorer
         id: deployment
         uses: actions/deploy-pages@v4
+
+  smoke:
+    name: Verify deployed explorer
+    runs-on: ubuntu-latest
+    needs: deploy
+    timeout-minutes: 5
+
+    steps:
+      - name: Smoke test public Pages site
+        env:
+          SITE_URL: ${{ needs.deploy.outputs.page_url }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import time
+          from urllib.error import HTTPError, URLError
+          from urllib.request import Request, urlopen
+
+          base_url = os.environ["SITE_URL"].rstrip("/") + "/"
+
+          def fetch(path: str) -> bytes:
+              url = base_url + path
+              last_error: Exception | None = None
+              for attempt in range(12):
+                  try:
+                      request = Request(
+                          url,
+                          headers={"User-Agent": "WorldInsights deployment smoke test"},
+                      )
+                      with urlopen(request, timeout=15) as response:
+                          if response.status != 200:
+                              raise RuntimeError(f"{url} returned HTTP {response.status}")
+                          body = response.read()
+                          if not body:
+                              raise RuntimeError(f"{url} returned an empty response")
+                          return body
+                  except (HTTPError, URLError, RuntimeError) as error:
+                      last_error = error
+                      if attempt == 11:
+                          break
+                      time.sleep(5)
+              raise RuntimeError(f"could not fetch {url}: {last_error}")
+
+          index = fetch("").decode("utf-8")
+          build = json.loads(fetch("build.json"))
+          latest = json.loads(fetch("data/latest.json"))
+          main_javascript = fetch("apps/web/src/main.js")
+          stylesheet = fetch("styles.css")
+
+          if "WorldInsights" not in index:
+              raise RuntimeError("deployed index is missing the WorldInsights shell")
+          if "apps/web/src/main.js" not in index:
+              raise RuntimeError("deployed index does not reference the application entry point")
+          if build.get("release_schema") != 2:
+              raise RuntimeError("deployed build metadata has the wrong release schema")
+          if latest.get("schema_version") != 2:
+              raise RuntimeError("deployed latest release is not the V2 catalog")
+          if len(main_javascript) < 1_000:
+              raise RuntimeError("deployed application JavaScript is unexpectedly small")
+          if len(stylesheet) < 1_000:
+              raise RuntimeError("deployed stylesheet is unexpectedly small")
+
+          print(f"Verified deployed WorldInsights site at {base_url}")
+          print(f"Release: {latest['release_id']}")
+          PY
