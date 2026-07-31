@@ -8,7 +8,7 @@ async function waitForScope(page) {
   await expect(page.locator("#compatibility-badge")).not.toHaveText(/checking/i);
 }
 
-test("global selection, chart policies, pagination, and CSV work together", async ({ page }) => {
+test("global selection, correlation, chart policies, pagination, and CSV work together", async ({ page }) => {
   const pageErrors = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));
 
@@ -48,7 +48,7 @@ test("global selection, chart policies, pagination, and CSV work together", asyn
   await expect(gdp).toBeChecked();
   await expect(lifeExpectancy).not.toBeChecked();
 
-  await operation.selectOption("scatter");
+  await operation.selectOption("correlation");
   await lifeExpectancy.check();
   await waitForScope(page);
 
@@ -76,8 +76,18 @@ test("global selection, chart policies, pagination, and CSV work together", asyn
   await expect.poll(() => new URL(page.url()).searchParams.has("r")).toBe(true);
 
   await loadButton.click();
+  const correlation = page.locator(".correlation-card");
+  await expect(correlation).toBeVisible({ timeout: 30_000 });
+  await expect(correlation).toContainText("Pearson correlation");
+  await expect(correlation).toContainText("Complete pairs");
+  const coefficient = correlation.locator(
+    'strong[aria-label^="Pearson correlation coefficient"]',
+  );
+  await expect(coefficient).toHaveText(/^r = -?(?:0\.\d{3}|1\.000)$/);
+  await expect(correlation).toContainText("correlation does not imply causation");
+
   const scatter = page.locator("svg.scatter-chart");
-  await expect(scatter).toBeVisible({ timeout: 30_000 });
+  await expect(scatter).toBeVisible();
   const pointCount = await scatter.locator(".scatter-point").count();
   expect(pointCount).toBeGreaterThan(40);
   await expect(scatter).toHaveClass(/dense-scatter/);
