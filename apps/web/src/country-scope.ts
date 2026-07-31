@@ -63,6 +63,21 @@ export function countryScopeSummary(
   };
 }
 
+export function countrySelectionAfterVisibleAction(
+  items: readonly CountryScopeItem[],
+  query: string,
+  checked: boolean,
+): Set<number> {
+  return new Set(
+    items
+      .filter((item) =>
+        countryMatchesSearch(item.name, item.canonicalCode, query) ? checked : item.checked,
+      )
+      .filter((item) => item.checked || countryMatchesSearch(item.name, item.canonicalCode, query))
+      .map((item) => item.geographyId),
+  );
+}
+
 export function enhanceCountryScope(root: HTMLElement): void {
   if (root.querySelector("[data-country-scope-toolbar]")) return;
   const options = countryOptionElements(root);
@@ -110,14 +125,15 @@ function wireCountryScopeControls(
   const countStatus = requiredElement<HTMLElement>(toolbar, "#country-selection-count");
   const emptyStatus = requiredElement<HTMLElement>(toolbar, "#country-search-empty");
 
+  const items = (): CountryScopeItem[] => options.map((option) => ({
+    geographyId: option.geographyId,
+    name: option.name,
+    canonicalCode: option.canonicalCode,
+    checked: option.input.checked,
+  }));
+
   const refresh = (): void => {
-    const items = options.map((option) => ({
-      geographyId: option.geographyId,
-      name: option.name,
-      canonicalCode: option.canonicalCode,
-      checked: option.input.checked,
-    }));
-    const summary = countryScopeSummary(items, searchInput.value);
+    const summary = countryScopeSummary(items(), searchInput.value);
     const visibleIds = new Set(summary.visibleGeographyIds);
 
     for (const option of options) {
@@ -132,11 +148,12 @@ function wireCountryScopeControls(
   };
 
   const setVisibleSelection = (checked: boolean): void => {
+    const selectedIds = countrySelectionAfterVisibleAction(items(), searchInput.value, checked);
     let firstChanged: HTMLInputElement | null = null;
     for (const option of options) {
-      if (option.label.hidden || option.input.checked === checked) continue;
-      option.input.checked = checked;
-      firstChanged ??= option.input;
+      const nextChecked = selectedIds.has(option.geographyId);
+      if (option.input.checked !== nextChecked) firstChanged ??= option.input;
+      option.input.checked = nextChecked;
     }
     refresh();
     firstChanged?.dispatchEvent(new Event("change", { bubbles: true }));
