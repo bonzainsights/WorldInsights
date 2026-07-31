@@ -17,7 +17,11 @@ def test_deployed_browser_spec_covers_global_interactions_and_full_export() -> N
     assert 'name: "Select all visible"' in content
     assert 'input[name="indicators"][value="wb.sp.dyn.le00.in"]' in content
     assert "toHaveCount(3)" in content
-    assert 'operation.selectOption("scatter")' in content
+    assert 'operation.selectOption("correlation")' in content
+    assert 'page.locator(".correlation-card")' in content
+    assert "Pearson correlation coefficient" in content
+    assert 'toHaveText(/^r = -?(?:0\\.\\d{3}|1\\.000)$/)' in content
+    assert "correlation does not imply causation" in content
     assert 'name: "Use latest period"' in content
     assert 'input[name="scope-period"][value="2023"]' in content
     assert 'searchParams.has("r")' in content
