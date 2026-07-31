@@ -131,7 +131,7 @@ _OPERATION_ARITY: dict[Operation, tuple[int, int | None]] = {
     Operation.TABLE: (1, None),
     Operation.SCATTER: (2, 2),
     Operation.RATIO: (2, 2),
-    Operation.CORRELATION: (2, None),
+    Operation.CORRELATION: (2, 2),
 }
 
 
