@@ -31,12 +31,12 @@ from worldinsights.release import IndicatorReleaseInput, build_catalog_release
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MAPPINGS = ROOT / "data/mappings/world_bank_geographies.json"
+DEFAULT_MAPPINGS = ROOT / "data/mappings/world_bank_geographies_m49.json"
 DEFAULT_COUNTRY_CODES = ("DEU", "NPL", "USA")
 DEFAULT_GEOGRAPHIES = (
-    Geography(1, "DEU", "Germany", GeographyType.COUNTRY),
-    Geography(2, "NPL", "Nepal", GeographyType.COUNTRY),
-    Geography(3, "USA", "United States", GeographyType.COUNTRY),
+    Geography(276, "DEU", "Germany", GeographyType.COUNTRY),
+    Geography(524, "NPL", "Nepal", GeographyType.COUNTRY),
+    Geography(840, "USA", "United States", GeographyType.COUNTRY),
 )
 
 PayloadFetcher = Callable[[str], Any]
@@ -166,7 +166,7 @@ def build_live_release(
         dataset_id=adapter.dataset_id,
         retrieved_at=timestamp,
         source_checksum=source_checksum.hexdigest(),
-        pipeline_version="0.5.0",
+        pipeline_version="0.6.0",
     )
     artifacts = build_catalog_release(
         output_root=output_root,

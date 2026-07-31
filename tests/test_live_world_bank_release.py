@@ -64,8 +64,9 @@ def test_live_builder_creates_bounded_multi_indicator_release(tmp_path: Path) ->
     release_root = tmp_path / "releases" / latest["release_id"]
     catalog = json.loads((release_root / "catalog.json").read_text(encoding="utf-8"))
     assert catalog["release"]["retrieved_at"] == "2026-07-31T07:30:00+00:00"
-    assert catalog["release"]["pipeline_version"] == "0.5.0"
+    assert catalog["release"]["pipeline_version"] == "0.6.0"
     assert len(catalog["release"]["source_checksum"]) == 64
+    assert [item["geography_id"] for item in catalog["geographies"]] == [276, 524, 840]
     assert [item["indicator_variant_id"] for item in catalog["indicators"]] == [
         "wb.ny.gdp.pcap.cd",
         "wb.sp.pop.totl",
@@ -78,7 +79,7 @@ def test_live_builder_creates_bounded_multi_indicator_release(tmp_path: Path) ->
         )
         coverage = json.loads((indicator_root / "coverage.json").read_text(encoding="utf-8"))
         assert len(observations) == 15
-        assert coverage["geography_ids"] == [1, 2, 3]
+        assert coverage["geography_ids"] == [276, 524, 840]
         assert coverage["periods"] == ["2019", "2020", "2021", "2022", "2023"]
 
 

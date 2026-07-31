@@ -17,6 +17,11 @@ def test_sample_release_builds_real_multi_indicator_history(tmp_path: Path) -> N
         "wb.sp.pop.totl",
     ]
     assert [entry["row_count"] for entry in catalog["indicators"]] == [15, 15]
+    assert [geography["geography_id"] for geography in catalog["geographies"]] == [
+        276,
+        524,
+        840,
+    ]
     assert [geography["name"] for geography in catalog["geographies"]] == [
         "Germany",
         "Nepal",
@@ -36,12 +41,12 @@ def test_sample_release_builds_real_multi_indicator_history(tmp_path: Path) -> N
     gdp_values = {(row["geography_id"], row["period_label"]): row["value"] for row in gdp}
 
     assert len(population) == len(gdp) == 15
-    assert population_values[(1, "2019")] == 83_092_962.0
-    assert population_values[(3, "2023")] == 336_806_231.0
-    assert gdp_values[(2, "2019")] == 1_203.1
-    assert gdp_values[(3, "2023")] == 82_586.8
-    assert population_coverage["geography_ids"] == [1, 2, 3]
-    assert gdp_coverage["geography_ids"] == [1, 2, 3]
+    assert population_values[(276, "2019")] == 83_092_962.0
+    assert population_values[(840, "2023")] == 336_806_231.0
+    assert gdp_values[(524, "2019")] == 1_203.1
+    assert gdp_values[(840, "2023")] == 82_586.8
+    assert population_coverage["geography_ids"] == [276, 524, 840]
+    assert gdp_coverage["geography_ids"] == [276, 524, 840]
     assert population_coverage["periods"] == gdp_coverage["periods"] == [
         "2019",
         "2020",
