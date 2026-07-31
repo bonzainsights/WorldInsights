@@ -130,7 +130,7 @@ def build_global_live_release(
         dataset_id=adapter.dataset_id,
         retrieved_at=timestamp,
         source_checksum=source_checksum.hexdigest(),
-        pipeline_version="0.8.0",
+        pipeline_version="0.9.0",
     )
     artifacts = build_catalog_release(
         output_root=output_root,
