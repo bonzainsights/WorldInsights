@@ -1,0 +1,105 @@
+{
+  "coverage": {
+    "concept_id": "population.total",
+    "frequency": "annual",
+    "geography_bits_hex": "0xe",
+    "geography_ids": [
+      1,
+      2,
+      3
+    ],
+    "geography_types": [
+      "country"
+    ],
+    "indicator_variant_id": "wb.sp.pop.totl",
+    "periods": [
+      "2023"
+    ],
+    "unit_id": "people"
+  },
+  "latest": {
+    "manifest": "releases/world-bank-population-2023-sample/manifest.json",
+    "manifest_sha256": "00bf04818aa51822c62681104b63e216b137c1427540350ce9cf98febd56f80b",
+    "release_id": "world-bank-population-2023-sample",
+    "schema_version": 1
+  },
+  "manifest": {
+    "files": {
+      "coverage.json": {
+        "sha256": "148359834e1054eb7172d98ef74aecd39c140aaac0795283f5bf130cb74d96a7"
+      },
+      "observations.json": {
+        "sha256": "303f1ed18d1ceead1618fb4f685d8deb8ad1ae22510af909ce419a186af4e5a2"
+      }
+    },
+    "indicator": {
+      "concept_id": "population.total",
+      "dataset_id": "indicators",
+      "frequency": "annual",
+      "geography_types": [
+        "country"
+      ],
+      "indicator_variant_id": "wb.sp.pop.totl",
+      "name": "Population, total",
+      "provider_id": "world-bank",
+      "provider_indicator_code": "SP.POP.TOTL",
+      "unit_id": "people"
+    },
+    "release": {
+      "dataset_id": "indicators",
+      "pipeline_version": "0.1.0",
+      "provider_id": "world-bank",
+      "release_id": "world-bank-population-2023-sample",
+      "retrieved_at": "2026-07-30T00:00:00+00:00",
+      "source_checksum": "a297382f00c3e93b8c0e7c417c558cc7cc3738cf5f9a865efc263f772c7d1b94"
+    },
+    "row_count": 3,
+    "schema_version": 1
+  },
+  "observations": [
+    {
+      "frequency": "annual",
+      "geography_id": 1,
+      "indicator_variant_id": "wb.sp.pop.totl",
+      "period_end": "2023-12-31",
+      "period_label": "2023",
+      "period_start": "2023-01-01",
+      "provider_quality_flags": [],
+      "release_id": "world-bank-population-2023-sample",
+      "status": "observed",
+      "system_quality_flags": [],
+      "unit_id": "people",
+      "value": 83280000.0
+    },
+    {
+      "frequency": "annual",
+      "geography_id": 2,
+      "indicator_variant_id": "wb.sp.pop.totl",
+      "period_end": "2023-12-31",
+      "period_label": "2023",
+      "period_start": "2023-01-01",
+      "provider_quality_flags": [
+        "E"
+      ],
+      "release_id": "world-bank-population-2023-sample",
+      "status": "observed",
+      "system_quality_flags": [],
+      "unit_id": "people",
+      "value": 30896590.0
+    },
+    {
+      "frequency": "annual",
+      "geography_id": 3,
+      "indicator_variant_id": "wb.sp.pop.totl",
+      "period_end": "2023-12-31",
+      "period_label": "2023",
+      "period_start": "2023-01-01",
+      "provider_quality_flags": [],
+      "release_id": "world-bank-population-2023-sample",
+      "status": "observed",
+      "system_quality_flags": [],
+      "unit_id": "people",
+      "value": 334914895.0
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "geography": {
+    "geography_ids": [
+      1,
+      3
+    ],
+    "mode": "include"
+  },
+  "indicator_variant_ids": [
+    "wb.sp.pop.totl",
+    "wb.ny.gdp.pcap.cd"
+  ],
+  "operation": "scatter",
+  "release_id": "world-bank-population-2023-sample",
+  "schema_version": 1,
+  "time": {
+    "mode": "include",
+    "periods": [
+      "2022",
+      "2023"
+    ]
+  },
+  "transforms": [
+    {
+      "parameters": {
+        "base": 10,
+        "clamp_zero": true
+      },
+      "transform_id": "log10"
+    }
+  ],
+  "visualization": "scatter"
+}
