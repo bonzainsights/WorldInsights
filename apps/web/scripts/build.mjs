@@ -8,9 +8,13 @@ const appRoot = resolve(scriptDirectory, "..");
 const repositoryRoot = resolve(appRoot, "../..");
 const output = resolve(appRoot, "dist");
 const releaseMode = process.env.WORLDINSIGHTS_RELEASE_MODE ?? "sample";
+const releaseScope = process.env.WORLDINSIGHTS_RELEASE_SCOPE ?? "bounded";
 
 if (!new Set(["sample", "live"]).has(releaseMode)) {
   throw new Error(`unsupported WORLDINSIGHTS_RELEASE_MODE: ${releaseMode}`);
+}
+if (!new Set(["bounded", "global"]).has(releaseScope)) {
+  throw new Error(`unsupported WORLDINSIGHTS_RELEASE_SCOPE: ${releaseScope}`);
 }
 
 await rm(output, { recursive: true, force: true });
@@ -42,11 +46,14 @@ const buildMetadata = {
   built_at: new Date().toISOString(),
   release_mode: releaseMode,
   data_source: releaseMode === "live"
-    ? "live World Bank Indicators API"
+    ? releaseScope === "global"
+      ? "live global World Bank Indicators API"
+      : "live bounded World Bank Indicators API"
     : "pinned World Bank population and GDP-per-capita fixtures",
   release_schema: 2,
   ...(releaseMode === "live"
     ? {
+        release_scope: releaseScope,
         start_year: parseYear("WORLDINSIGHTS_START_YEAR", "2019"),
         end_year: parseYear("WORLDINSIGHTS_END_YEAR", "2024"),
       }
@@ -69,8 +76,11 @@ function liveReleaseArguments() {
   if (startYear > endYear) {
     throw new Error("WORLDINSIGHTS_START_YEAR cannot be after WORLDINSIGHTS_END_YEAR");
   }
+  const script = releaseScope === "global"
+    ? "build_global_world_bank_release.py"
+    : "build_live_world_bank_release.py";
   return [
-    resolve(repositoryRoot, "scripts/build_live_world_bank_release.py"),
+    resolve(repositoryRoot, "scripts", script),
     "--output",
     resolve(output, "data"),
     "--start-year",
