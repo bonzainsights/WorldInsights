@@ -137,7 +137,7 @@ const OPERATION_ARITY: Record<Operation, readonly [number, number | null]> = {
   table: [1, null],
   scatter: [2, 2],
   ratio: [2, 2],
-  correlation: [2, null],
+  correlation: [2, 2],
 };
 const ALLOWED_VISUALIZATIONS: Record<Operation, ReadonlySet<Visualization>> = {
   map: new Set(["map", "table"]),
