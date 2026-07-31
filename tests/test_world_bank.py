@@ -81,6 +81,7 @@ def test_records_normalize_without_conflating_missing_and_zero() -> None:
         unit_id="people",
     )
 
+    assert observations[0].geography_id == 276
     assert observations[0].value == 83280000
     assert observations[1].provider_quality_flags == ("E",)
     assert observations[-1].status is ObservationStatus.MISSING
@@ -129,7 +130,7 @@ def test_normalizes_pinned_gdp_per_capita_fixture() -> None:
 
     assert records[0].indicator_code == "NY.GDP.PCAP.CD"
     assert records[0].indicator_name == "GDP per capita (current US$)"
-    assert [row.geography_id for row in observations] == [1, 2, 3]
+    assert [row.geography_id for row in observations] == [276, 524, 840]
     assert [row.value for row in observations] == [54776.8, 1382.4, 82586.8]
     assert all(row.period.label == "2023" for row in observations)
     assert all(row.unit_id == "current_usd_per_person" for row in observations)
