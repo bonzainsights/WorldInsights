@@ -7,7 +7,7 @@ name = "worldinsights"
 version = "0.1.0"
 description = "Static-first global data compatibility and release tooling"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = ["pycountry==24.6.1"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.9", "mypy>=1.14"]
