@@ -89,6 +89,35 @@ test("reports operation arity and empty intersections", () => {
   assert.ok(result.blockers.includes("no_shared_periods"));
 });
 
+test("requires exactly two indicators for browser correlation", () => {
+  const first = {
+    indicator_variant_id: "one",
+    geography_bits_hex: "0x2",
+    geography_ids: [1],
+    periods: ["2023"],
+    geography_types: ["country"],
+    frequency: "annual",
+    concept_id: "shared",
+    unit_id: "shared",
+  };
+  const second = { ...first, indicator_variant_id: "two" };
+  const third = { ...first, indicator_variant_id: "three" };
+
+  assert.deepEqual(
+    evaluateCoverageCompatibility("correlation", [first]).blockers,
+    ["operation_arity"],
+  );
+
+  const accepted = evaluateCoverageCompatibility("correlation", [first, second]);
+  assert.equal(accepted.status, "valid");
+  assert.deepEqual(accepted.blockers, []);
+
+  assert.deepEqual(
+    evaluateCoverageCompatibility("correlation", [first, second, third]).blockers,
+    ["operation_arity"],
+  );
+});
+
 test("decodes compact coverage bitsets", () => {
   assert.deepEqual(geographyIdsFromBits(0xen), [1, 2, 3]);
   assert.throws(() => geographyIdsFromBits(-1n), RangeError);
