@@ -68,14 +68,14 @@ export function countrySelectionAfterVisibleAction(
   query: string,
   checked: boolean,
 ): Set<number> {
-  return new Set(
-    items
-      .filter((item) =>
-        countryMatchesSearch(item.name, item.canonicalCode, query) ? checked : item.checked,
-      )
-      .filter((item) => item.checked || countryMatchesSearch(item.name, item.canonicalCode, query))
-      .map((item) => item.geographyId),
-  );
+  const selected = new Set<number>();
+  for (const item of items) {
+    const nextChecked = countryMatchesSearch(item.name, item.canonicalCode, query)
+      ? checked
+      : item.checked;
+    if (nextChecked) selected.add(item.geographyId);
+  }
+  return selected;
 }
 
 export function enhanceCountryScope(root: HTMLElement): void {
@@ -107,11 +107,24 @@ export function enhanceCountryScope(root: HTMLElement): void {
 }
 
 export function startCountryScopeEnhancer(): void {
-  const root = document.querySelector<HTMLElement>("#scope-controls");
-  if (!root) return;
-  const observer = new MutationObserver(() => enhanceCountryScope(root));
-  observer.observe(root, { childList: true });
-  enhanceCountryScope(root);
+  const applicationRoot = document.querySelector<HTMLElement>("#app");
+  if (!applicationRoot) return;
+
+  const attach = (): boolean => {
+    const scopeRoot = applicationRoot.querySelector<HTMLElement>("#scope-controls");
+    if (!scopeRoot) return false;
+    const scopeObserver = new MutationObserver(() => enhanceCountryScope(scopeRoot));
+    scopeObserver.observe(scopeRoot, { childList: true });
+    enhanceCountryScope(scopeRoot);
+    return true;
+  };
+
+  if (attach()) return;
+  const applicationObserver = new MutationObserver(() => {
+    if (!attach()) return;
+    applicationObserver.disconnect();
+  });
+  applicationObserver.observe(applicationRoot, { childList: true, subtree: true });
 }
 
 function wireCountryScopeControls(
