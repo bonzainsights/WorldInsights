@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -36,10 +37,11 @@ DEFAULT_GDP_FIXTURE = ROOT / "tests/fixtures/world_bank/gdp_per_capita_2019_2023
 DEFAULT_MAPPINGS = ROOT / "data/mappings/world_bank_geographies.json"
 
 SAMPLE_GEOGRAPHIES = (
-    Geography(1, "DEU", "Germany", GeographyType.COUNTRY),
-    Geography(2, "NPL", "Nepal", GeographyType.COUNTRY),
-    Geography(3, "USA", "United States", GeographyType.COUNTRY),
+    Geography(276, "DEU", "Germany", GeographyType.COUNTRY),
+    Geography(524, "NPL", "Nepal", GeographyType.COUNTRY),
+    Geography(840, "USA", "United States", GeographyType.COUNTRY),
 )
+LEGACY_V1_GEOGRAPHY_IDS = {276: 1, 524: 2, 840: 3}
 
 
 def build_sample(
@@ -90,7 +92,7 @@ def build_sample(
         dataset_id=adapter.dataset_id,
         retrieved_at=datetime(2026, 7, 30, tzinfo=timezone.utc),
         source_checksum=combined_source.hexdigest(),
-        pipeline_version="0.4.0",
+        pipeline_version="0.6.0",
     )
     population = IndicatorVariant(
         indicator_variant_id="wb.sp.pop.totl",
@@ -140,12 +142,16 @@ def build_legacy_v1_contract_fixture(
         if record.country_code != "WLD"
     ]
     release_id = "world-bank-population-2023-sample"
-    observations = adapter.normalize_records(
+    normalized = adapter.normalize_records(
         records,
         release_id=release_id,
         indicator_variant_id="wb.sp.pop.totl",
         unit_id="people",
     )
+    observations = [
+        replace(row, geography_id=LEGACY_V1_GEOGRAPHY_IDS[row.geography_id])
+        for row in normalized
+    ]
     release = DataRelease(
         release_id=release_id,
         provider_id=adapter.provider_id,
