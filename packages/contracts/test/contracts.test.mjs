@@ -77,6 +77,39 @@ test("matches Python operation and visualization validation", async () => {
   );
 });
 
+test("requires exactly two indicators for correlation recipes", async () => {
+  const recipe = await fixture("exploration_recipe_v1.json");
+  const correlationRecipe = {
+    ...recipe,
+    operation: "correlation",
+    visualization: "scatter",
+  };
+
+  assert.throws(
+    () =>
+      parseExplorationRecipeV1({
+        ...correlationRecipe,
+        indicator_variant_ids: ["one"],
+      }),
+    /invalid indicator arity/,
+  );
+
+  const accepted = parseExplorationRecipeV1({
+    ...correlationRecipe,
+    indicator_variant_ids: ["one", "two"],
+  });
+  assert.deepEqual(accepted.indicator_variant_ids, ["one", "two"]);
+
+  assert.throws(
+    () =>
+      parseExplorationRecipeV1({
+        ...correlationRecipe,
+        indicator_variant_ids: ["one", "two", "three"],
+      }),
+    /invalid indicator arity/,
+  );
+});
+
 
 test("parses the Python-generated V2 catalog fixture", async () => {
   const root = new URL("../../../tests/fixtures/contracts/catalog-release-v2/", import.meta.url);
