@@ -1,0 +1,37 @@
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = ROOT / "apps/web/e2e/global-pages.spec.mjs"
+CONFIG = ROOT / "apps/web/playwright.config.mjs"
+
+
+def test_deployed_browser_spec_covers_global_interactions_and_full_export() -> None:
+    content = SPEC.read_text(encoding="utf-8")
+
+    assert 'page.locator("#country-search")' in content
+    assert 'name: "Clear visible"' in content
+    assert 'name: "Select all visible"' in content
+    assert 'operation.selectOption("scatter")' in content
+    assert 'name: "Use latest period"' in content
+    assert 'toHaveClass(/dense-scatter/)' in content
+    assert 'Showing 100 of ${countryCount} rows' in content
+    assert 'name: "Download CSV"' in content
+    assert "countryCount + 1" in content
+    assert 'operation.selectOption("trend")' in content
+    assert 'name: "Keep first 5 selected"' in content
+    assert 'page.locator(".chart-legend li")' in content
+    assert "toHaveCount(5)" in content
+
+
+def test_playwright_configuration_is_bounded_and_failure_diagnostic() -> None:
+    content = CONFIG.read_text(encoding="utf-8")
+
+    assert 'process.env.SITE_URL' in content
+    assert 'workers: 1' in content
+    assert 'retries: 1' in content
+    assert 'name: "chromium"' in content
+    assert 'devices["Desktop Chrome"]' in content
+    assert 'trace: "retain-on-failure"' in content
+    assert 'screenshot: "only-on-failure"' in content
+    assert 'open: "never"' in content
