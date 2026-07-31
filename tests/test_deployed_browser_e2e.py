@@ -1,4 +1,5 @@
 from pathlib import Path
+import subprocess
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,3 +36,14 @@ def test_playwright_configuration_is_bounded_and_failure_diagnostic() -> None:
     assert 'trace: "retain-on-failure"' in content
     assert 'screenshot: "only-on-failure"' in content
     assert 'open: "never"' in content
+
+
+def test_playwright_files_are_valid_javascript_modules() -> None:
+    for path in (CONFIG, SPEC):
+        result = subprocess.run(
+            ["node", "--check", str(path)],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0, result.stderr
