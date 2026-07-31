@@ -80,10 +80,18 @@ jobs:
     name: Verify deployed explorer
     runs-on: ubuntu-latest
     needs: deploy
-    timeout-minutes: 5
+    timeout-minutes: 15
 
     steps:
-      - name: Smoke test public Pages site
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Smoke test public Pages metadata
         env:
           SITE_URL: ${{ needs.deploy.outputs.page_url }}
         run: |
@@ -155,3 +163,24 @@ jobs:
           print(f"Release: {release_id}")
           print(f"Geographies: {len(catalog['geographies'])}")
           PY
+
+      - name: Install pinned Playwright and Chromium
+        working-directory: apps/web
+        run: |
+          npm install --no-save @playwright/test@1.60.0
+          npx playwright install --with-deps chromium
+
+      - name: Verify global user flows in Chromium
+        working-directory: apps/web
+        env:
+          SITE_URL: ${{ needs.deploy.outputs.page_url }}
+        run: npx playwright test --config=playwright.config.mjs --project=chromium
+
+      - name: Upload browser report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployed-browser-report
+          path: apps/web/playwright-report
+          if-no-files-found: ignore
+          retention-days: 7
