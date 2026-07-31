@@ -46,9 +46,10 @@ jobs:
       - name: Validate repository
         run: make check
 
-      - name: Build static explorer from live World Bank data
+      - name: Build static explorer from global World Bank data
         env:
           WORLDINSIGHTS_RELEASE_MODE: live
+          WORLDINSIGHTS_RELEASE_SCOPE: global
           WORLDINSIGHTS_START_YEAR: "2019"
           WORLDINSIGHTS_END_YEAR: "2024"
         run: npm --prefix apps/web run build
@@ -121,6 +122,7 @@ jobs:
           index = fetch("").decode("utf-8")
           build = json.loads(fetch("build.json"))
           latest = json.loads(fetch("data/latest.json"))
+          catalog = json.loads(fetch("data/" + latest["catalog"]))
           main_javascript = fetch("apps/web/src/main.js")
           stylesheet = fetch("styles.css")
 
@@ -132,15 +134,24 @@ jobs:
               raise RuntimeError("deployed build metadata has the wrong release schema")
           if build.get("release_mode") != "live":
               raise RuntimeError("production deployment did not use the live release builder")
+          if build.get("release_scope") != "global":
+              raise RuntimeError("production deployment did not use global release scope")
           if latest.get("schema_version") != 2:
               raise RuntimeError("deployed latest release is not the V2 catalog")
-          if "sample" in str(latest.get("release_id", "")):
-              raise RuntimeError("production deployment published a sample release")
+          release_id = str(latest.get("release_id", ""))
+          if not release_id.startswith("world-bank-global-indicators-"):
+              raise RuntimeError("production deployment did not publish a global release")
+          if len(catalog.get("geographies", [])) < 200:
+              raise RuntimeError("global release contains fewer than 200 geographies")
+          indicators = catalog.get("indicators", [])
+          if len(indicators) < 2 or any(item.get("row_count", 0) < 1_000 for item in indicators):
+              raise RuntimeError("global release indicator partitions are unexpectedly small")
           if len(main_javascript) < 1_000:
               raise RuntimeError("deployed application JavaScript is unexpectedly small")
           if len(stylesheet) < 1_000:
               raise RuntimeError("deployed stylesheet is unexpectedly small")
 
           print(f"Verified deployed WorldInsights site at {base_url}")
-          print(f"Release: {latest['release_id']}")
+          print(f"Release: {release_id}")
+          print(f"Geographies: {len(catalog['geographies'])}")
           PY
