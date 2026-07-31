@@ -33,8 +33,15 @@ ROOT = Path(__file__).resolve().parents[1]
 LEGACY_POPULATION_FIXTURE = ROOT / "tests/fixtures/world_bank/population_page.json"
 DEFAULT_POPULATION_FIXTURE = ROOT / "tests/fixtures/world_bank/population_2019_2023_page.json"
 DEFAULT_GDP_FIXTURE = ROOT / "tests/fixtures/world_bank/gdp_per_capita_2019_2023_page.json"
+DEFAULT_LIFE_EXPECTANCY_FIXTURE = (
+    ROOT / "tests/fixtures/world_bank/life_expectancy_2019_2023_page.json"
+)
 LEGACY_MAPPINGS = ROOT / "data/mappings/world_bank_geographies.json"
 DEFAULT_MAPPINGS = ROOT / "data/mappings/world_bank_geographies_m49.json"
+
+LIFE_EXPECTANCY_CODE = "SP.DYN.LE00.IN"
+LIFE_EXPECTANCY_VARIANT_ID = "wb.sp.dyn.le00.in"
+LIFE_EXPECTANCY_UNIT_ID = "years"
 
 SAMPLE_GEOGRAPHIES = (
     Geography(276, "DEU", "Germany", GeographyType.COUNTRY),
@@ -47,9 +54,11 @@ def build_sample(
     output_root: Path,
     population_fixture: Path = DEFAULT_POPULATION_FIXTURE,
     gdp_fixture: Path = DEFAULT_GDP_FIXTURE,
+    life_expectancy_fixture: Path = DEFAULT_LIFE_EXPECTANCY_FIXTURE,
 ) -> Path:
     population_bytes = population_fixture.read_bytes()
     gdp_bytes = gdp_fixture.read_bytes()
+    life_expectancy_bytes = life_expectancy_fixture.read_bytes()
     adapter = WorldBankAdapter.from_mapping_file(DEFAULT_MAPPINGS)
     release_id = "world-bank-indicators-2019-2023-sample"
 
@@ -59,6 +68,7 @@ def build_sample(
         if record.country_code in {"DEU", "NPL", "USA"}
     ]
     gdp_records = adapter.parse_records(json.loads(gdp_bytes))
+    life_expectancy_records = adapter.parse_records(json.loads(life_expectancy_bytes))
 
     population_observations = adapter.normalize_records(
         population_records,
@@ -72,12 +82,19 @@ def build_sample(
         indicator_variant_id=GDP_PER_CAPITA_CURRENT_USD_VARIANT_ID,
         unit_id=GDP_PER_CAPITA_CURRENT_USD_UNIT_ID,
     )
+    life_expectancy_observations = adapter.normalize_records(
+        life_expectancy_records,
+        release_id=release_id,
+        indicator_variant_id=LIFE_EXPECTANCY_VARIANT_ID,
+        unit_id=LIFE_EXPECTANCY_UNIT_ID,
+    )
 
     combined_source = hashlib.sha256()
     for name, content in sorted(
         (
             (population_fixture.name, population_bytes),
             (gdp_fixture.name, gdp_bytes),
+            (life_expectancy_fixture.name, life_expectancy_bytes),
         )
     ):
         combined_source.update(name.encode("utf-8"))
@@ -91,7 +108,7 @@ def build_sample(
         dataset_id=adapter.dataset_id,
         retrieved_at=datetime(2026, 7, 30, tzinfo=timezone.utc),
         source_checksum=combined_source.hexdigest(),
-        pipeline_version="0.6.0",
+        pipeline_version="0.9.0",
     )
     population = IndicatorVariant(
         indicator_variant_id="wb.sp.pop.totl",
@@ -115,12 +132,24 @@ def build_sample(
         frequency=Frequency.ANNUAL,
         geography_types=frozenset({GeographyType.COUNTRY}),
     )
+    life_expectancy = IndicatorVariant(
+        indicator_variant_id=LIFE_EXPECTANCY_VARIANT_ID,
+        provider_id=adapter.provider_id,
+        dataset_id=adapter.dataset_id,
+        provider_indicator_code=LIFE_EXPECTANCY_CODE,
+        name="Life expectancy at birth, total (years)",
+        concept_id="health.life_expectancy_at_birth.total",
+        unit_id=LIFE_EXPECTANCY_UNIT_ID,
+        frequency=Frequency.ANNUAL,
+        geography_types=frozenset({GeographyType.COUNTRY}),
+    )
     artifacts = build_catalog_release(
         output_root=output_root,
         release=release,
         indicators=(
             IndicatorReleaseInput(population, tuple(population_observations)),
             IndicatorReleaseInput(gdp_per_capita, tuple(gdp_observations)),
+            IndicatorReleaseInput(life_expectancy, tuple(life_expectancy_observations)),
         ),
         geographies=SAMPLE_GEOGRAPHIES,
     )
@@ -179,8 +208,18 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True, help="Directory for static release assets")
     parser.add_argument("--population-fixture", type=Path, default=DEFAULT_POPULATION_FIXTURE)
     parser.add_argument("--gdp-fixture", type=Path, default=DEFAULT_GDP_FIXTURE)
+    parser.add_argument(
+        "--life-expectancy-fixture",
+        type=Path,
+        default=DEFAULT_LIFE_EXPECTANCY_FIXTURE,
+    )
     args = parser.parse_args()
-    latest = build_sample(args.output, args.population_fixture, args.gdp_fixture)
+    latest = build_sample(
+        args.output,
+        args.population_fixture,
+        args.gdp_fixture,
+        args.life_expectancy_fixture,
+    )
     print(latest)
     return 0
 
