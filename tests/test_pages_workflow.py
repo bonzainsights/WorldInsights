@@ -4,7 +4,7 @@ from pathlib import Path
 WORKFLOW = Path(__file__).resolve().parents[1] / ".github/workflows/pages.yml"
 
 
-def test_pages_workflow_validates_before_uploading_static_build() -> None:
+def test_pages_workflow_validates_deploys_and_smoke_tests_static_build() -> None:
     content = WORKFLOW.read_text(encoding="utf-8")
 
     assert "pull_request:" not in content
@@ -20,4 +20,14 @@ def test_pages_workflow_validates_before_uploading_static_build() -> None:
     validation = content.index("run: make check")
     build = content.index("run: npm --prefix apps/web run build")
     upload = content.index("uses: actions/upload-pages-artifact@v3")
-    assert validation < build < upload
+    deploy = content.index("uses: actions/deploy-pages@v4")
+    smoke = content.index("name: Verify deployed explorer")
+    assert validation < build < upload < deploy < smoke
+
+    assert "page_url: ${{ steps.deployment.outputs.page_url }}" in content
+    assert "SITE_URL: ${{ needs.deploy.outputs.page_url }}" in content
+    assert 'fetch("build.json")' in content
+    assert 'fetch("data/latest.json")' in content
+    assert 'fetch("apps/web/src/main.js")' in content
+    assert 'fetch("styles.css")' in content
+    assert "latest.get(\"schema_version\") != 2" in content
