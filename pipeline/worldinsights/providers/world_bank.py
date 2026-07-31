@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -75,14 +76,36 @@ class WorldBankAdapter:
         *,
         start_year: int,
         end_year: int,
+        country_codes: Sequence[str] | None = None,
         per_page: int = 20_000,
     ) -> str:
-        if not indicator_code.strip():
+        indicator = indicator_code.strip()
+        if not indicator:
             raise ValueError("indicator_code is required")
         if start_year > end_year:
             raise ValueError("start_year cannot be after end_year")
         if per_page <= 0:
             raise ValueError("per_page must be positive")
+
+        country_segment = "all"
+        if country_codes is not None:
+            normalized_codes: list[str] = []
+            seen_codes: set[str] = set()
+            for raw_code in country_codes:
+                code = raw_code.strip().upper()
+                if len(code) != 3 or not code.isascii() or not code.isalpha():
+                    raise ValueError("country codes must be three ASCII letters")
+                if code in seen_codes:
+                    raise ValueError(f"duplicate country code: {code}")
+                seen_codes.add(code)
+                normalized_codes.append(code)
+            if not normalized_codes:
+                raise ValueError("country_codes cannot be empty")
+            normalized_codes.sort()
+            country_segment = ";".join(normalized_codes)
+            if len(country_segment) > 1_500:
+                raise ValueError("country code path exceeds the World Bank API limit")
+
         query = urlencode(
             {
                 "format": "json",
@@ -91,7 +114,9 @@ class WorldBankAdapter:
                 "source": 2,
             }
         )
-        return f"{WORLD_BANK_BASE_URL}/country/all/indicator/{indicator_code}?{query}"
+        return (
+            f"{WORLD_BANK_BASE_URL}/country/{country_segment}/indicator/{indicator}?{query}"
+        )
 
     def fetch_payload(self, url: str, *, timeout_seconds: float = 30.0) -> Any:
         if not url.startswith(WORLD_BANK_BASE_URL):
